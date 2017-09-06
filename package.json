@@ -1,0 +1,30 @@
+{
+  "name": "i18nc",
+  "version": "1.0.0",
+  "description": "i18nc cli tool",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm ls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Bacra/node-i18nc-cli.git"
+  },
+  "keywords": [
+    "i18n",
+    "cli",
+    "js"
+  ],
+  "author": "Bacra Woo <bacra.woo@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bacra/node-i18nc-cli/issues"
+  },
+  "homepage": "https://github.com/Bacra/node-i18nc-cli",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "commander": "^2.11.0",
+    "glob": "^7.1.2",
+    "strip-bom": "^3.0.0"
+  }
+}
