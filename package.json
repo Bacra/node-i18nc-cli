@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "i18nc cli tool",
   "main": "index.js",
+  "bin": {
+    "i18nc": "bin/i18nc.js"
+  },
   "scripts": {
     "prepublish": "npm ls"
   },
@@ -24,7 +27,10 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "commander": "^2.11.0",
+    "debug": "^3.0.1",
     "glob": "^7.1.2",
+    "i18nc-core": "^1.0.0",
+    "mkdirp": "^0.5.1",
     "strip-bom": "^3.0.0"
   }
 }
