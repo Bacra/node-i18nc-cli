@@ -1,1 +1,1 @@
-module.exports = require('i18nc');
+module.exports = require('i18nc-core');
