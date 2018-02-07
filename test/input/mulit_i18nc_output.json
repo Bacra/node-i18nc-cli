@@ -1,0 +1,78 @@
+{
+	"files/example1.js": {
+		"funcTranslateWords": {
+			"func_code_file_key": {
+				"zh-TW": {
+					"DEFAULTS": {
+						"简体": [
+							"簡體"
+						]
+					},
+					"SUBTYPES": {
+						"subtype": {
+							"简体++": [
+								"簡體--"
+							],
+							"I18N(中文)": [
+								"I18N(中文)"
+							]
+						}
+					}
+				}
+			}
+		},
+		"codeTranslateWords": {
+			"DEFAULTS": [
+				"中文0",
+				"中文I18N"
+			],
+			"SUBTYPES": {
+				"haha": [
+					"中文I18N",
+					"中文I18N2"
+				],
+				"subtype": [
+					"I18N(中文)"
+				]
+			}
+		}
+	},
+	"files/example2.js": {
+		"funcTranslateWords": {
+			"func_code_file_key": {
+				"zh-TW": {
+					"DEFAULTS": {
+						"简体": [
+							"簡體"
+						]
+					},
+					"SUBTYPES": {
+						"subtype": {
+							"简体++": [
+								"簡體--"
+							],
+							"I18N(中文)": [
+								"I18N(中文)"
+							]
+						}
+					}
+				}
+			}
+		},
+		"codeTranslateWords": {
+			"DEFAULTS": [
+				"中文0",
+				"中文I18N"
+			],
+			"SUBTYPES": {
+				"haha": [
+					"中文I18N",
+					"中文I18N2"
+				],
+				"subtype": [
+					"I18N(中文)"
+				]
+			}
+		}
+	}
+}
