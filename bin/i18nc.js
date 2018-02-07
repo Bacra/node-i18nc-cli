@@ -3,9 +3,9 @@
 'use strict';
 process.title = 'i18nc';
 
-var cwd		= process.cwd();
-var program	= require('commander');
-var actions	= require('../lib/main');
+var cwd        = process.cwd();
+var program    = require('commander');
+var codeAction = require('../lib/actions/code');
 
 program.version(
 		' cli: v'+require('../package.json').version
@@ -13,7 +13,7 @@ program.version(
 	);
 
 
-program.command('code [input] [output]')
+program.command('code <input> <output>')
 	.description('insert I18N handler to code')
 	.option('-d --dbfile [file]', 'dbfile path')
 	.option('-w --output-word-file [file]', 'output translate words')
@@ -32,7 +32,7 @@ program.command('code [input] [output]')
 	{
 		if (args.r) input += '/**/*';
 
-		actions.code(cwd, input, output, args)
+		codeAction(cwd, input, output, args)
 			.catch(function(err)
 			{
 				console.log(err.stack);
