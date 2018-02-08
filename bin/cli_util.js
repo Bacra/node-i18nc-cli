@@ -14,6 +14,7 @@ function scanFileList(input, recurse)
 		{
 			if (stats.isFile())
 			{
+				debug('input is file');
 				return fs.realpath(input)
 					.then(function(file)
 					{
@@ -25,6 +26,7 @@ function scanFileList(input, recurse)
 			}
 			else if (stats.isDirectory())
 			{
+				debug('input is dir');
 				if (!recurse) throw new Error('Input Is A Directory');
 
 				return glob('**/*', {cwd: input, nodir: true, realpath: true})
@@ -44,6 +46,7 @@ function scanFileList(input, recurse)
 		function(err)
 		{
 			if (!recurse || !err || !err.code == 'ENOENT') throw err;
+			debug('input is not exists');
 
 			return glob(input, {nodir: true, realpath: true})
 				.then(function(files)
@@ -67,10 +70,12 @@ function writeOneFile(output, content, input)
 		{
 			if (stats.isFile())
 			{
+				debug('output is file');
 				return output;
 			}
 			else if (stats.isDirectory())
 			{
+				debug('output is dir');
 				var filename = path.filename(input);
 				return output+'/'+filename;
 			}
@@ -83,11 +88,13 @@ function writeOneFile(output, content, input)
 		{
 			if (!err || err.code != 'ENOENT') throw err;
 
+			debug('output is not exists');
 			// 当文件不存在的时候
 			var tailStr = output[output.length-1];
 			var dir, rfile;
 			if (tailStr == '/' || tailStr == '\\')
 			{
+				debug('ouput maybe is path');
 				dir = output;
 				rfile = dir + path.filename(input);
 			}
