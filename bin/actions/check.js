@@ -1,5 +1,6 @@
-var path = require('path');
-var cliUtil = require('../cli_util');
+var path      = require('path');
+var debug     = require('debug')('i18nc:check');
+var cliUtil   = require('../cli_util');
 var i18ncUtil = require('../../i18nc/util');
 
 module.exports = function chekc(cwd, input, options)

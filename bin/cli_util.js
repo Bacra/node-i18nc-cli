@@ -1,9 +1,10 @@
-var _ = require('loadsh');
+var _       = require('loadsh');
+var debug   = require('debug')('i18nc:cli_util');
 var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require('fs'));
-var glob = Promise.promisify(require('glob'));
-var mkdirp = Promise.promisify(require('mkdirp'));
-var path = require('path');
+var fs      = Promise.promisifyAll(require('fs'));
+var glob    = Promise.promisify(require('glob'));
+var mkdirp  = Promise.promisify(require('mkdirp'));
+var path    = require('path');
 
 exports.sacnFileList = scanFileList;
 function scanFileList(input, recurse)
