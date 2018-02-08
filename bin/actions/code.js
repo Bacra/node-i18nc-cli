@@ -7,7 +7,7 @@ var glob		= Promise.promisify(require('glob'));
 var stripBOM	= require('strip-bom');
 var path		= require('path');
 var extend		= require('extend');
-var utils		= require('../utils');
+var i18ncUtil	= require('../../i18nc/util');
 
 
 module.exports = function code(cwd, input, output, options)
@@ -31,11 +31,13 @@ module.exports = function code(cwd, input, output, options)
 			});
 	}
 
+	var allfiledata = {};
+
 	return Promise.all(
 		[
 			glob(input, {cwd: cwd}),
 			readDBFilePromise,
-			inputPODir && utils.loadPOFiles(path.resolve(cwd, inputPODir))
+			inputPODir && i18ncUtil.loadPOFiles(path.resolve(cwd, inputPODir))
 		])
 		.then(function(data)
 		{
@@ -53,45 +55,40 @@ module.exports = function code(cwd, input, output, options)
 							pickFileLanguages : options.lans
 						});
 
-					return fileI18NHanlder(cwd, file, options.c ? null : output, myOptions)
+					var rfile = path.resolve(cwd, file);
+					return i18ncUtil.file2i18nc(rfile, myOptions)
 						.then(function(data)
 						{
-							if (!data) return;
+							var code = data.code;
+							delete code;
+							allfiledata[file] = data;
+							if (!options.c) return;
 
-							delete data.code;
-							data.file = file;
+							var wfile = path.resolve(cwd, output, file);
+							debug('writefile: %s', wfile);
 
-							return data;
+							return writeFile(wfile, code)
+								.then(function()
+								{
+									console.log('write file: '+file);
+								});
 						});
 				},
 				{
 					concurrency: 5
 				});
 		})
-		.then(function(data)
-		{
-			var map = {};
-			data.forEach(function(item)
-			{
-				if (item)
-				{
-					map[item.file] = item;
-				}
-			});
-
-			return map;
-		})
-		.then(function(mainData)
+		.then(function()
 		{
 			// 如果仅仅检查，则不处理写的逻辑
-			if (options.c) return mainData;
+			if (options.c) return;
 
 			var outputWordFile = options['output-word-file'];
 			var writeOutputWordFilePromise;
 			if (outputWordFile)
 			{
 				outputWordFile = path.resolve(cwd, outputWordFile);
-				writeOutputWordFilePromise = writeFile(outputWordFile, JSON.stringify(mainData, null, '\t'))
+				writeOutputWordFilePromise = writeFile(outputWordFile, JSON.stringify(allfiledata, null, '\t'))
 					.then(function()
 					{
 						console.log('write words file: '+outputWordFile);
@@ -104,57 +101,15 @@ module.exports = function code(cwd, input, output, options)
 			return Promise.all(
 				[
 					writeOutputWordFilePromise,
-					outputPODir && utils.mulitResult2POFiles(mainData, outputPODir,
+					outputPODir && i18ncUtil.mulitResult2POFiles(allfiledata, outputPODir,
 						{
 							pickFileLanguages: options.lans
 						})
 				])
-				.then(function()
-				{
-					return mainData;
-				});
+				.then(function(){});
 		});
 }
 
-
-function fileI18NHanlder(cwd, file, output, options)
-{
-	var rfile = path.resolve(cwd, file);
-	debug('readfile: %s', rfile);
-
-	return fs.statAsync(rfile)
-		.then(function(stat)
-		{
-			if (!stat.isFile())
-			{
-				debug('is not file:%s', rfile);
-				return;
-			}
-
-			return fs.readFileAsync(rfile,
-				{
-					encoding: 'utf8'
-				})
-				.then(function(code)
-				{
-					var code = stripBOM(code);
-					var info = i18nc(code, options);
-
-					if (output)
-					{
-						var wfile = path.resolve(cwd, output, file);
-						debug('writefile: %s', wfile);
-
-						return writeFile(wfile, info.code)
-							.then(function()
-							{
-								console.log('write file: '+file);
-								return info;
-							});
-					}
-				});
-		});
-}
 
 function writeFile(file, content)
 {

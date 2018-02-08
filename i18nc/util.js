@@ -119,3 +119,27 @@ function isI18NHandlerAllWrap(json)
 
 	return true;
 }
+
+
+exports.file2i18nc = function(file, options)
+{
+	return fs.statAsync(file)
+		.then(function(stat)
+		{
+			if (!stat.isFile())
+			{
+				debug('is not file:%s', file);
+				return;
+			}
+
+			return fs.readFileAsync(file,
+				{
+					encoding: 'utf8'
+				})
+				.then(function(code)
+				{
+					code = stripBOM(code);
+					return i18nc(code, options);
+				});
+		});
+}
