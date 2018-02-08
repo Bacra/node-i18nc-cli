@@ -3,11 +3,10 @@ var debug		= require('debug')('i18nc');
 var fs			= Promise.promisifyAll(require('fs'));
 var i18nc		= require('i18nc-core');
 var mkdirp		= Promise.promisify(require('mkdirp'));
-var glob		= Promise.promisify(require('glob'));
-var stripBOM	= require('strip-bom');
 var path		= require('path');
 var extend		= require('extend');
 var i18ncUtil	= require('../../i18nc/util');
+var cliUtil		= require('../cli_util');
 
 
 module.exports = function code(cwd, input, output, options)
@@ -36,49 +35,74 @@ module.exports = function code(cwd, input, output, options)
 
 	return Promise.all(
 		[
-			glob(input, {cwd: cwd}),
+			cliUtil.scanFileList(options.input, null, options.r),
 			readDBFilePromise,
 			inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, inputPOFile)),
 			inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, inputPODir))
 		])
 		.then(function(data)
 		{
-			var files = data[0];
+			var fileInfo = data[0];
 			var dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
+			var myOptions =
+			{
+				dbTranslateWords  : dbTranslateWords,
+				I18NHandlerName   : options['i18n-hanlder-name'],
+				pickFileLanguages : options.lans
+			};
 
-			return Promise.map(files, function(file)
-				{
-					debug('i18n file start: %s', file);
+			if (fileInfo.type == 'list')
+			{
+				return Promise.map(fileInfo.data, function(file)
+					{
+						debug('i18n file start: %s', file);
 
-					var myOptions = extend(
-						{
-							dbTranslateWords  : dbTranslateWords,
-							I18NHandlerName   : options['i18n-hanlder-name'],
-							pickFileLanguages : options.lans
-						});
+						return i18ncUtil.file2i18nc(file, myOptions)
+							.then(function(data)
+							{
+								var code = data.code;
+								delete data.code;
+								allfiledata[file] = data;
+								if (!options.c) return;
 
-					var rfile = path.resolve(cwd, file);
-					return i18ncUtil.file2i18nc(rfile, myOptions)
-						.then(function(data)
-						{
-							var code = data.code;
-							delete code;
-							allfiledata[file] = data;
-							if (!options.c) return;
+								var wfile = path.resolve(cwd, output, file);
+								debug('writefile: %s', wfile);
 
-							var wfile = path.resolve(cwd, output, file);
-							debug('writefile: %s', wfile);
+								return writeFile(wfile, code)
+									.then(function()
+									{
+										console.log('write file: '+wfile);
+									});
+							});
+					},
+					{
+						concurrency: 5
+					});
+			}
+			else
+			{
+				var file = fileInfo.data;
+				debug('one file mod:%s', file);
 
-							return writeFile(wfile, code)
-								.then(function()
-								{
-									console.log('write file: '+file);
-								});
-						});
-				},
-				{
-					concurrency: 5
-				});
+				return i18ncUtil.file2i18nc(file, myOptions)
+					.then(function(data)
+					{
+						var code = data.code;
+						delete data.code;
+
+						allfiledata[file] = data;
+						if (!options.c) return;
+
+						var wfile = path.resolve(cwd, output);
+						debug('writefile: %s', wfile);
+
+						return cliUtil.writeOneFile(output, code, file)
+							.then(function(realfile)
+							{
+								console.log('write file: '+realfile);
+							});
+					});
+			}
 		})
 		.then(function()
 		{
