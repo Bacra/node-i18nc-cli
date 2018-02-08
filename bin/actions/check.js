@@ -21,11 +21,11 @@ module.exports = function chekc(cwd, input, options)
 						{
 							if (i18ncUtil.isI18NHandlerAllWrap(data, myOptions))
 							{
-								console.log('ok check: %s', file);
+								console.log('ok check: '+file);
 							}
 							else
 							{
-								console.log('fail check: %s', file);
+								console.log('fail check: '+file);
 							}
 						});
 				},
