@@ -5,8 +5,8 @@ var i18nc		= require('i18nc-core');
 var mkdirp		= Promise.promisify(require('mkdirp'));
 var path		= require('path');
 var extend		= require('extend');
-var i18ncUtil	= require('../../i18nc/util');
 var cliUtil		= require('../cli_util');
+var i18ncUtil	= require('../../i18nc/util');
 
 
 module.exports = function code(cwd, input, output, options)
@@ -35,7 +35,7 @@ module.exports = function code(cwd, input, output, options)
 
 	return Promise.all(
 		[
-			cliUtil.scanFileList(options.input, null, options.r),
+			cliUtil.scanFileList(path.resolve(cwd, input), null, options.r),
 			readDBFilePromise,
 			inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, inputPOFile)),
 			inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, inputPODir))
