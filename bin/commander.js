@@ -1,6 +1,7 @@
-var cwd        = process.cwd();
-var program    = require('commander');
-var codeAction = require('./actions/code');
+var cwd         = process.cwd();
+var program     = require('commander');
+var codeAction  = require('./actions/code');
+var checkAction = require('./actions/check');
 
 module.exports = program;
 
@@ -11,7 +12,7 @@ program.version(
 
 
 program.command('code <input> <output>')
-	.description('insert I18N handler to code')
+	.description('Warp code width I18N handler')
 	.option('-b --dbfile [file]', 'dbfile path')
 	.option('-w --output-word-file [file]', 'output translate words')
 	.option('-o --output-po-dir [dir]', 'output po files dir')
@@ -29,6 +30,19 @@ program.command('code <input> <output>')
 	.action(function(input, output, args)
 	{
 		codeAction(cwd, input, output, args)
+			.catch(function(err)
+			{
+				console.log(err.stack);
+			});
+	});
+
+
+program.command('check <input>')
+	.description('Check if all words were wrapped by I18N handler')
+	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
+	.action(function(input, args)
+	{
+		checkAction(cwd, input, args)
 			.catch(function(err)
 			{
 				console.log(err.stack);
