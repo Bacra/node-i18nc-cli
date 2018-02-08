@@ -22,11 +22,9 @@ function mulitResult2POFiles(data, outputDir, options)
 	return mkdirp(outputDir)
 		.then(function()
 		{
-			var poPromises = Promise.map(_.toPairs(output.po), function(item)
+			var poPromises = Promise.map(_.keys(output.po), function(file)
 				{
-					var file = item[0];
-					var content = item[1];
-					return fs.writeFileAsync(outputDir+'/'+file+'.po', content);
+					return fs.writeFileAsync(outputDir+'/'+file+'.po', output.po[file]);
 				},
 				{
 					concurrency: 5
@@ -51,6 +49,8 @@ function autoLoadPOFiles(input)
 				return loadPOFile(input);
 			else if (stats.isDirectory())
 				return loadPOFiles(input);
+			else
+				throw new Error('Input Is Not File Or Directory');
 		});
 }
 
