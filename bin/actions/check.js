@@ -4,12 +4,12 @@ var i18ncUtil = require('../../i18nc/util');
 
 module.exports = function chekc(cwd, input, options)
 {
-	return cliUtil.scanFileList(path.resolve(cwd, input), options.r)
+	return cliUtil.scanFileList(path.resolve(cwd, input), options.isRecurse)
 		.then(function(fileInfo)
 		{
 			var myOptions =
 			{
-				I18NHandlerName: options['i18n-handler-name']
+				I18NHandlerName: options.I18NHandlerName
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
 			return Promise.map(list, function(file)

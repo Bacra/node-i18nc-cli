@@ -111,3 +111,15 @@ function writeOneFile(output, content, input)
 				});
 		});
 }
+
+
+exports.key2key = key2key;
+function key2key(obj, keyMap)
+{
+	var result = {};
+	_.each(obj, function(val, key)
+	{
+		return result[keyMap[key] || key] = val;
+	});
+	return result;
+}

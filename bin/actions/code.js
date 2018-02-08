@@ -12,8 +12,6 @@ var i18ncUtil	= require('../../i18nc/util');
 module.exports = function code(cwd, input, output, options)
 {
 	var dbfile = options.dbfile;
-	var inputPOFile = options['input-po-file'];
-	var inputPODir = options['input-po-dir'];
 	var readDBFilePromise;
 
 	if (dbfile)
@@ -35,10 +33,10 @@ module.exports = function code(cwd, input, output, options)
 
 	return Promise.all(
 		[
-			cliUtil.scanFileList(path.resolve(cwd, input), null, options.r),
+			cliUtil.scanFileList(path.resolve(cwd, input), null, options.isRecurse),
 			readDBFilePromise,
-			inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, inputPOFile)),
-			inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, inputPODir))
+			options.inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, options.inputPOFile)),
+			options.inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, options.inputPODir))
 		])
 		.then(function(data)
 		{
@@ -47,8 +45,8 @@ module.exports = function code(cwd, input, output, options)
 			var myOptions =
 			{
 				dbTranslateWords  : dbTranslateWords,
-				I18NHandlerName   : options['i18n-hanlder-name'],
-				pickFileLanguages : options.lans
+				I18NHandlerName   : options.I18NHandlerName,
+				pickFileLanguages : options.pickFileLanguages
 			};
 
 			if (fileInfo.type == 'list')
@@ -63,7 +61,7 @@ module.exports = function code(cwd, input, output, options)
 								var code = data.code;
 								delete data.code;
 								allfiledata[file] = data;
-								if (!options.c) return;
+								if (!options.isOnlyCheck) return;
 
 								var wfile = path.resolve(cwd, output, file);
 								debug('writefile: %s', wfile);
@@ -91,7 +89,7 @@ module.exports = function code(cwd, input, output, options)
 						delete data.code;
 
 						allfiledata[file] = data;
-						if (!options.c) return;
+						if (!options.isOnlyCheck) return;
 
 						var wfile = path.resolve(cwd, output);
 						debug('writefile: %s', wfile);
@@ -107,9 +105,9 @@ module.exports = function code(cwd, input, output, options)
 		.then(function()
 		{
 			// 如果仅仅检查，则不处理写的逻辑
-			if (options.c) return;
+			if (options.isOnlyCheck) return;
 
-			var outputWordFile = options['output-word-file'];
+			var outputWordFile = options.outputWordFile;
 			var writeOutputWordFilePromise;
 			if (outputWordFile)
 			{
@@ -121,7 +119,7 @@ module.exports = function code(cwd, input, output, options)
 					});
 			}
 
-			var outputPODir = options['output-po-dir'];
+			var outputPODir = options.outputPODir;
 			if (outputPODir) outputPODir = path.resolve(cwd, outputPODir);
 
 			return Promise.all(
@@ -129,7 +127,7 @@ module.exports = function code(cwd, input, output, options)
 					writeOutputWordFilePromise,
 					outputPODir && i18ncUtil.mulitResult2POFiles(allfiledata, outputPODir,
 						{
-							pickFileLanguages: options.lans
+							pickFileLanguages: options.pickFileLanguages
 						})
 				])
 				.then(function(){});

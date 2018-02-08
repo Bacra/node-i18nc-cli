@@ -1,5 +1,6 @@
 var cwd         = process.cwd();
 var program     = require('commander');
+var cliUtil     = require('./cli_util');
 var codeAction  = require('./actions/code');
 var checkAction = require('./actions/check');
 
@@ -14,10 +15,10 @@ program.version(
 program.command('code <input> <output>')
 	.description('Warp code width I18N handler')
 	.option('-b --dbfile [file]', 'dbfile path')
-	.option('-w --output-word-file [file]', 'output translate words')
-	.option('-o --output-po-dir [dir]', 'output po files dir')
 	.option('-p --input-po-file [file]', 'input po files file')
 	.option('-d --input-po-dir [dir]', 'input po files dir')
+	.option('-w --output-word-file [file]', 'output translate words')
+	.option('-o --output-po-dir [dir]', 'output po files dir')
 	.option('-l --lans [lan1,lan2]', 'pick file languages', function(val)
 		{
 			return val.split(',')
@@ -29,7 +30,20 @@ program.command('code <input> <output>')
 	.option('-r', 'recurse into directories')
 	.action(function(input, output, args)
 	{
-		codeAction(cwd, input, output, args)
+		var options = cliUtil.key2key(args,
+			{
+				'dbfile'            : 'dbfile',
+				'input-po-file'     : 'inputPOFile',
+				'input-po-dir'      : 'inputPODir',
+				'output-word-file'  : 'outputWordFile',
+				'output-po-dir'     : 'outputPODir',
+				'lans'              : 'pickFileLanguages',
+				'i18n-hanlder-name' : 'I18NHandlerName',
+				'c'                 : 'isOnlyCheck',
+				'r'                 : 'isRecurse',
+			});
+
+		codeAction(cwd, input, output, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
@@ -40,9 +54,15 @@ program.command('code <input> <output>')
 program.command('check <input>')
 	.description('Check if all words were wrapped by I18N handler')
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
+	.option('-r', 'recurse into directories')
 	.action(function(input, args)
 	{
-		checkAction(cwd, input, args)
+		var options = cliUtil.key2key(args,
+			{
+				'i18n-handler-name' : 'I18NHandlerName',
+				'r'                 : 'isRecurse',
+			});
+		checkAction(cwd, input, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
