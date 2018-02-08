@@ -24,7 +24,9 @@ function scanFileList(input, recurse)
 			}
 			else if (stats.isDirectory())
 			{
-				return glob(recurse ? '**/*' : '*', {cwd: input, nodir: true, realpath: true})
+				if (!recurse) throw new Error('Input Is A Directory');
+
+				return glob('**/*', {cwd: input, nodir: true, realpath: true})
 					.then(function(files)
 					{
 						return {
