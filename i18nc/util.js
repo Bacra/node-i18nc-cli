@@ -42,14 +42,14 @@ function mulitResult2POFiles(data, outputDir, options)
 
 
 exports.autoLoadPOFiles = autoLoadPOFiles;
-function autoLoadPOFiles(file)
+function autoLoadPOFiles(input)
 {
-	return fs.stat(file, function(stats)
+	return fs.stat(input, function(stats)
 		{
 			if (stats.isFile())
-				return loadPOFile(file);
+				return loadPOFile(input);
 			else if (stats.isDirectory())
-				return loadPOFiles(file);
+				return loadPOFiles(input);
 		});
 }
 
