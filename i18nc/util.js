@@ -41,6 +41,19 @@ function mulitResult2POFiles(data, outputDir, options)
 }
 
 
+exports.autoLoadPOFiles = autoLoadPOFiles;
+function autoLoadPOFiles(file)
+{
+	return fs.stat(file, function(stats)
+		{
+			if (stats.isFile())
+				return loadPOFile(file);
+			else if (stats.isDirectory())
+				return loadPOFiles(file);
+		});
+}
+
+
 /**
  * 从po文件中读取dbTranslateWords结构体
  */
@@ -48,14 +61,13 @@ exports.loadPOFiles = loadPOFiles;
 function loadPOFiles(inputDir)
 {
 	debug('sacn dir:%s', inputDir);
-	return glob('**/*.po', {cwd: inputDir})
+	return glob('**/*.po', {cwd: inputDir, nodir: true, absolute: true})
 		.then(function(files)
 		{
 			return Promise.map(files, function(file)
 			{
-				var rfile = path.resolve(inputDir, file);
-				debug('load po file:%s', rfile);
-				return loadPOFile(rfile);
+				debug('load po file:%s', file);
+				return loadPOFile(file);
 			},
 			{
 				concurrency: 5
@@ -68,30 +80,20 @@ function loadPOFiles(inputDir)
 		});
 }
 
+
 exports.loadPOFile = loadPOFile;
 function loadPOFile(file)
 {
-	return fs.statAsync(file)
-		.then(function(stat)
+	return fs.readFileAsync(file,
 		{
-			if (!stat.isFile())
-			{
-				debug('is not file:%s', file);
-				return;
-			}
-
-			return fs.readFileAsync(file,
-				{
-					encoding: 'utf8'
-				})
-				.then(function(content)
-				{
-					content = stripBOM(content);
-					return i18ncPO.parse(content);
-				});
+			encoding: 'utf8'
+		})
+		.then(function(content)
+		{
+			content = stripBOM(content);
+			return i18ncPO.parse(content);
 		});
 }
-
 
 /**
  * 检查代码中的翻译文本，是否全部使用I18N函数包裹
