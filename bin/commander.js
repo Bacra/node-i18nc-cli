@@ -12,10 +12,11 @@ program.version(
 
 program.command('code <input> <output>')
 	.description('insert I18N handler to code')
-	.option('-d --dbfile [file]', 'dbfile path')
+	.option('-b --dbfile [file]', 'dbfile path')
 	.option('-w --output-word-file [file]', 'output translate words')
 	.option('-o --output-po-dir [dir]', 'output po files dir')
-	.option('-i --input-po-dir [dir]', 'input po files dir')
+	.option('-p --input-po-file [file]', 'input po files file')
+	.option('-d --input-po-dir [dir]', 'input po files dir')
 	.option('-l --lans [lan1,lan2]', 'pick file languages', function(val)
 		{
 			return val.split(',')
@@ -27,8 +28,6 @@ program.command('code <input> <output>')
 	.option('-r', 'recurse into directories')
 	.action(function(input, output, args)
 	{
-		if (args.r) input += '/**/*';
-
 		codeAction(cwd, input, output, args)
 			.catch(function(err)
 			{

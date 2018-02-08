@@ -13,6 +13,7 @@ var i18ncUtil	= require('../../i18nc/util');
 module.exports = function code(cwd, input, output, options)
 {
 	var dbfile = options.dbfile;
+	var inputPOFile = options['input-po-file'];
 	var inputPODir = options['input-po-dir'];
 	var readDBFilePromise;
 
@@ -37,12 +38,13 @@ module.exports = function code(cwd, input, output, options)
 		[
 			glob(input, {cwd: cwd}),
 			readDBFilePromise,
-			inputPODir && i18ncUtil.loadPOFiles(path.resolve(cwd, inputPODir))
+			inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, inputPOFile)),
+			inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, inputPODir))
 		])
 		.then(function(data)
 		{
 			var files = data[0];
-			var dbTranslateWords = extend(true, {}, data[1], data[2]);
+			var dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
 
 			return Promise.map(files, function(file)
 				{
