@@ -44,7 +44,8 @@ function mulitResult2POFiles(data, outputDir, options)
 exports.autoLoadPOFiles = autoLoadPOFiles;
 function autoLoadPOFiles(input)
 {
-	return fs.stat(input, function(stats)
+	return fs.statAsync(input)
+		.then(function(stats)
 		{
 			if (stats.isFile())
 				return loadPOFile(input);
