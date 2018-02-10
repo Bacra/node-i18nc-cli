@@ -1,4 +1,4 @@
-var _       = require('loadsh');
+var _       = require('lodash');
 var debug   = require('debug')('i18nc:cli_util');
 var Promise = require('bluebird');
 var fs      = Promise.promisifyAll(require('fs'));
@@ -6,7 +6,7 @@ var glob    = Promise.promisify(require('glob'));
 var mkdirp  = Promise.promisify(require('mkdirp'));
 var path    = require('path');
 
-exports.sacnFileList = scanFileList;
+exports.scanFileList = scanFileList;
 function scanFileList(input, recurse)
 {
 	return fs.statAsync(input)
@@ -15,7 +15,7 @@ function scanFileList(input, recurse)
 			if (stats.isFile())
 			{
 				debug('input is file');
-				return fs.realpath(input)
+				return fs.realpathAsync(input)
 					.then(function(file)
 					{
 						return {

@@ -4,6 +4,7 @@ var fs       = Promise.promisifyAll(require('fs'));
 var glob     = Promise.promisify(require('glob'));
 var mkdirp   = Promise.promisify(require('mkdirp'));
 var debug    = require('debug')('i18nc:utils');
+var i18nc    = require('i18nc-core');
 var i18ncPO  = require('i18nc-po');
 var stripBOM = require('strip-bom');
 var path     = require('path');

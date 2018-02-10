@@ -1,3 +1,4 @@
+var Promise   = require('bluebird');
 var path      = require('path');
 var debug     = require('debug')('i18nc:check');
 var cliUtil   = require('../cli_util');
@@ -13,7 +14,7 @@ module.exports = function chekc(cwd, input, options)
 				I18NHandlerName: options.I18NHandlerName
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
-			return Promise.map(list, function(file)
+			return Promise.map(files, function(file)
 				{
 					debug('i18n file start: %s', file);
 
