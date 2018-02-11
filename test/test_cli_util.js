@@ -1,11 +1,9 @@
 var Promise  = require('bluebird');
 var fs       = Promise.promisifyAll(require('fs'));
 var mkdirp   = Promise.promisify(require('mkdirp'));
-var rimraf   = Promise.promisify(require('rimraf'));
 var path     = require('path');
 var expect   = require('expect.js');
 var cliUtil  = require('../bin/cli_util');
-var TMP_PATH = __dirname+'/tmp/';
 
 
 describe('#cli_util', function()
@@ -131,27 +129,8 @@ describe('#cli_util', function()
 
 	describe('#getWriteOneFilePath', function()
 	{
-		var outputDir = TMP_PATH+'getWriteOneFilePath/';
+		var outputDir = __dirname+'output/';
 		var inputFile = __dirname+'input/input.file';
-		before(function()
-		{
-			// 县创建目录
-			// 然后删除目录
-			// 最后再创建目录
-			return mkdirp(outputDir)
-				.then(function()
-				{
-					return rimraf(outputDir);
-				})
-				.then(function()
-				{
-					return mkdirp(outputDir);
-				})
-				.then(function()
-				{
-					return fs.writeFileAsync(outputDir+'prev.file', '');
-				});
-		});
 
 		it('#file', function()
 		{
