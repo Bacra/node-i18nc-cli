@@ -45,8 +45,10 @@ function scanFileList(input, recurse)
 		},
 		function(err)
 		{
-			if (!recurse || !err || !err.code == 'ENOENT') throw err;
-			debug('input is not exists');
+			if (!err || !err.code == 'ENOENT') throw err;
+			if (!recurse && input.indexOf('*') == -1) throw err;
+
+			debug('input is not exists, start glob');
 
 			return glob(input, {nodir: true, realpath: true})
 				.then(function(files)
@@ -54,7 +56,7 @@ function scanFileList(input, recurse)
 					return {
 						type: 'list',
 						data: files
-					}
+					};
 				});
 		});
 }
@@ -62,8 +64,8 @@ function scanFileList(input, recurse)
 /**
  * 写入一个文件，需要判断input本身的文件状态
  */
-exports.writeOneFile = writeOneFile;
-function writeOneFile(output, content, input)
+exports.getWriteOneFilePath = getWriteOneFilePath;
+function getWriteOneFilePath(output, input)
 {
 	return fs.statAsync(output)
 		.then(function(stats)
@@ -76,7 +78,7 @@ function writeOneFile(output, content, input)
 			else if (stats.isDirectory())
 			{
 				debug('output is dir');
-				var filename = path.filename(input);
+				var filename = path.basename(input);
 				return output+'/'+filename;
 			}
 			else
@@ -96,7 +98,7 @@ function writeOneFile(output, content, input)
 			{
 				debug('ouput maybe is path');
 				dir = output;
-				rfile = dir + path.filename(input);
+				rfile = dir + path.basename(input);
 			}
 			else
 			{
@@ -105,14 +107,6 @@ function writeOneFile(output, content, input)
 			}
 
 			return mkdirp(dir)
-				.then(function()
-				{
-					return rfile;
-				});
-		})
-		.then(function(rfile)
-		{
-			return fs.writeFileAsync(rfile, content)
 				.then(function()
 				{
 					return rfile;

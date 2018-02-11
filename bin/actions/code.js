@@ -94,10 +94,14 @@ module.exports = function code(cwd, input, output, options)
 						var wfile = path.resolve(cwd, output);
 						debug('writefile: %s', wfile);
 
-						return cliUtil.writeOneFile(output, code, file)
-							.then(function(realfile)
+						return cliUtil.getWriteOneFilePath(output, file)
+							.then(function(rfile)
 							{
-								console.log('write file: '+realfile);
+								return fs.writeFileAsync(rfile, code)
+									.then(function()
+									{
+										console.log('write file: '+rfile);
+									});
 							});
 					});
 			}
