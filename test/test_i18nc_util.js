@@ -5,7 +5,7 @@ var i18nc         = require('../');
 var autoTestUtils = require('./auto_test_utils')
 var TMP_PATH      = __dirname+'/tmp/';
 
-describe('#utils', function()
+describe('#i18nc_util', function()
 {
 	describe('#mulitResult2POFiles', function()
 	{
