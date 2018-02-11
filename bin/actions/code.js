@@ -61,7 +61,7 @@ module.exports = function code(cwd, input, output, options)
 								var code = data.code;
 								delete data.code;
 								allfiledata[file] = data;
-								if (!options.isOnlyCheck) return;
+								if (options.isOnlyCheck) return;
 
 								var wfile = path.resolve(cwd, output, file);
 								debug('writefile: %s', wfile);
@@ -89,18 +89,18 @@ module.exports = function code(cwd, input, output, options)
 						delete data.code;
 
 						allfiledata[file] = data;
-						if (!options.isOnlyCheck) return;
+						if (options.isOnlyCheck) return;
 
 						var wfile = path.resolve(cwd, output);
 						debug('writefile: %s', wfile);
 
-						return cliUtil.getWriteOneFilePath(output, file)
-							.then(function(rfile)
+						return cliUtil.getWriteOneFilePath(wfile, file)
+							.then(function(wfile)
 							{
-								return fs.writeFileAsync(rfile, code)
+								return fs.writeFileAsync(wfile, code)
 									.then(function()
 									{
-										console.log('write file: '+rfile);
+										console.log('write file: '+wfile);
 									});
 							});
 					});

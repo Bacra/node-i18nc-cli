@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/Bacra/node-i18nc-cli",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "commander": "^2.11.0",
-    "debug": "^3.0.1",
+    "bluebird": "^3.5.1",
+    "commander": "^2.14.1",
+    "debug": "^3.1.0",
     "extend": "^3.0.1",
     "glob": "^7.1.2",
     "i18nc-core": "^4.0.0",
