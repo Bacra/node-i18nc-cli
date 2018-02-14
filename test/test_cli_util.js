@@ -1,6 +1,7 @@
 var Promise  = require('bluebird');
 var fs       = Promise.promisifyAll(require('fs'));
 var mkdirp   = Promise.promisify(require('mkdirp'));
+var rimraf   = Promise.promisify(require('rimraf'));
 var path     = require('path');
 var expect   = require('expect.js');
 var cliUtil  = require('../bin/cli_util');
@@ -129,8 +130,25 @@ describe('#cli_util', function()
 
 	describe('#getWriteOneFilePath', function()
 	{
-		var outputDir = __dirname+'output/';
-		var inputFile = __dirname+'input/input.file';
+		var outputDir = __dirname+'/tmp/getWriteOneFilePath/';
+		var inputFile = __dirname+'/input/input.file';
+
+		before(function()
+		{
+			return mkdirp(outputDir)
+				.then(function()
+				{
+					return rimraf(outputDir);
+				})
+				.then(function()
+				{
+					return mkdirp(outputDir);
+				})
+				.then(function()
+				{
+					return fs.writeFileAsync(outputDir+'prev.file', '');
+				});
+		});
 
 		it('#file', function()
 		{
