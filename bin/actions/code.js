@@ -55,7 +55,7 @@ module.exports = function code(cwd, input, output, options)
 					{
 						debug('i18n file start: %s', file);
 
-						return i18ncUtil.file2i18nc(file, myOptions)
+						return cliUtil.file2i18nc(file, myOptions)
 							.then(function(data)
 							{
 								var code = data.code;
@@ -82,7 +82,7 @@ module.exports = function code(cwd, input, output, options)
 				var file = fileInfo.data;
 				debug('one file mod:%s', file);
 
-				return i18ncUtil.file2i18nc(file, myOptions)
+				return cliUtil.file2i18nc(file, myOptions)
 					.then(function(data)
 					{
 						var code = data.code;

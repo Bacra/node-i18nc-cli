@@ -18,7 +18,7 @@ module.exports = function chekc(cwd, input, options)
 				{
 					debug('i18n file start: %s', file);
 
-					return i18ncUtil.file2i18nc(file)
+					return cliUtil.file2i18nc(file)
 						.then(function(data)
 						{
 							if (i18ncUtil.isI18NHandlerAllWrap(data, myOptions))

@@ -1,10 +1,12 @@
-var _       = require('lodash');
-var debug   = require('debug')('i18nc:cli_util');
-var Promise = require('bluebird');
-var fs      = Promise.promisifyAll(require('fs'));
-var glob    = Promise.promisify(require('glob'));
-var mkdirp  = Promise.promisify(require('mkdirp'));
-var path    = require('path');
+var _        = require('lodash');
+var debug    = require('debug')('i18nc:cli_util');
+var Promise  = require('bluebird');
+var fs       = Promise.promisifyAll(require('fs'));
+var glob     = Promise.promisify(require('glob'));
+var mkdirp   = Promise.promisify(require('mkdirp'));
+var path     = require('path');
+var i18nc    = require('i18nc-core');
+var stripBOM = require('strip-bom');
 
 exports.scanFileList = scanFileList;
 function scanFileList(input, recurse)
@@ -124,4 +126,29 @@ function key2key(obj, keyMap)
 		return result[keyMap[key] || key] = val;
 	});
 	return result;
+}
+
+
+exports.file2i18nc = file2i18nc;
+function file2i18nc(file, options)
+{
+	return fs.statAsync(file)
+		.then(function(stat)
+		{
+			if (!stat.isFile())
+			{
+				debug('is not file:%s', file);
+				return;
+			}
+
+			return fs.readFileAsync(file,
+				{
+					encoding: 'utf8'
+				})
+				.then(function(code)
+				{
+					code = stripBOM(code);
+					return i18nc(code, options);
+				});
+		});
 }

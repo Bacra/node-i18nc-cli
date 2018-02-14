@@ -1,7 +1,7 @@
 var Promise       = require('bluebird');
 var mkdirp        = Promise.promisify(require('mkdirp'));
 var expect        = require('expect.js');
-var i18nc         = require('../');
+var i18ncUtil     = require('../i18nc/util');
 var autoTestUtils = require('./auto_test_utils');
 var TMP_PATH      = __dirname+'/tmp/';
 
@@ -17,7 +17,7 @@ describe('#i18nc_util', function()
 		it('#base', function()
 		{
 			var mulitI18NCOutput = require('./input/mulit_i18nc_output');
-			return i18nc.util.mulitResult2POFiles(mulitI18NCOutput, TMP_PATH+'mulitResult2POFiles',
+			return i18ncUtil.mulitResult2POFiles(mulitI18NCOutput, TMP_PATH+'mulitResult2POFiles',
 				{
 					pickFileLanguages: ['zh-TW', 'en-US']
 				});
@@ -28,7 +28,7 @@ describe('#i18nc_util', function()
 	{
 		it('#file', function()
 		{
-			return i18nc.util.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
+			return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
 				.then(function(json)
 				{
 					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_en-US.json', json);
@@ -38,7 +38,7 @@ describe('#i18nc_util', function()
 
 		it('#dir', function()
 		{
-			return i18nc.util.autoLoadPOFiles(__dirname+'/input/pofiles')
+			return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles')
 				.then(function(json)
 				{
 					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_all.json', json);
@@ -53,40 +53,47 @@ describe('#i18nc_util', function()
 		var arr11 = {DEFAULTS:['中文2', '中文1']};
 		var arr2 = {DEFAULTS:['中文2']};
 		var arr3 = {DEFAULTS:['中文3']};
+		var arr31 = {DEFAULTS:['中文3', '中文1']};
 
 		it('#base', function()
 		{
-			expect(i18nc.util.isI18NHandlerAllWrap({})).to.be(true);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap({})).to.be(true);
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					codeTranslateWords: arr1
 				}))
 				.to.be(false);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr11
 				}))
 				.to.be(true);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr2
 				}))
 				.to.be(false);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr3
+				}))
+				.to.be(false);
+			expect(i18ncUtil.isI18NHandlerAllWrap(
+				{
+					codeTranslateWords: arr1,
+					I18NArgsTranslateWords: arr31
 				}))
 				.to.be(false);
 		});
 
 		it('#subScopeData', function()
 		{
-			expect(i18nc.util.isI18NHandlerAllWrap({subScopeDatas:[]})).to.be(true);
-			expect(i18nc.util.isI18NHandlerAllWrap({subScopeDatas:[{codeTranslateWords:arr1}]})).to.be(false);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap({subScopeDatas:[]})).to.be(true);
+			expect(i18ncUtil.isI18NHandlerAllWrap({subScopeDatas:[{codeTranslateWords:arr1}]})).to.be(false);
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					subScopeDatas:[
 						{
@@ -95,7 +102,7 @@ describe('#i18nc_util', function()
 						}]
 				}))
 				.to.be(true);
-			expect(i18nc.util.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isI18NHandlerAllWrap(
 				{
 					subScopeDatas:[
 						{
@@ -110,4 +117,6 @@ describe('#i18nc_util', function()
 				.to.be(false);
 		});
 	});
+
+
 });

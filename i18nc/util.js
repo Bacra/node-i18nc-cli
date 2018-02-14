@@ -4,7 +4,6 @@ var fs       = Promise.promisifyAll(require('fs'));
 var glob     = Promise.promisify(require('glob'));
 var mkdirp   = Promise.promisify(require('mkdirp'));
 var debug    = require('debug')('i18nc:utils');
-var i18nc    = require('i18nc-core');
 var i18ncPO  = require('i18nc-po');
 var stripBOM = require('strip-bom');
 var path     = require('path');
@@ -122,28 +121,4 @@ function isI18NHandlerAllWrap(json)
 	}
 
 	return true;
-}
-
-
-exports.file2i18nc = function(file, options)
-{
-	return fs.statAsync(file)
-		.then(function(stat)
-		{
-			if (!stat.isFile())
-			{
-				debug('is not file:%s', file);
-				return;
-			}
-
-			return fs.readFileAsync(file,
-				{
-					encoding: 'utf8'
-				})
-				.then(function(code)
-				{
-					code = stripBOM(code);
-					return i18nc(code, options);
-				});
-		});
 }
