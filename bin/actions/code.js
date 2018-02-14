@@ -1,10 +1,10 @@
 var Promise   = require('bluebird');
 var debug     = require('debug')('i18nc');
 var fs        = Promise.promisifyAll(require('fs'));
-var i18nc     = require('i18nc-core');
 var mkdirp    = Promise.promisify(require('mkdirp'));
 var path      = require('path');
 var extend    = require('extend');
+var i18nc     = require('i18nc-core');
 var cliUtil   = require('../cli_util');
 var i18ncUtil = require('../../i18nc/util');
 

@@ -1,10 +1,11 @@
-var Promise  = require('bluebird');
-var fs       = Promise.promisifyAll(require('fs'));
-var mkdirp   = Promise.promisify(require('mkdirp'));
-var rimraf   = Promise.promisify(require('rimraf'));
-var path     = require('path');
-var expect   = require('expect.js');
-var cliUtil  = require('../bin/cli_util');
+var Promise       = require('bluebird');
+var fs            = Promise.promisifyAll(require('fs'));
+var mkdirp        = Promise.promisify(require('mkdirp'));
+var rimraf        = Promise.promisify(require('rimraf'));
+var path          = require('path');
+var expect        = require('expect.js');
+var cliUtil       = require('../bin/cli_util');
+var autoTestUtils = require('./auto_test_utils');
 
 
 describe('#cli_util', function()
@@ -127,7 +128,6 @@ describe('#cli_util', function()
 	});
 
 
-
 	describe('#getWriteOneFilePath', function()
 	{
 		var outputDir = __dirname+'/tmp/getWriteOneFilePath/';
@@ -187,6 +187,7 @@ describe('#cli_util', function()
 		});
 	});
 
+
 	describe('#key2key', function()
 	{
 		it('#base', function()
@@ -195,6 +196,21 @@ describe('#cli_util', function()
 				.to.eql({ky1: 1, ky2: 2});
 			expect(cliUtil.key2key({k1:1}, {}))
 				.to.eql({k1: 1});
+		});
+	});
+
+
+	describe('#file2i18nc', function()
+	{
+		it('#base', function()
+		{
+			return cliUtil.file2i18nc(__dirname+'/input/example.js')
+				.then(function(data)
+				{
+					delete data.code;
+					var otherData = autoTestUtils.requireAfterWrite('file2i18nc.json', data);
+					expect(data).to.eql(otherData);
+				});
 		});
 	});
 });

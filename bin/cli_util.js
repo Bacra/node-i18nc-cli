@@ -132,23 +132,13 @@ function key2key(obj, keyMap)
 exports.file2i18nc = file2i18nc;
 function file2i18nc(file, options)
 {
-	return fs.statAsync(file)
-		.then(function(stat)
+	return fs.readFileAsync(file,
 		{
-			if (!stat.isFile())
-			{
-				debug('is not file:%s', file);
-				return;
-			}
-
-			return fs.readFileAsync(file,
-				{
-					encoding: 'utf8'
-				})
-				.then(function(code)
-				{
-					code = stripBOM(code);
-					return i18nc(code, options);
-				});
+			encoding: 'utf8'
+		})
+		.then(function(code)
+		{
+			code = stripBOM(code);
+			return i18nc(code, options);
 		});
 }
