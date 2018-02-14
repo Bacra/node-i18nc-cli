@@ -24,14 +24,24 @@ describe('#i18nc_util', function()
 		});
 	});
 
-	describe('#loadPOFiles', function()
+	describe('#autoLoadPOFiles', function()
 	{
-		it('#base', function()
+		it('#file', function()
 		{
-			return i18nc.util.loadPOFiles(__dirname+'/input/pofiles')
+			return i18nc.util.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
 				.then(function(json)
 				{
-					var otherJson = autoTestUtils.requireAfterWrite('loadpofiles_output.json', json);
+					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_en-US.json', json);
+					expect(json).to.eql(otherJson);
+				});
+		});
+
+		it('#dir', function()
+		{
+			return i18nc.util.autoLoadPOFiles(__dirname+'/input/pofiles')
+				.then(function(json)
+				{
+					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_all.json', json);
 					expect(json).to.eql(otherJson);
 				});
 		});
