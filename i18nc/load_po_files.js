@@ -76,9 +76,9 @@ function autoLoadPOFilesSync(input)
 	var stats = fs.statSync(input);
 
 	if (stats.isFile())
-		return loadPOFile(input);
+		return loadPOFileSync(input);
 	else if (stats.isDirectory())
-		return loadPOFiles(input);
+		return loadPOFilesSync(input);
 	else
 		throw new Error('Input Is Not File Or Directory');
 }
@@ -90,7 +90,7 @@ function loadPOFilesSync(inputDir)
 {
 	debug('sacn dir:%s', inputDir);
 	var files = glob.sync('**/*.po', {cwd: inputDir, nodir: true, absolute: true});
-	var arr = files.map(files, loadPOFileSync);
+	var arr = files.map(loadPOFileSync);
 	arr.unshift(true);
 	return extend.apply(null, arr);
 }
