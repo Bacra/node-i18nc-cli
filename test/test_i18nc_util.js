@@ -2,7 +2,6 @@ var Promise       = require('bluebird');
 var mkdirp        = Promise.promisify(require('mkdirp'));
 var expect        = require('expect.js');
 var i18ncUtil     = require('../i18nc/util');
-var autoTestUtils = require('./auto_test_utils');
 var TMP_PATH      = __dirname+'/tmp/';
 
 describe('#i18nc_util', function()
@@ -24,28 +23,6 @@ describe('#i18nc_util', function()
 		});
 	});
 
-	describe('#autoLoadPOFiles', function()
-	{
-		it('#file', function()
-		{
-			return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
-				.then(function(json)
-				{
-					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_en-US.json', json);
-					expect(json).to.eql(otherJson);
-				});
-		});
-
-		it('#dir', function()
-		{
-			return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles')
-				.then(function(json)
-				{
-					var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_all.json', json);
-					expect(json).to.eql(otherJson);
-				});
-		});
-	});
 
 	describe('#isI18NHandlerAllWrap', function()
 	{
