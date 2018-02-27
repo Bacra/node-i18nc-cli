@@ -22,8 +22,22 @@ program.command('code <input> <output>')
 	.option('-l --lans [lan1,lan2]', 'pick file languages', cliUtil.argsToArray)
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
+	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
+	.option('   --combo-literal-mode [mode]',
+		[
+			'combo closest literal before collect. Mode:',
+			'NONE     : do nothing (default)',
+			'LITERAL  : combo simple literal',
+			'I18N     : combo simple literal and I18N callerr',
+			'ALL_I18N : combo literal and I18N callerr (include subtype callerr)'
+		]
+		.join('\n'+new Array(45).join(' '))+'\n',
+		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 	.option('-c', 'only check, not write code to file')
 	.option('-r', 'recurse into directories')
+	.option('-w', 'closure when I18N hanlder insert head')
+	.option('-m', 'min Function translate code of I18N handler')
+	.option('-f', 'force update total I18N Function. default:partial update')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -36,9 +50,15 @@ program.command('code <input> <output>')
 				'lans'               : 'pickFileLanguages',
 				'i18n-hanlder-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'ignore-scan-names'  : 'ignoreScanHandlerNames',
+				'combo-literal-mode' : 'comboLiteralMode',
 				'c'                  : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
+				'w'                  : 'isClosureWhenInsertedHead',
+				'm'                  : 'isMinFuncTranslateCode',
 			});
+
+		options.isPartialUpdate = !args.f;
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -52,6 +72,17 @@ program.command('check-wrap <input>')
 	.description('Check if all words were wrapped by I18N handler')
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
+	.option('   --ignore-scan-hanlder-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
+	.option('   --combo-literal-mode [mode]',
+		[
+			'combo closest literal before collect. Mode:',
+			'NONE     : do nothing (default)',
+			'LITERAL  : combo simple literal',
+			'I18N     : combo simple literal and I18N callerr',
+			'ALL_I18N : combo literal and I18N callerr (include subtype callerr)'
+		]
+		.join('\n'+new Array(45).join(' '))+'\n',
+		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 	.option('-r', 'recurse into directories')
 	.action(function(input, args)
 	{
@@ -59,6 +90,8 @@ program.command('check-wrap <input>')
 			{
 				'i18n-handler-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'ignore-scan-names'  : 'ignoreScanHandlerNames',
+				'combo-literal-mode' : 'comboLiteralMode',
 				'r'                  : 'isRecurse',
 			});
 		checkAction(cwd, input, options)

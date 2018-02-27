@@ -11,8 +11,10 @@ module.exports = function checkWrap(cwd, input, options)
 		{
 			var myOptions =
 			{
-				I18NHandlerName  : options.I18NHandlerName,
-				I18NHandlerAlias : options.I18NHandlerAlias
+				I18NHandlerName        : options.I18NHandlerName,
+				I18NHandlerAlias       : options.I18NHandlerAlias,
+				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
+				comboLiteralMode       : options.comboLiteralMode,
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
 			return Promise.map(files, function(file)
