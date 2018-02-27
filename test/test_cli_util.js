@@ -208,6 +208,7 @@ describe('#cli_util', function()
 				.then(function(data)
 				{
 					delete data.code;
+					data.words = data.words.toJSON();
 					var otherData = autoTestUtils.requireAfterWrite('file2i18nc.json', data);
 					expect(data).to.eql(otherData);
 				});

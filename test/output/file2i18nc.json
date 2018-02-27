@@ -3,17 +3,15 @@
 	"orignalFileKeys": [],
 	"subScopeDatas": [],
 	"dirtyAsts": [],
-	"codeTranslateWords": {
-		"DEFAULTS": [
-			"中文",
-			"输出信息"
-		],
-		"SUBTYPES": {}
-	},
-	"I18NArgsTranslateWords": {
-		"DEFAULTS": [],
-		"SUBTYPES": {}
-	},
-	"funcTranslateWords": {},
-	"usedTranslateWords": {}
+	"words": {
+		"codeTranslateWords": {
+			"DEFAULTS": [
+				"中文",
+				"输出信息"
+			],
+			"SUBTYPES": {}
+		},
+		"funcTranslateWords": {},
+		"usedTranslateWords": {}
+	}
 }
