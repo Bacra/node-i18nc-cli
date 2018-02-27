@@ -4,6 +4,7 @@ var cliUtil     = require('./cli_util');
 var codeAction  = require('./actions/code');
 var checkAction = require('./actions/check');
 
+var COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
 
 program.version(
@@ -29,9 +30,10 @@ program.command('code <input> <output>')
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
-			'ALL_I18N : combo literal and I18N callerr (include subtype callerr)'
+			'ALL_I18N : combo literal and I18N callerr',
+			'           (include subtype callerr)'
 		]
-		.join('\n'+new Array(45).join(' '))+'\n',
+		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 	.option('-c', 'only check, not write code to file')
 	.option('-r', 'recurse into directories')
@@ -79,9 +81,10 @@ program.command('check-wrap <input>')
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
-			'ALL_I18N : combo literal and I18N callerr (include subtype callerr)'
+			'ALL_I18N : combo literal and I18N callerr',
+			'           (include subtype callerr)'
 		]
-		.join('\n'+new Array(45).join(' '))+'\n',
+		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 	.option('-r', 'recurse into directories')
 	.action(function(input, args)
