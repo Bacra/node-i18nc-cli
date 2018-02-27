@@ -7,7 +7,7 @@ var i18ncPO   = require('i18nc-po');
 
 
 exports.mulitResult2POFiles = mulitResult2POFiles;
-exports.isI18NHandlerAllWrap = isI18NHandlerAllWrap;
+exports.isAllI18NHandlerWrap = isAllI18NHandlerWrap;
 
 _.extend(exports, require('./load_po_files'));
 
@@ -44,7 +44,7 @@ function mulitResult2POFiles(data, outputDir, options)
  * 检查代码中的翻译文本，是否全部使用I18N函数包裹
  * 使用i18nc处理结果进行分析
  */
-function isI18NHandlerAllWrap(json)
+function isAllI18NHandlerWrap(json)
 {
 	var codeArr = json.codeTranslateWords && json.codeTranslateWords.DEFAULTS;
 	var argsArr = json.I18NArgsTranslateWords && json.I18NArgsTranslateWords.DEFAULTS;
@@ -60,7 +60,7 @@ function isI18NHandlerAllWrap(json)
 	{
 		return !_.some(json.subScopeDatas, function(json2)
 			{
-				return !isI18NHandlerAllWrap(json2);
+				return !isAllI18NHandlerWrap(json2);
 			});
 	}
 

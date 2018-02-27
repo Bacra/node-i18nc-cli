@@ -24,7 +24,7 @@ describe('#i18nc_util', function()
 	});
 
 
-	describe('#isI18NHandlerAllWrap', function()
+	describe('#isAllI18NHandlerWrap', function()
 	{
 		var arr1 = {DEFAULTS:['中文1', '中文2']};
 		var arr11 = {DEFAULTS:['中文2', '中文1']};
@@ -34,31 +34,31 @@ describe('#i18nc_util', function()
 
 		it('#base', function()
 		{
-			expect(i18ncUtil.isI18NHandlerAllWrap({})).to.be(true);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap({})).to.be(true);
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					codeTranslateWords: arr1
 				}))
 				.to.be(false);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr11
 				}))
 				.to.be(true);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr2
 				}))
 				.to.be(false);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr3
 				}))
 				.to.be(false);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					codeTranslateWords: arr1,
 					I18NArgsTranslateWords: arr31
@@ -68,9 +68,9 @@ describe('#i18nc_util', function()
 
 		it('#subScopeData', function()
 		{
-			expect(i18ncUtil.isI18NHandlerAllWrap({subScopeDatas:[]})).to.be(true);
-			expect(i18ncUtil.isI18NHandlerAllWrap({subScopeDatas:[{codeTranslateWords:arr1}]})).to.be(false);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap({subScopeDatas:[]})).to.be(true);
+			expect(i18ncUtil.isAllI18NHandlerWrap({subScopeDatas:[{codeTranslateWords:arr1}]})).to.be(false);
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					subScopeDatas:[
 						{
@@ -79,7 +79,7 @@ describe('#i18nc_util', function()
 						}]
 				}))
 				.to.be(true);
-			expect(i18ncUtil.isI18NHandlerAllWrap(
+			expect(i18ncUtil.isAllI18NHandlerWrap(
 				{
 					subScopeDatas:[
 						{

@@ -14,33 +14,30 @@ program.version(
 
 program.command('code <input> <output>')
 	.description('Warp code width I18N handler')
-	.option('-b --dbfile [file]', 'dbfile path')
-	.option('-p --input-po-file [file]', 'input po files file')
 	.option('-d --input-po-dir [dir]', 'input po files dir')
-	.option('-w --output-word-file [file]', 'output translate words')
+	.option('   --input-po-file [file]', 'input po files file')
+	.option('   --translate-db-file [file]', 'translate data db file')
 	.option('-o --output-po-dir [dir]', 'output po files dir')
-	.option('-l --lans [lan1,lan2]', 'pick file languages', function(val)
-		{
-			return val.split(',')
-				.map(function(val){return val.trim()})
-				.filter(function(val){return val});
-		})
+	.option('   --output-word-file [file]', 'output translate words')
+	.option('-l --lans [lan1,lan2]', 'pick file languages', cliUtil.argsToArray)
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
-	.option('-c', 'only check')
+	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
+	.option('-c', 'only check, not write code to file')
 	.option('-r', 'recurse into directories')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
 			{
-				'dbfile'            : 'dbfile',
-				'input-po-file'     : 'inputPOFile',
-				'input-po-dir'      : 'inputPODir',
-				'output-word-file'  : 'outputWordFile',
-				'output-po-dir'     : 'outputPODir',
-				'lans'              : 'pickFileLanguages',
-				'i18n-hanlder-name' : 'I18NHandlerName',
-				'c'                 : 'isOnlyCheck',
-				'r'                 : 'isRecurse',
+				'input-po-dir'       : 'inputPODir',
+				'input-po-file'      : 'inputPOFile',
+				'translate-db-file'  : 'translateDBFile',
+				'output-po-dir'      : 'outputPODir',
+				'output-word-file'   : 'outputWordFile',
+				'lans'               : 'pickFileLanguages',
+				'i18n-hanlder-name'  : 'I18NHandlerName',
+				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'c'                  : 'isOnlyCheck',
+				'r'                  : 'isRecurse',
 			});
 
 		codeAction(cwd, input, output, options)
@@ -51,16 +48,18 @@ program.command('code <input> <output>')
 	});
 
 
-program.command('check <input>')
+program.command('check-wrap <input>')
 	.description('Check if all words were wrapped by I18N handler')
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
+	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('-r', 'recurse into directories')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
 			{
-				'i18n-handler-name' : 'I18NHandlerName',
-				'r'                 : 'isRecurse',
+				'i18n-handler-name'  : 'I18NHandlerName',
+				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'r'                  : 'isRecurse',
 			});
 		checkAction(cwd, input, options)
 			.catch(function(err)

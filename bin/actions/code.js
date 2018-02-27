@@ -11,15 +11,15 @@ var i18ncUtil = require('../../i18nc/util');
 
 module.exports = function code(cwd, input, output, options)
 {
-	var dbfile = options.dbfile;
-	var readDBFilePromise;
+	var translateDBFile = options.translateDBFile;
+	var readTranslateDBFilePromise;
 
-	if (dbfile)
+	if (translateDBFile)
 	{
-		dbfile = path.resolve(cwd, dbfile);
-		debug('read dbfile:%s', dbfile);
+		translateDBFile = path.resolve(cwd, translateDBFile);
+		debug('read translateDBFile:%s', translateDBFile);
 
-		readDBFilePromise = fs.readFileAsync(dbfile,
+		readTranslateDBFilePromise = fs.readFileAsync(translateDBFile,
 			{
 				encoding: 'utf8'
 			})
@@ -34,7 +34,7 @@ module.exports = function code(cwd, input, output, options)
 	return Promise.all(
 		[
 			cliUtil.scanFileList(path.resolve(cwd, input), null, options.isRecurse),
-			readDBFilePromise,
+			readTranslateDBFilePromise,
 			options.inputPOFile && i18i18ncUtil.loadPOFile(path.resolve(cwd, options.inputPOFile)),
 			options.inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, options.inputPODir))
 		])
@@ -46,6 +46,7 @@ module.exports = function code(cwd, input, output, options)
 			{
 				dbTranslateWords  : dbTranslateWords,
 				I18NHandlerName   : options.I18NHandlerName,
+				I18NHandlerAlias  : options.I18NHandlerAlias,
 				pickFileLanguages : options.pickFileLanguages
 			};
 
