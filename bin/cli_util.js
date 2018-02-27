@@ -142,3 +142,11 @@ function file2i18nc(file, options)
 			return i18nc(code, options);
 		});
 }
+
+exports.argsToArray = argsToArray;
+function argsToArray(val)
+{
+	return val.split(',')
+		.map(function(val){return val.trim()})
+		.filter(function(val){return val});
+}

@@ -213,4 +213,16 @@ describe('#cli_util', function()
 				});
 		});
 	});
+
+
+	describe('#argsToArray', function()
+	{
+		it('#base', function()
+		{
+			expect(cliUtil.argsToArray('1,2')).to.eql(['1', '2']);
+			expect(cliUtil.argsToArray('1 ,')).to.eql(['1']);
+			expect(cliUtil.argsToArray(',')).to.eql([]);
+			expect(cliUtil.argsToArray(' ')).to.eql([]);
+		});
+	});
 });
