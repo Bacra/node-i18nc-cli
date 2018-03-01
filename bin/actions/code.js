@@ -53,6 +53,8 @@ module.exports = function code(cwd, input, output, options)
 				isClosureWhenInsertedHead : options.isClosureWhenInsertedHead,
 				ignoreScanHandlerNames    : options.ignoreScanHandlerNames,
 				comboLiteralMode          : options.comboLiteralMode,
+				ignoreScanError           : options.ignoreScanError,
+				codeModifiedArea          : options.codeModifiedArea,
 			};
 
 			if (fileInfo.type == 'list')
