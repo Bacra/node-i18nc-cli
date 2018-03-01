@@ -14,7 +14,7 @@ program.version(
 
 
 program.command('code <input> <output>')
-	.description('Warp code width I18N handler')
+	.description('Warp code width I18N handler.')
 	.option('-d --input-po-dir [dir]', 'input po files dir')
 	.option('   --input-po-file [file]', 'input po files file')
 	.option('   --translate-db-file [file]', 'translate data db file')
@@ -35,11 +35,17 @@ program.command('code <input> <output>')
 		]
 		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
+
 	.option('-c', 'only check, not write code to file')
 	.option('-r', 'recurse into directories')
 	.option('-w', 'closure when I18N hanlder insert head')
 	.option('-m', 'min Function translate code of I18N handler')
-	.option('-f', 'force update total I18N Function. default:partial update')
+	.option('-f', ['force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
+
+	.option('-O', 'ignoreScanError: ObjectKey')
+	.option('-H', 'codeModifiedArea: I18NHandler')
+	.option('-T', 'codeModifiedArea: translateWord')
+	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -61,6 +67,13 @@ program.command('code <input> <output>')
 			});
 
 		options.isPartialUpdate = !args.f;
+		var arr = options.ignoreScanError = [];
+		if (options.O) arr.push('ObjectKey');
+
+		var arr = options.codeModifiedArea = [];
+		if (options.H) arr.push('I18NHandler');
+		if (options.T) arr.push('translateWord');
+		if (options.A) arr.push('I18NHandlerAlias');
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -71,10 +84,10 @@ program.command('code <input> <output>')
 
 
 program.command('check-wrap <input>')
-	.description('Check if all words were wrapped by I18N handler')
+	.description('Check if all words were wrapped by I18N handler.')
 	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
-	.option('   --ignore-scan-hanlder-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
+	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
 	.option('   --combo-literal-mode [mode]',
 		[
 			'combo closest literal before collect. Mode:',
@@ -86,7 +99,13 @@ program.command('check-wrap <input>')
 		]
 		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
+
 	.option('-r', 'recurse into directories')
+
+	.option('-O', 'ignoreScanError: ObjectKey')
+	.option('-H', 'codeModifiedArea: I18NHandler')
+	.option('-T', 'codeModifiedArea: translateWord')
+	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -97,13 +116,21 @@ program.command('check-wrap <input>')
 				'combo-literal-mode' : 'comboLiteralMode',
 				'r'                  : 'isRecurse',
 			});
+
+		var arr = options.ignoreScanError = [];
+		if (options.O) arr.push('ObjectKey');
+
+		var arr = options.codeModifiedArea = [];
+		if (options.H) arr.push('I18NHandler');
+		if (options.T) arr.push('translateWord');
+		if (options.A) arr.push('I18NHandlerAlias');
+
 		checkAction(cwd, input, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
 			});
 	});
-
 
 program.command('help <cmd>')
 	.description('display help for [cmd]')
@@ -124,7 +151,8 @@ program.command('help <cmd>')
 				// 在命令行前加上父节点前缀
 				.replace(/Usage: */, 'Usage: '+self.parent.name()+' ')
 				// 如果没有多余的Options，就把这一项干掉
-				.replace(/ +Options:\s+$/, '');
+				.replace(/ +Options:\s+$/, '')
+				+ '\n';
 		});
 	});
 
