@@ -4,6 +4,8 @@ var table     = require('table');
 var chalk     = require('chalk');
 var i18ncUtil = require('../../i18nc/util');
 
+var EMPTY_SYMBOL = chalk.gray('(empty)');
+
 var tableOptions =
 {
 	border: table.getBorderCharacters('void'),
@@ -31,14 +33,14 @@ module.exports = function(str)
 	var mainTableData =
 	[
 		[chalk.gray('type'), ''+info.type],
-		[chalk.gray('fileKey'), info.fileKey || ''],
-		[chalk.gray('subtype'), info.subtype || ''],
-		[chalk.gray('joinIndexs'), info.joinIndexs && info.joinIndexs.join(',') || '-']
+		[chalk.gray('fileKey'), info.fileKey || EMPTY_SYMBOL],
+		[chalk.gray('subtype'), info.subtype || EMPTY_SYMBOL],
+		[chalk.gray('joinIndexs'), info.joinIndexs && info.joinIndexs.join(',') || EMPTY_SYMBOL]
 	];
 
-	if (info.subkeys)
+	if (info.subkeys && Object.keys(info.subkeys).length)
 	{
-		mainTableData.push([chalk.gray('subkeys'), '']);
+		mainTableData.push([chalk.gray('subkeys \u21E9'), chalk.gray('\u21E9 \u21E9')]);
 		_.each(info.subkeys, function(val, key)
 		{
 			mainTableData.push([key, val]);
@@ -46,7 +48,7 @@ module.exports = function(str)
 	}
 	else
 	{
-		mainTableData.push([chalk.gray('subkeys'), '-']);
+		mainTableData.push([chalk.gray('subkeys'), EMPTY_SYMBOL]);
 	}
 
 	var output = table.table(mainTableData, tableOptions);
