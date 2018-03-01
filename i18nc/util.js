@@ -8,6 +8,7 @@ var i18ncPO   = require('i18nc-po');
 
 exports.mulitResult2POFiles = mulitResult2POFiles;
 exports.isAllI18NHandlerWrap = isAllI18NHandlerWrap;
+exports.refs = require('i18nc-po/lib/refs_utils');
 
 _.extend(exports, require('./load_po_files'));
 

@@ -3,6 +3,7 @@ var program     = require('commander');
 var cliUtil     = require('./cli_util');
 var codeAction  = require('./actions/code');
 var checkAction = require('./actions/check');
+var refsAction  = require('./actions/refs');
 
 var COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
@@ -130,6 +131,20 @@ program.command('check-wrap <input>')
 			{
 				console.log(err.stack);
 			});
+	});
+
+
+program.command('refs <string>')
+	.description('Parse refs in po files. <e.g.> i18nc refs "1,1,0,7,subtype,*"')
+	.action(function(string)
+	{
+		try {
+			refsAction(string);
+		}
+		catch(err)
+		{
+			console.log(err.stack);
+		}
 	});
 
 program.command('help <cmd>')
