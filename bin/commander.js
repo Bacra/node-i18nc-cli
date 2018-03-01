@@ -1,9 +1,9 @@
-var cwd         = process.cwd();
-var program     = require('commander');
-var cliUtil     = require('./cli_util');
-var codeAction  = require('./actions/code');
-var checkAction = require('./actions/check');
-var refsAction  = require('./actions/refs');
+var cwd             = process.cwd();
+var program         = require('commander');
+var cliUtil         = require('./cli_util');
+var codeAction      = require('./actions/code');
+var checkWrapAction = require('./actions/check-wrap');
+var refsAction      = require('./actions/refs');
 
 var COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
@@ -126,7 +126,7 @@ program.command('check-wrap <input>')
 		if (options.T) arr.push('translateWord');
 		if (options.A) arr.push('I18NHandlerAlias');
 
-		checkAction(cwd, input, options)
+		checkWrapAction(cwd, input, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
