@@ -40,10 +40,11 @@ module.exports = function(str)
 
 	if (info.subkeys && Object.keys(info.subkeys).length)
 	{
-		mainTableData.push([chalk.gray('subkeys \u21E9'), chalk.gray('\u21E9 \u21E9')]);
+		mainTableData.push(['', ' ']);
+		mainTableData.push([chalk.gray('subkeys'), chalk.gray('index')]);
 		_.each(info.subkeys, function(val, key)
 		{
-			mainTableData.push([key, val]);
+			mainTableData.push([val, key]);
 		});
 	}
 	else
