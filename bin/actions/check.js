@@ -1,6 +1,7 @@
 var Promise   = require('bluebird');
 var path      = require('path');
 var debug     = require('debug')('i18nc:check');
+var chalk     = require('chalk');
 var cliUtil   = require('../cli_util');
 var i18ncUtil = require('../../i18nc/util');
 
@@ -15,6 +16,8 @@ module.exports = function checkWrap(cwd, input, options)
 				I18NHandlerAlias       : options.I18NHandlerAlias,
 				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
 				comboLiteralMode       : options.comboLiteralMode,
+				ignoreScanError        : options.ignoreScanError,
+				codeModifiedArea       : options.codeModifiedArea,
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
 			return Promise.map(files, function(file)
@@ -25,13 +28,9 @@ module.exports = function checkWrap(cwd, input, options)
 						.then(function(data)
 						{
 							if (i18ncUtil.isAllI18NHandlerWrap(data, myOptions))
-							{
-								console.log('ok check: '+file);
-							}
+								console.log('  '+chalk.green('ok')+' '+file);
 							else
-							{
-								console.log('fail check: '+file);
-							}
+								console.log('  '+chalk.red('fail')+' '+file);
 						});
 				},
 				{
