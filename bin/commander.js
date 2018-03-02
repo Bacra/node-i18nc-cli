@@ -47,6 +47,9 @@ program.command('code <input> <output>')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
+	.option('-R', 'cutWordBeautify: RemoveTplComment')
+	.option('-K', 'cutWordBeautify: KeyTrim')
+	.option('-S', 'cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -75,6 +78,11 @@ program.command('code <input> <output>')
 		if (options.H) arr.push('I18NHandler');
 		if (options.T) arr.push('TranslateWord');
 		if (options.A) arr.push('I18NHandlerAlias');
+
+		var arr = options.cutWordBeautify = [];
+		if (options.R) arr.push('RemoveTplComment');
+		if (options.K) arr.push('KeyTrim');
+		if (options.S) arr.push('SplitByEndSymbol');
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -107,6 +115,9 @@ program.command('check-wrap <input>')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
+	.option('-R', 'cutWordBeautify: RemoveTplComment')
+	.option('-K', 'cutWordBeautify: KeyTrim')
+	.option('-S', 'cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -125,6 +136,11 @@ program.command('check-wrap <input>')
 		if (options.H) arr.push('I18NHandler');
 		if (options.T) arr.push('TranslateWord');
 		if (options.A) arr.push('I18NHandlerAlias');
+
+		var arr = options.cutWordBeautify = [];
+		if (options.R) arr.push('RemoveTplComment');
+		if (options.K) arr.push('KeyTrim');
+		if (options.S) arr.push('SplitByEndSymbol');
 
 		checkWrapAction(cwd, input, options)
 			.catch(function(err)

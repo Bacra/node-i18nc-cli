@@ -55,6 +55,7 @@ module.exports = function code(cwd, input, output, options)
 				comboLiteralMode          : options.comboLiteralMode,
 				ignoreScanError           : options.ignoreScanError,
 				codeModifiedArea          : options.codeModifiedArea,
+				cutWordBeautify           : options.cutWordBeautify,
 			};
 
 			if (fileInfo.type == 'list')
