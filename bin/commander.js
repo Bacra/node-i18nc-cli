@@ -45,7 +45,7 @@ program.command('code <input> <output>')
 
 	.option('-O', 'ignoreScanError: ObjectKey')
 	.option('-H', 'codeModifiedArea: I18NHandler')
-	.option('-T', 'codeModifiedArea: translateWord')
+	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
@@ -73,7 +73,7 @@ program.command('code <input> <output>')
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
-		if (options.T) arr.push('translateWord');
+		if (options.T) arr.push('TranslateWord');
 		if (options.A) arr.push('I18NHandlerAlias');
 
 		codeAction(cwd, input, output, options)
@@ -105,7 +105,7 @@ program.command('check-wrap <input>')
 
 	.option('-O', 'ignoreScanError: ObjectKey')
 	.option('-H', 'codeModifiedArea: I18NHandler')
-	.option('-T', 'codeModifiedArea: translateWord')
+	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
 	.action(function(input, args)
 	{
@@ -123,7 +123,7 @@ program.command('check-wrap <input>')
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
-		if (options.T) arr.push('translateWord');
+		if (options.T) arr.push('TranslateWord');
 		if (options.A) arr.push('I18NHandlerAlias');
 
 		checkWrapAction(cwd, input, options)
