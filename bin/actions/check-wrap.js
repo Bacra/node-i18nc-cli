@@ -26,16 +26,35 @@ module.exports = function checkWrap(cwd, input, options)
 					debug('i18n file start: %s', file);
 
 					return cliUtil.file2i18nc(file)
-						.then(function(data)
+						.then(function(result)
 						{
-							if (i18ncUtil.isAllI18NHandlerWrap(data, myOptions))
-								console.log('  '+chalk.green('ok')+' '+file);
-							else
-								console.log('  '+chalk.red('fail')+' '+file);
+							var newlist = result.allCodeTranslateWords().list4newWordAsts();
+							return {file: file, newlist: newlist};
 						});
 				},
 				{
 					concurrency: 5
+				})
+				.then(function(results)
+				{
+					results.forEach(function(item)
+					{
+						if (!item.newlist.length)
+						{
+							console.log('  '+chalk.green('ok')+' '+item.file);
+						}
+						else
+						{
+							console.log('  '+chalk.red('fail')+' '+item.file);
+							item.newlist.forEach(function(item)
+							{
+								var ast = item.originalAst;
+								var localStr = 'Loc:'+ast.loc.start.line+','+ast.loc.start.column;
+								var wordsStr = item.translateWords.join(',');
+								console.log('       '+chalk.gray(localStr)+'    '+wordsStr);
+							});
+						}
+					});
 				});
 		});
 }

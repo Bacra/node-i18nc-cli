@@ -1,6 +1,6 @@
 {
   "name": "i18nc",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "i18nc",
   "main": "index.js",
   "bin": {
@@ -35,8 +35,8 @@
     "debug": "^3.1.0",
     "extend": "^3.0.1",
     "glob": "^7.1.2",
-    "i18nc-core": "^5.3.0",
-    "i18nc-po": "^2.1.1",
+    "i18nc-core": "^6.0.1",
+    "i18nc-po": "^2.2.0",
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
     "strip-bom": "^2.0.0",
