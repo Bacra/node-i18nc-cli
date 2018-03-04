@@ -19,10 +19,10 @@ function mulitResult2POFiles(data, outputDir, options)
 	return mkdirp(outputDir)
 		.then(function()
 		{
-			var poPromises = Promise.map(_.keys(output.po), function(file)
+			var poPromises = Promise.map(_.keys(output.po), function(lan)
 				{
-					var file = outputDir+'/'+file+'.po';
-					return fs.writeFileAsync(file, output.po[file]);
+					var file = outputDir+'/'+lan+'.po';
+					return fs.writeFileAsync(file, output.po[lan]);
 				},
 				{
 					concurrency: 5
