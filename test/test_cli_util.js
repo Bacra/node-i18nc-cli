@@ -207,10 +207,10 @@ describe('#cli_util', function()
 			return cliUtil.file2i18nc(__dirname+'/input/example.js')
 				.then(function(data)
 				{
-					delete data.code;
-					data.words = data.words.toJSON();
-					var otherData = autoTestUtils.requireAfterWrite('file2i18nc.json', data);
-					expect(data).to.eql(otherData);
+					var json = data.toJSON();
+					delete json.code;
+					var otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
+					expect(json).to.eql(otherJson);
 				});
 		});
 	});
