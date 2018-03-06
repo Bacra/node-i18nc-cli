@@ -16,18 +16,18 @@ program.version(
 
 program.command('code <input> <output>')
 	.description('Warp code width I18N handler.')
-	.option('-d --input-po-dir [dir]', 'input po files dir')
-	.option('   --input-po-file [file]', 'input po files file')
-	.option('   --translate-db-file [file]', 'translate data db file')
-	.option('-o --output-po-dir [dir]', 'output po files dir')
-	.option('   --output-word-file [file]', 'output translate words')
-	.option('-l --lans [lan1,lan2]', 'pick file languages', cliUtil.argsToArray)
-	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
+	.option('-d --input-po-dir [dir]', 'Input po files dir')
+	.option('   --input-po-file [file]', 'Input po files file')
+	.option('   --translate-db-file [file]', 'Translate data db file')
+	.option('-o --output-po-dir [dir]', 'Output po files dir')
+	.option('   --output-word-file [file]', 'Output translate words')
+	.option('-l --lans [lan1,lan2]', 'Pick file languages', cliUtil.argsToArray)
+	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
 	.option('   --combo-literal-mode [mode]',
 		[
-			'combo closest literal before collect. Mode:',
+			'Combo closest literal before collect. Mode:',
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
@@ -37,11 +37,11 @@ program.command('code <input> <output>')
 		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 
-	.option('-c', 'only check, not write code to file')
-	.option('-r', 'recurse into directories')
-	.option('-w', 'closure when I18N hanlder insert head')
-	.option('-m', 'min Function translate code of I18N handler')
-	.option('-f', ['force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
+	.option('-c', 'Only check, not write code to file')
+	.option('-r', 'Recurse into directories')
+	.option('-w', 'Closure when I18N hanlder insert head')
+	.option('-m', 'Min Function translate code of I18N handler')
+	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
@@ -91,12 +91,12 @@ program.command('code <input> <output>')
 
 program.command('check-wrap <input>')
 	.description('Check if all words were wrapped by I18N handler.')
-	.option('-n --i18n-handler-name [name]', 'custom I18N handler name')
+	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
 	.option('   --combo-literal-mode [mode]',
 		[
-			'combo closest literal before collect. Mode:',
+			'Combo closest literal before collect. Mode:',
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
@@ -106,7 +106,7 @@ program.command('check-wrap <input>')
 		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 
-	.option('-r', 'recurse into directories')
+	.option('-r', 'Recurse into directories')
 
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
