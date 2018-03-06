@@ -16,7 +16,6 @@ module.exports = function checkWrap(cwd, input, options)
 				I18NHandlerAlias       : options.I18NHandlerAlias,
 				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
 				comboLiteralMode       : options.comboLiteralMode,
-				ignoreScanError        : options.ignoreScanError,
 				codeModifiedArea       : options.codeModifiedArea,
 				cutWordBeautify        : options.cutWordBeautify,
 			};

@@ -43,7 +43,6 @@ program.command('code <input> <output>')
 	.option('-m', 'min Function translate code of I18N handler')
 	.option('-f', ['force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
-	.option('-O', 'ignoreScanError: ObjectKey')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
@@ -71,8 +70,6 @@ program.command('code <input> <output>')
 			});
 
 		options.isPartialUpdate = !args.f;
-		var arr = options.ignoreScanError = [];
-		if (options.O) arr.push('ObjectKey');
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
@@ -111,7 +108,6 @@ program.command('check-wrap <input>')
 
 	.option('-r', 'recurse into directories')
 
-	.option('-O', 'ignoreScanError: ObjectKey')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
@@ -128,9 +124,6 @@ program.command('check-wrap <input>')
 				'combo-literal-mode' : 'comboLiteralMode',
 				'r'                  : 'isRecurse',
 			});
-
-		var arr = options.ignoreScanError = [];
-		if (options.O) arr.push('ObjectKey');
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
