@@ -75,14 +75,14 @@ program.command('code <input> <output>')
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
 		var arr = options.codeModifiedArea = [];
-		if (options.H) arr.push('I18NHandler');
-		if (options.T) arr.push('TranslateWord');
-		if (options.A) arr.push('I18NHandlerAlias');
+		if (args.H) arr.push('I18NHandler');
+		if (args.T) arr.push('TranslateWord');
+		if (args.A) arr.push('I18NHandlerAlias');
 
 		var arr = options.cutWordBeautify = [];
-		if (options.R) arr.push('RemoveTplComment');
-		if (options.K) arr.push('KeyTrim');
-		if (options.S) arr.push('SplitByEndSymbol');
+		if (args.R) arr.push('RemoveTplComment');
+		if (args.K) arr.push('KeyTrim');
+		if (args.S) arr.push('SplitByEndSymbol');
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -132,14 +132,14 @@ program.command('check-wrap <input>')
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
 		var arr = options.codeModifiedArea = [];
-		if (options.H) arr.push('I18NHandler');
-		if (options.T) arr.push('TranslateWord');
-		if (options.A) arr.push('I18NHandlerAlias');
+		if (args.H) arr.push('I18NHandler');
+		if (args.T) arr.push('TranslateWord');
+		if (args.A) arr.push('I18NHandlerAlias');
 
 		var arr = options.cutWordBeautify = [];
-		if (options.R) arr.push('RemoveTplComment');
-		if (options.K) arr.push('KeyTrim');
-		if (options.S) arr.push('SplitByEndSymbol');
+		if (args.R) arr.push('RemoveTplComment');
+		if (args.K) arr.push('KeyTrim');
+		if (args.S) arr.push('SplitByEndSymbol');
 
 		checkWrapAction(cwd, input, options)
 			.catch(function(err)
