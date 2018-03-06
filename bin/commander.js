@@ -4,6 +4,7 @@ var cliUtil         = require('./cli_util');
 var codeAction      = require('./actions/code');
 var checkWrapAction = require('./actions/check-wrap');
 var refsAction      = require('./actions/refs');
+var cliPrinter      = require('../i18nc/cli_printer');
 
 var COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
@@ -12,7 +13,6 @@ program.version(
 		' cli: v'+require('../package.json').version
 		+ '\ncore: v'+require('../').version
 	);
-
 
 program.command('code <input> <output>')
 	.description('Warp code width I18N handler.')
@@ -37,12 +37,13 @@ program.command('code <input> <output>')
 		.join(COMMAND_INDENT)+'\n',
 		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
 
-	.option('-c', 'Only check, not write code to file')
+	.option('-c --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
 	.option('-w', 'Closure when I18N hanlder insert head')
 	.option('-m', 'Min Function translate code of I18N handler')
 	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
+	.option('-C, --no-color', 'Disable colored output.')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
@@ -63,13 +64,15 @@ program.command('code <input> <output>')
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
 				'combo-literal-mode' : 'comboLiteralMode',
-				'c'                  : 'isOnlyCheck',
+				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
 				'w'                  : 'isClosureWhenInsertedHead',
 				'm'                  : 'isMinFuncTranslateCode',
 			});
 
 		options.isPartialUpdate = !args.f;
+
+		if (args.color === false) cliPrinter.colors.enabled = false;
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
@@ -108,6 +111,7 @@ program.command('check-wrap <input>')
 
 	.option('-r', 'Recurse into directories')
 
+	.option('-C, --no-color', 'Disable colored output.')
 	.option('-H', 'codeModifiedArea: I18NHandler')
 	.option('-T', 'codeModifiedArea: TranslateWord')
 	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
@@ -124,6 +128,8 @@ program.command('check-wrap <input>')
 				'combo-literal-mode' : 'comboLiteralMode',
 				'r'                  : 'isRecurse',
 			});
+
+		if (args.color === false) cliPrinter.colors.enabled = false;
 
 		var arr = options.codeModifiedArea = [];
 		if (options.H) arr.push('I18NHandler');
@@ -149,8 +155,11 @@ program.command('refs <string>')
 		'Parse refs in po files.',
 		'<e.g.> i18nc refs "1,1,0,7,subtype,*"'
 	].join('\n    '))
-	.action(function(string)
+	.option('-C, --no-color', 'Disable colored output.')
+	.action(function(string, args)
 	{
+		if (args.color === false) cliPrinter.colors.enabled = false;
+
 		try {
 			refsAction(string);
 		}
