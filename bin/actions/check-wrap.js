@@ -1,9 +1,9 @@
-var Promise   = require('bluebird');
-var path      = require('path');
-var debug     = require('debug')('i18nc:check');
-var chalk     = require('chalk');
-var cliUtil   = require('../cli_util');
-var i18ncUtil = require('../../i18nc/util');
+var Promise    = require('bluebird');
+var path       = require('path');
+var debug      = require('debug')('i18nc:check');
+var cliUtil    = require('../cli_util');
+var i18ncUtil  = require('../../i18nc/util');
+var cliPrinter = require('../../i18nc/cli_printer');
 
 module.exports = function checkWrap(cwd, input, options)
 {
@@ -28,7 +28,8 @@ module.exports = function checkWrap(cwd, input, options)
 						.then(function(result)
 						{
 							var newlist = result.allCodeTranslateWords().list4newWordAsts();
-							return {file: file, newlist: newlist};
+							var dirtyWords = result.allDirtyWords();
+							return {file: file, newlist: newlist, dirtyWords: dirtyWords};
 						});
 				},
 				{
@@ -36,24 +37,36 @@ module.exports = function checkWrap(cwd, input, options)
 				})
 				.then(function(results)
 				{
-					results.forEach(function(item)
-					{
-						if (!item.newlist.length)
-						{
-							console.log('  '+chalk.green('ok')+' '+item.file);
-						}
-						else
-						{
-							console.log('  '+chalk.red('fail')+' '+item.file);
-							item.newlist.forEach(function(item)
-							{
-								var ast = item.originalAst;
-								var localStr = 'Loc:'+ast.loc.start.line+','+ast.loc.start.column;
-								var wordsStr = item.translateWords.join(',');
-								console.log('       '+chalk.gray(localStr)+'    '+wordsStr);
-							});
-						}
-					});
+					results.forEach(_printResult);
 				});
 		});
+}
+
+
+function _printResult(item)
+{
+	if (!item.newlist.length && !item.dirtyWords.list.length)
+	{
+		console.log('  '+cliPrinter.colors.green('ok')+' '+item.file);
+	}
+	else
+	{
+		console.log('  '+cliPrinter.colors.red('fail')+' '+item.file);
+		var output = '';
+
+		if (item.newlist.length)
+		{
+			output += cliPrinter.printNewWords(item.newlist, 7);
+		}
+		if (item.newlist.length && item.dirtyWords.list.length)
+		{
+			output += '       ===========================\n'
+		}
+		if (item.dirtyWords.list.length)
+		{
+			output += cliPrinter.printDirtyWords(item.dirtyWords, 7);
+		}
+
+		console.log(output);
+	}
 }
