@@ -19,7 +19,6 @@ exports.defaultTableOptions =
 };
 
 
-
 exports.printDirtyWords = printDirtyWords;
 function printDirtyWords(dirtyWords, paddingLeft)
 {
@@ -35,18 +34,10 @@ function printDirtyWords(dirtyWords, paddingLeft)
 	});
 
 
-	var tableOptions = _.extend({}, exports.defaultTableOptions,
+	return _printTable(mainTableData,
 		{
-			columns:
-			{
-				0:
-				{
-					paddingLeft: paddingLeft || 1
-				}
-			},
+			paddingLeft: paddingLeft || 1
 		});
-
-	return table.table(mainTableData, tableOptions);
 }
 
 
@@ -63,19 +54,10 @@ function printNewWords(newlist, paddingLeft)
 		];
 	});
 
-
-	var tableOptions = _.extend({}, exports.defaultTableOptions,
+	return _printTable(mainTableData,
 		{
-			columns:
-			{
-				0:
-				{
-					paddingLeft: paddingLeft || 1
-				}
-			},
+			paddingLeft: paddingLeft || 1
 		});
-
-	return table.table(mainTableData, tableOptions);
 }
 
 exports.printRefs = printRefs;
@@ -104,19 +86,28 @@ function printRefs(info, paddingLeft)
 		mainTableData.push([exports.colors.gray('subkeys'), emptySymbol]);
 	}
 
+	return _printTable(mainTableData,
+		{
+			alignment   : 'right',
+			paddingLeft : paddingLeft || 1
+		});
+}
+
+
+function _printTable(mainTableData, firstColumnStyle)
+{
 	var tableOptions = _.extend({}, exports.defaultTableOptions,
 		{
 			columns:
 			{
-				0:
-				{
-					alignment: 'right',
-					paddingLeft: paddingLeft || 1
-				}
+				0: firstColumnStyle,
 			},
 		});
 
-	return table.table(mainTableData, tableOptions);
+	if (table.table)
+		return table.table(mainTableData, tableOptions);
+	else
+		return table.default(mainTableData, tableOptions);
 }
 
 
