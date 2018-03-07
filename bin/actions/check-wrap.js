@@ -52,20 +52,7 @@ function _printResult(item)
 	else
 	{
 		console.log('  '+cliPrinter.colors.red('fail')+' '+item.file);
-		var output = '';
-
-		if (item.newlist.length)
-		{
-			output += cliPrinter.printNewWords(item.newlist, 7);
-		}
-		if (item.newlist.length && item.dirtyWords.list.length)
-		{
-			output += '       ===========================\n'
-		}
-		if (item.dirtyWords.list.length)
-		{
-			output += cliPrinter.printDirtyWords(item.dirtyWords, 7);
-		}
+		var output = cliPrinter.printDirtyAndNewWords(item.dirtyWords, item.newlist, 7);
 
 		console.log(output);
 	}

@@ -18,23 +18,29 @@ exports.defaultTableOptions =
 	}
 };
 
+exports.printDirtyAndNewWords = printDirtyAndNewWords;
+function printDirtyAndNewWords(dirtyWords, newlist, paddingLeft)
+{
+	var list = _getNewWordsTableListData(newlist, true);
+	list.push.apply(list, _getDirtyWordsTableListData(dirtyWords));
+	list.sort(function(a, b)
+	{
+		return a.ast.range[0] > b.ast.range[0] ? 1 : -1;
+	});
+
+	return _printWordListTable(list,
+		{
+			paddingLeft: paddingLeft || 1
+		});
+}
+
 
 exports.printDirtyWords = printDirtyWords;
 function printDirtyWords(dirtyWords, paddingLeft)
 {
-	var mainTableData = dirtyWords.list.map(function(item)
-	{
-		var ast = item.originalAst;
+	var list = _getDirtyWordsTableListData(dirtyWords);
 
-		return [
-			exports.colors.gray(getAstLocStr(ast)),
-			exports.colors.yellow(item.code),
-			item.reason
-		];
-	});
-
-
-	return _printTable(mainTableData,
+	return _printWordListTable(list,
 		{
 			paddingLeft: paddingLeft || 1
 		});
@@ -44,17 +50,9 @@ function printDirtyWords(dirtyWords, paddingLeft)
 exports.printNewWords = printNewWords;
 function printNewWords(newlist, paddingLeft)
 {
-	var mainTableData = newlist.map(function(item)
-	{
-		var ast = item.originalAst;
+	var list = _getNewWordsTableListData(newlist);
 
-		return [
-			exports.colors.gray(getAstLocStr(ast)),
-			exports.colors.yellow(item.translateWords.join(','))
-		];
-	});
-
-	return _printTable(mainTableData,
+	return _printWordListTable(list,
 		{
 			paddingLeft: paddingLeft || 1
 		});
@@ -93,6 +91,58 @@ function printRefs(info, paddingLeft)
 		});
 }
 
+
+function _getDirtyWordsTableListData(dirtyWords)
+{
+	var list = dirtyWords.list.map(function(item)
+	{
+		var ast = item.originalAst;
+
+		return {
+			ast    : ast,
+			loc    : getAstLocStr(ast),
+			value  : item.code,
+			reason : item.reason
+		};
+	});
+
+	return list;
+}
+
+function _getNewWordsTableListData(newlist, reason)
+{
+	var list = newlist.map(function(item)
+	{
+		var ast = item.originalAst;
+		return {
+			ast    : ast,
+			loc    : getAstLocStr(ast),
+			value  : item.translateWords.join(','),
+			reason : reason ? 'Words are not wrapped' : null,
+		};
+	});
+
+	return list;
+}
+
+
+function _printWordListTable(list, firstColumnStyle)
+{
+	var mainTableData = list.map(function(item)
+		{
+			return [
+				item.loc ? exports.colors.gray(item.loc) : ' ',
+				item.value ? exports.colors.yellow(item.value) : ' ',
+				item.reason || ' '
+			];
+		})
+		.filter(function(arr)
+		{
+			return arr.join('').trim();
+		});
+
+	return _printTable(mainTableData, firstColumnStyle);
+}
 
 function _printTable(mainTableData, firstColumnStyle)
 {
