@@ -28,7 +28,7 @@ function printDirtyWords(dirtyWords, paddingLeft)
 
 		return [
 			exports.colors.gray(getAstLocStr(ast)),
-			item.code,
+			exports.colors.yellow(item.code),
 			item.reason
 		];
 	});
@@ -50,7 +50,7 @@ function printNewWords(newlist, paddingLeft)
 
 		return [
 			exports.colors.gray(getAstLocStr(ast)),
-			item.translateWords.join(',')
+			exports.colors.yellow(item.translateWords.join(','))
 		];
 	});
 
