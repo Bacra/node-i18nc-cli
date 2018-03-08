@@ -1,5 +1,5 @@
 var expect        = require('expect.js');
-var i18ncUtil     = require('../i18nc/util');
+var loader        = require('../i18nc/load_po_files');
 var autoTestUtils = require('./auto_test_utils');
 
 
@@ -11,7 +11,7 @@ describe('#load_po_files', function()
 		{
 			it('#file', function()
 			{
-				return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
+				return loader.autoLoadPOFiles(__dirname+'/input/pofiles/en-US.po')
 					.then(function(json)
 					{
 						var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_en-US.json', json);
@@ -21,7 +21,7 @@ describe('#load_po_files', function()
 
 			it('#dir', function()
 			{
-				return i18ncUtil.autoLoadPOFiles(__dirname+'/input/pofiles')
+				return loader.autoLoadPOFiles(__dirname+'/input/pofiles')
 					.then(function(json)
 					{
 						var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_all.json', json);
@@ -35,14 +35,14 @@ describe('#load_po_files', function()
 		{
 			it('#file', function()
 			{
-				var json = i18ncUtil.autoLoadPOFilesSync(__dirname+'/input/pofiles/en-US.po')
+				var json = loader.autoLoadPOFilesSync(__dirname+'/input/pofiles/en-US.po')
 				var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_en-US.json', json);
 				expect(json).to.eql(otherJson);
 			});
 
 			it('#dir', function()
 			{
-				var json = i18ncUtil.autoLoadPOFilesSync(__dirname+'/input/pofiles')
+				var json = loader.autoLoadPOFilesSync(__dirname+'/input/pofiles')
 				var otherJson = autoTestUtils.requireAfterWrite('autoLoadPOFiles_all.json', json);
 				expect(json).to.eql(otherJson);
 			});
