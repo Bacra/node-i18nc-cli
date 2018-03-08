@@ -2,7 +2,7 @@ var Promise       = require('bluebird');
 var mkdirp        = Promise.promisify(require('mkdirp'));
 var expect        = require('expect.js');
 var i18nc         = require('i18nc-core');
-var i18ncUtil     = require('../i18nc/util');
+var i18ncUtil     = require('../i18nc/fileresult');
 var autoTestUtils = require('./auto_test_utils');
 
 var OUTPUT_PATH   = __dirname+'/output/';
