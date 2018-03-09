@@ -45,6 +45,7 @@ program.command('code <input> <output>')
 	.option('-C, --no-color', 'Disable colored output.')
 	.option('-H', 'Disable codeModifiedArea: I18NHandler')
 	.option('-T', 'Disable codeModifiedArea: TranslateWord')
+	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
 	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
 	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
 	.option('-K', 'Disable cutWordBeautify: KeyTrim')
@@ -76,6 +77,7 @@ program.command('code <input> <output>')
 		var obj = options.codeModifiedArea = {};
 		if (args.H) obj.I18NHandler = false;
 		if (args.T) obj.TranslateWord = false;
+		if (args.E) obj.TranslateWord_RegExp = false;
 		if (args.A) obj.I18NHandlerAlias = false;
 
 		var obj = options.cutWordBeautify = {};
@@ -112,6 +114,7 @@ program.command('check-wrap <input>')
 	.option('-C, --no-color', 'Disable colored output.')
 	.option('-H', 'Disable codeModifiedArea: I18NHandler')
 	.option('-T', 'Disable codeModifiedArea: TranslateWord')
+	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
 	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
 	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
 	.option('-K', 'Disable cutWordBeautify: KeyTrim')
@@ -132,6 +135,7 @@ program.command('check-wrap <input>')
 		var obj = options.codeModifiedArea = {};
 		if (args.H) obj.I18NHandler = false;
 		if (args.T) obj.TranslateWord = false;
+		if (args.E) obj.TranslateWord_RegExp = false;
 		if (args.A) obj.I18NHandlerAlias = false;
 
 		var obj = options.cutWordBeautify = {};
