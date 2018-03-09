@@ -31,11 +31,10 @@ program.command('code <input> <output>')
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
-			'ALL_I18N : combo literal and I18N callerr',
-			'           (include subtype callerr)'
+			'           (without subtype or tpldata callerr)'
 		]
 		.join(COMMAND_INDENT)+'\n',
-		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
+		/^(NONE|LITERAL|I18N)$/i)
 
 	.option('-c --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
@@ -103,11 +102,10 @@ program.command('check-wrap <input>')
 			'NONE     : do nothing (default)',
 			'LITERAL  : combo simple literal',
 			'I18N     : combo simple literal and I18N callerr',
-			'ALL_I18N : combo literal and I18N callerr',
-			'           (include subtype callerr)'
+			'           (without subtype or tpldata callerr)'
 		]
 		.join(COMMAND_INDENT)+'\n',
-		/^(NONE|LITERAL|I18N|ALL_I18N)$/i)
+		/^(NONE|LITERAL|I18N)$/i)
 
 	.option('-r', 'Recurse into directories')
 
