@@ -148,11 +148,7 @@ program.command('check-wrap <input>')
 
 
 program.command('refs <string>')
-	.description(
-	[
-		'Parse refs in po files.',
-		'<e.g.> i18nc refs "1,1,0,7,subtype,*"'
-	].join('\n    '))
+	.description('Parse refs in po files. <e.g.> "1,1,0,7,subtype,*"')
 	.option('-C, --no-color', 'Disable colored output.')
 	.action(function(string, args)
 	{
