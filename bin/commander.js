@@ -43,12 +43,12 @@ program.command('code <input> <output>')
 	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
 	.option('-C, --no-color', 'Disable colored output.')
-	.option('-H', 'codeModifiedArea: I18NHandler')
-	.option('-T', 'codeModifiedArea: TranslateWord')
-	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
-	.option('-R', 'cutWordBeautify: RemoveTplComment')
-	.option('-K', 'cutWordBeautify: KeyTrim')
-	.option('-S', 'cutWordBeautify: SplitByEndSymbol')
+	.option('-H', 'Disable codeModifiedArea: I18NHandler')
+	.option('-T', 'Disable codeModifiedArea: TranslateWord')
+	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
+	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
+	.option('-K', 'Disable cutWordBeautify: KeyTrim')
+	.option('-S', 'Disable cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -73,15 +73,15 @@ program.command('code <input> <output>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var arr = options.codeModifiedArea = [];
-		if (args.H) arr.push('I18NHandler');
-		if (args.T) arr.push('TranslateWord');
-		if (args.A) arr.push('I18NHandlerAlias');
+		var obj = options.codeModifiedArea = {};
+		if (args.H) obj.I18NHandler = false;
+		if (args.T) obj.TranslateWord = false;
+		if (args.A) obj.I18NHandlerAlias = false;
 
-		var arr = options.cutWordBeautify = [];
-		if (args.R) arr.push('RemoveTplComment');
-		if (args.K) arr.push('KeyTrim');
-		if (args.S) arr.push('SplitByEndSymbol');
+		var obj = options.cutWordBeautify = {};
+		if (args.R) obj.RemoveTplComment = false;
+		if (args.K) obj.KeyTrim = false;
+		if (args.S) obj.SplitByEndSymbol = false;
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -110,12 +110,12 @@ program.command('check-wrap <input>')
 	.option('-r', 'Recurse into directories')
 
 	.option('-C, --no-color', 'Disable colored output.')
-	.option('-H', 'codeModifiedArea: I18NHandler')
-	.option('-T', 'codeModifiedArea: TranslateWord')
-	.option('-A', 'codeModifiedArea: I18NHandlerAlias')
-	.option('-R', 'cutWordBeautify: RemoveTplComment')
-	.option('-K', 'cutWordBeautify: KeyTrim')
-	.option('-S', 'cutWordBeautify: SplitByEndSymbol')
+	.option('-H', 'Disable codeModifiedArea: I18NHandler')
+	.option('-T', 'Disable codeModifiedArea: TranslateWord')
+	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
+	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
+	.option('-K', 'Disable cutWordBeautify: KeyTrim')
+	.option('-S', 'Disable cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -129,15 +129,15 @@ program.command('check-wrap <input>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var arr = options.codeModifiedArea = [];
-		if (args.H) arr.push('I18NHandler');
-		if (args.T) arr.push('TranslateWord');
-		if (args.A) arr.push('I18NHandlerAlias');
+		var obj = options.codeModifiedArea = {};
+		if (args.H) obj.I18NHandler = false;
+		if (args.T) obj.TranslateWord = false;
+		if (args.A) obj.I18NHandlerAlias = false;
 
-		var arr = options.cutWordBeautify = [];
-		if (args.R) arr.push('RemoveTplComment');
-		if (args.K) arr.push('KeyTrim');
-		if (args.S) arr.push('SplitByEndSymbol');
+		var obj = options.cutWordBeautify = {};
+		if (args.R) obj.RemoveTplComment = false;
+		if (args.K) obj.KeyTrim = false;
+		if (args.S) obj.SplitByEndSymbol = false;
 
 		checkWrapAction(cwd, input, options)
 			.catch(function(err)
