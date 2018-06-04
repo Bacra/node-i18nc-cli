@@ -1,5 +1,5 @@
 var expect        = require('expect.js');
-var loader        = require('../i18nc/load_po_files');
+var loader        = require('../util/load_po_files');
 var autoTestUtils = require('./auto_test_utils');
 
 

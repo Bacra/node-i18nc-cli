@@ -2,13 +2,13 @@ var Promise       = require('bluebird');
 var mkdirp        = Promise.promisify(require('mkdirp'));
 var expect        = require('expect.js');
 var i18nc         = require('i18nc-core');
-var i18ncUtil     = require('../i18nc/fileresult');
+var i18ncUtil     = require('../util/fileresult');
 var autoTestUtils = require('./auto_test_utils');
 
 var OUTPUT_PATH   = __dirname+'/output/';
 var TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/tmp/';
 
-describe('#i18nc_util', function()
+describe('#fileresult', function()
 {
 	describe('#mulitResult2POFiles', function()
 	{
@@ -20,9 +20,9 @@ describe('#i18nc_util', function()
 
 		it('#base', function()
 		{
-			var json1 = i18nc('console.log("中文")');
-			var json2 = i18nc('I18N("简体")');
-			var json3 = i18nc('I18N("简体", "subtype")');
+			var json1 = i18nc('talkme("中文")', {isClosureWhenInsertedHead: false});
+			var json2 = i18nc('I18N("简体")', {isClosureWhenInsertedHead: false});
+			var json3 = i18nc('I18N("简体", "subtype")', {isClosureWhenInsertedHead: false});
 			return i18ncUtil.mulitResult2POFiles(
 				{
 					json1: json1,
