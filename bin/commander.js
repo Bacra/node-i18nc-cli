@@ -1,3 +1,5 @@
+'use strict';
+
 var cwd             = process.cwd();
 var program         = require('commander');
 var cliUtil         = require('./cli_util');

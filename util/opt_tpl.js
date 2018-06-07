@@ -1,3 +1,5 @@
+'use strict';
+
 exports.webAndProcessDomain = function(cache)
 {
 	if (cache.global)

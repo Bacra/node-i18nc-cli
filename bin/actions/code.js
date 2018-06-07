@@ -1,3 +1,5 @@
+'use strict';
+
 var Promise   = require('bluebird');
 var debug     = require('debug')('i18nc');
 var fs        = Promise.promisifyAll(require('fs'));

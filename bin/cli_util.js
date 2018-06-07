@@ -1,3 +1,5 @@
+'use strict';
+
 var _        = require('lodash');
 var debug    = require('debug')('i18nc:cli_util');
 var Promise  = require('bluebird');

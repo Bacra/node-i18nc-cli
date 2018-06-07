@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 
 exports.refs = require('i18nc-po/lib/refs_utils');

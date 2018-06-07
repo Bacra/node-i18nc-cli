@@ -1,3 +1,5 @@
+'use strict';
+
 var Promise       = require('bluebird');
 var mkdirp        = Promise.promisify(require('mkdirp'));
 var expect        = require('expect.js');

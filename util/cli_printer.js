@@ -1,3 +1,5 @@
+'use strict';
+
 var _            = require('lodash');
 var table        = require('table');
 var chalk        = require('chalk');
