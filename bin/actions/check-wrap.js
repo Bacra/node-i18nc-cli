@@ -4,7 +4,6 @@ var Promise    = require('bluebird');
 var path       = require('path');
 var debug      = require('debug')('i18nc:check');
 var cliUtil    = require('../cli_util');
-var i18ncUtil  = require('../../i18nc/util');
 var cliPrinter = require('../../i18nc/cli_printer');
 
 module.exports = function checkWrap(cwd, input, options)
@@ -26,7 +25,7 @@ module.exports = function checkWrap(cwd, input, options)
 				{
 					debug('i18n file start: %s', file);
 
-					return cliUtil.file2i18nc(file)
+					return cliUtil.file2i18nc(file, myOptions)
 						.then(function(result)
 						{
 							var newlist = result.allCodeTranslateWords().list4newWordAsts();

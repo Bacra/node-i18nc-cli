@@ -47,7 +47,7 @@ describe('#cli_util', function()
 			it('#dir', function()
 			{
 				return cliUtil.scanFileList(inputDir)
-					.then(function(data)
+					.then(function()
 					{
 						expect().fail();
 					},

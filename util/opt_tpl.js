@@ -1,3 +1,5 @@
+/* global window */
+
 'use strict';
 
 exports.webAndProcessDomain = function(cache)
@@ -41,7 +43,7 @@ exports.webAndProcessDomain = function(cache)
 	}
 }
 
-exports.onlyWeb = function(cache)
+exports.onlyWeb = function()
 {
 	if (!window.__i18n_lan__)
 	{
