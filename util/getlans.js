@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 exports.req = function(req)
 {
-	var lans = this.req.get('Accept-Language');
+	var lans = req.get('Accept-Language');
 	if (lans)
 	{
 		var lanstr = [];
@@ -33,12 +33,6 @@ exports.req = function(req)
 			{
 				var val = item.val;
 				if (val == 'zh-cn') return true;
-
-				if (DEFAULT_LANS[val])
-				{
-					lanstr = lanstr.concat(DEFAULT_LANS[val]);
-				}
-
 				lanstr.push(val);
 			});
 

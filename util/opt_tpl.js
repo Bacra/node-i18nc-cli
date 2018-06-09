@@ -1,3 +1,5 @@
+/* global window */
+
 exports.webAndProcessDomain = function(cache)
 {
 	if (cache.global)
@@ -39,7 +41,7 @@ exports.webAndProcessDomain = function(cache)
 	}
 }
 
-exports.onlyWeb = function(cache)
+exports.onlyWeb = function()
 {
 	if (!window.__i18n_lan__)
 	{

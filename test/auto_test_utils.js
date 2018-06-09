@@ -1,5 +1,4 @@
 var Promise = require('bluebird');
-var _ = require('lodash');
 var fs = Promise.promisifyAll(require('fs'));
 var expect = require('expect.js');
 

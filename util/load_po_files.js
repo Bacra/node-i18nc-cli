@@ -1,11 +1,9 @@
 var Promise   = require('bluebird');
-var _         = require('lodash');
 var fs        = Promise.promisifyAll(require('fs'));
 var glob      = require('glob');
 var debug     = require('debug')('i18nc:load_po_files');
 var i18ncPO   = require('i18nc-po');
 var stripBOM  = require('strip-bom');
-var path      = require('path');
 var extend    = require('extend');
 var globAsync = Promise.promisify(glob);
 
