@@ -23,7 +23,8 @@ exports.webAndProcessDomain = function(cache)
 			var navlan = nav && nav.language;
 			var lan;
 			if (navlans) lan = ''+navlans
-			if (navlan) lan = navlan+navlan.split(/[-_]/)[0];
+			else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
+
 			if (lan)
 			{
 				window.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
@@ -52,7 +53,8 @@ exports.onlyWeb = function()
 		var navlan = nav && nav.language;
 		var lan;
 		if (navlans) lan = ''+navlans
-		if (navlan) lan = navlan+navlan.split(/[-_]/)[0];
+		else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
+
 		if (lan)
 		{
 			window.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
