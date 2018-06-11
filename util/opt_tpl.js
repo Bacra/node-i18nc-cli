@@ -1,8 +1,10 @@
-/* global window */
+/* global window document */
 
 'use strict';
 
-exports.webAndProcessDomain = function(cache)
+exports.webAndProcessDomain
+	= exports.webNavigatorAndProcessDomain
+	= function(cache)
 {
 	if (cache.global)
 	{
@@ -10,56 +12,116 @@ exports.webAndProcessDomain = function(cache)
 	}
 	else if (cache.platform == 'node-process')
 	{
-		return process.domain && process.domain.__i18n_lan__;
+		var dm = process.domain;
+		return dm && dm.__i18n_lan__;
 	}
 	else if (typeof window == 'object')
 	{
-		cache.global = window;
+		var win = window;
+		cache.global = win;
+		var lan = win.__i18n_lan__;
 
-		if (!window.__i18n_lan__)
+		if (!lan && lan !== false)
 		{
-			var nav = window.navigator;
+			var nav = win.navigator;
 			var navlans = nav && nav.languages;
 			var navlan = nav && nav.language;
-			var lan;
 			if (navlans) lan = ''+navlans
 			else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
 
 			if (lan)
-			{
-				window.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
-			}
+				lan = win.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
+			else
+				win.__i18n_lan__ = false;
 		}
 
-		return window.__i18n_lan__;
+		return lan;
 	}
 	else if (typeof process == 'object')
 	{
 		cache.platform == 'node-process';
-		return process.domain && process.domain.__i18n_lan__;
+		var dm = process.domain;
+		return dm && dm.__i18n_lan__;
 	}
 	else
 	{
 		cache.global = {};
 	}
-}
+};
 
-exports.onlyWeb = function()
+exports.webCookeAndProcssDomian = function(cache)
 {
-	if (!window.__i18n_lan__)
+	if (cache.global)
 	{
-		var nav = window.navigator;
+		return cache.global.__i18n_lan__;
+	}
+	else if (cache.platform == 'node-process')
+	{
+		var dm = process.domain;
+		return dm && dm.__i18n_lan__;
+	}
+	else if (typeof window == 'object')
+	{
+		var win = window;
+		cache.global = win;
+		var lan = win.__i18n_lan__;
+
+		if (!lan && lan !== false)
+		{
+			// 最好修改cookie的key
+			lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
+			win.__i18n_lan__ = lan && lan[1] || false;
+		}
+
+		return lan;
+	}
+	else if (typeof process == 'object')
+	{
+		cache.platform == 'node-process';
+		var dm = process.domain;
+		return dm && dm.__i18n_lan__;
+	}
+	else
+	{
+		cache.global = {};
+	}
+};
+
+exports.onlyWebCookie = function()
+{
+	var win = window;
+	var lan = win.__i18n_lan__;
+
+	if (!lan && lan !== false)
+	{
+		// 最好修改cookie的key
+		lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
+		win.__i18n_lan__ = lan && lan[1] || false;
+	}
+
+	return lan;
+};
+
+exports.onlyWeb
+	= exports.onlyWebNavigator
+	= function()
+{
+	var win = window;
+	var lan = win.__i18n_lan__;
+
+	if (!lan && lan !== false)
+	{
+		var nav = win.navigator;
 		var navlans = nav && nav.languages;
 		var navlan = nav && nav.language;
-		var lan;
 		if (navlans) lan = ''+navlans
 		else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
 
 		if (lan)
-		{
-			window.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
-		}
+			lan = win.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
+		else
+			win.__i18n_lan__ = false;
 	}
 
-	return window.__i18n_lan__;
-}
+	return lan;
+};
