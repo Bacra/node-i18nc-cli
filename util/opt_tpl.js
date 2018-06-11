@@ -6,11 +6,13 @@ exports.webAndProcessDomain
 	= exports.webNavigatorAndProcessDomain
 	= function(cache)
 {
-	if (cache.global)
+	// global.g: global
+	// global.p: platform
+	if (cache.g)
 	{
-		return cache.global.__i18n_lan__;
+		return cache.g.__i18n_lan__;
 	}
-	else if (cache.platform == 'node-process')
+	else if (cache.p == 1)
 	{
 		var dm = process.domain;
 		return dm && dm.__i18n_lan__;
@@ -18,7 +20,7 @@ exports.webAndProcessDomain
 	else if (typeof window == 'object')
 	{
 		var win = window;
-		cache.global = win;
+		cache.g = win;
 		var lan = win.__i18n_lan__;
 
 		if (!lan && lan !== false)
@@ -39,23 +41,25 @@ exports.webAndProcessDomain
 	}
 	else if (typeof process == 'object')
 	{
-		cache.platform == 'node-process';
+		cache.p = 1;
 		var dm = process.domain;
 		return dm && dm.__i18n_lan__;
 	}
 	else
 	{
-		cache.global = {};
+		cache.g = {};
 	}
 };
 
 exports.webCookeAndProcssDomian = function(cache)
 {
-	if (cache.global)
+	// global.g: global
+	// global.p: platform
+	if (cache.g)
 	{
-		return cache.global.__i18n_lan__;
+		return cache.g.__i18n_lan__;
 	}
-	else if (cache.platform == 'node-process')
+	else if (cache.p == 1)
 	{
 		var dm = process.domain;
 		return dm && dm.__i18n_lan__;
@@ -63,7 +67,7 @@ exports.webCookeAndProcssDomian = function(cache)
 	else if (typeof window == 'object')
 	{
 		var win = window;
-		cache.global = win;
+		cache.g = win;
 		var lan = win.__i18n_lan__;
 
 		if (!lan && lan !== false)
@@ -78,13 +82,13 @@ exports.webCookeAndProcssDomian = function(cache)
 	}
 	else if (typeof process == 'object')
 	{
-		cache.platform == 'node-process';
+		cache.p = 1;
 		var dm = process.domain;
 		return dm && dm.__i18n_lan__;
 	}
 	else
 	{
-		cache.global = {};
+		cache.g = {};
 	}
 };
 
