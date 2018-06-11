@@ -70,7 +70,8 @@ exports.webCookeAndProcssDomian = function(cache)
 		{
 			// 最好修改cookie的key
 			lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
-			win.__i18n_lan__ = lan && lan[1] || false;
+			if (lan) lan = decodeURIComponent(lan[1]);
+			win.__i18n_lan__ = lan || false;
 		}
 
 		return lan;
@@ -96,7 +97,8 @@ exports.onlyWebCookie = function()
 	{
 		// 最好修改cookie的key
 		lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
-		win.__i18n_lan__ = lan && lan[1] || false;
+		if (lan) lan = decodeURIComponent(lan[1]);
+		win.__i18n_lan__ = lan || false;
 	}
 
 	return lan;
