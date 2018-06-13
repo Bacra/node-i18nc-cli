@@ -49,9 +49,6 @@ program.command('code <input> <output>')
 	.option('-T', 'Disable codeModifiedArea: TranslateWord')
 	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
 	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
-	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
-	.option('-K', 'Disable cutWordBeautify: KeyTrim')
-	.option('-S', 'Disable cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -81,11 +78,6 @@ program.command('code <input> <output>')
 		if (args.T) obj.TranslateWord = false;
 		if (args.E) obj.TranslateWord_RegExp = false;
 		if (args.A) obj.I18NHandlerAlias = false;
-
-		var obj = options.cutWordBeautify = {};
-		if (args.R) obj.RemoveTplComment = false;
-		if (args.K) obj.KeyTrim = false;
-		if (args.S) obj.SplitByEndSymbol = false;
 
 		codeAction(cwd, input, output, options)
 			.catch(function(err)
@@ -118,9 +110,6 @@ program.command('check-wrap <input>')
 	.option('-T', 'Disable codeModifiedArea: TranslateWord')
 	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
 	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
-	.option('-R', 'Disable cutWordBeautify: RemoveTplComment')
-	.option('-K', 'Disable cutWordBeautify: KeyTrim')
-	.option('-S', 'Disable cutWordBeautify: SplitByEndSymbol')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -139,11 +128,6 @@ program.command('check-wrap <input>')
 		if (args.T) obj.TranslateWord = false;
 		if (args.E) obj.TranslateWord_RegExp = false;
 		if (args.A) obj.I18NHandlerAlias = false;
-
-		var obj = options.cutWordBeautify = {};
-		if (args.R) obj.RemoveTplComment = false;
-		if (args.K) obj.KeyTrim = false;
-		if (args.S) obj.SplitByEndSymbol = false;
 
 		checkWrapAction(cwd, input, options)
 			.catch(function(err)

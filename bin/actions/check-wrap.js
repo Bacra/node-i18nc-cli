@@ -18,7 +18,6 @@ module.exports = function checkWrap(cwd, input, options)
 				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
 				comboLiteralMode       : options.comboLiteralMode,
 				codeModifiedArea       : options.codeModifiedArea,
-				cutWordBeautify        : options.cutWordBeautify,
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
 			return Promise.map(files, function(file)
