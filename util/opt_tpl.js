@@ -6,8 +6,8 @@ exports.webAndProcessDomain
 	= exports.webNavigatorAndProcessDomain
 	= function(cache)
 {
-	// global.g: global
-	// global.p: platform
+	// cache.g: global
+	// cache.p: platform
 	if (cache.g)
 	{
 		return cache.g.__i18n_lan__;
@@ -53,8 +53,8 @@ exports.webAndProcessDomain
 
 exports.webCookeAndProcssDomian = function(cache)
 {
-	// global.g: global
-	// global.p: platform
+	// cache.g: global
+	// cache.p: platform
 	if (cache.g)
 	{
 		return cache.g.__i18n_lan__;
