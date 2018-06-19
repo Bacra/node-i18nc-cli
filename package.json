@@ -1,6 +1,6 @@
 {
   "name": "i18nc",
-  "version": "4.3.0",
+  "version": "4.5.0",
   "description": "i18nc",
   "main": "index.js",
   "bin": {
@@ -10,6 +10,7 @@
     "prepublish": "npm ls",
     "test": "cross-env DEBUG=i18nc* mocha test/test_*",
     "test-cov": "istanbul cover ./node_modules/.bin/_mocha -- test/test_* --reporter dot",
+    "test-eslint": "eslint .",
     "test-travis": "istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- test/test_* --reporter dot",
     "test-build": "cross-env TEST_BUILD=true mocha test/test_*"
   },
