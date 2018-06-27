@@ -6,7 +6,7 @@ var cliUtil         = require('./cli_util');
 var codeAction      = require('./actions/code');
 var checkWrapAction = require('./actions/check-wrap');
 var refsAction      = require('./actions/refs');
-var cliPrinter      = require('../i18nc/cli_printer');
+var cliPrinter      = require('../util/cli_printer');
 
 var COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;

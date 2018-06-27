@@ -4,7 +4,7 @@ var Promise    = require('bluebird');
 var path       = require('path');
 var debug      = require('debug')('i18nc:check');
 var cliUtil    = require('../cli_util');
-var cliPrinter = require('../../i18nc/cli_printer');
+var cliPrinter = require('../../util/cli_printer');
 
 module.exports = function checkWrap(cwd, input, options)
 {

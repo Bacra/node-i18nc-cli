@@ -1,8 +1,8 @@
 'use strict';
 
 var debug     = require('debug')('i18nc:refs');
-var i18ncUtil = require('../../i18nc/util');
-var cliPrinter = require('../../i18nc/cli_printer');
+var i18ncUtil = require('../../util/index');
+var cliPrinter = require('../../util/cli_printer');
 
 module.exports = function(str)
 {

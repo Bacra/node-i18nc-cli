@@ -7,7 +7,7 @@ var mkdirp    = Promise.promisify(require('mkdirp'));
 var path      = require('path');
 var extend    = require('extend');
 var cliUtil   = require('../cli_util');
-var i18ncUtil = require('../../i18nc/util');
+var i18ncUtil = require('../../util/index');
 
 
 module.exports = function code(cwd, input, output, options)
