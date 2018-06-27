@@ -16,7 +16,6 @@ module.exports = function checkWrap(cwd, input, options)
 				I18NHandlerName        : options.I18NHandlerName,
 				I18NHandlerAlias       : options.I18NHandlerAlias,
 				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-				comboLiteralMode       : options.comboLiteralMode,
 				codeModifiedArea       : options.codeModifiedArea,
 			};
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];

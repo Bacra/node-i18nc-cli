@@ -27,19 +27,9 @@ program.command('code <input> <output>')
 	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
-	.option('   --combo-literal-mode [mode]',
-		[
-			'Combo closest literal before collect. Mode:',
-			'NONE     : do nothing (default)',
-			'LITERAL  : combo simple literal',
-			'I18N     : combo simple literal and I18N callerr',
-			'           (without subtype or tpldata callerr)'
-		]
-		.join(COMMAND_INDENT)+'\n',
-		/^(NONE|LITERAL|I18N)$/i)
 
-	.option('-c --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
+	.option('-c --only-check', 'Only check, not write code to file')
 	.option('-w', 'Closure when I18N hanlder insert head')
 	.option('-m', 'Min Function translate code of I18N handler')
 	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
@@ -62,7 +52,6 @@ program.command('code <input> <output>')
 				'i18n-hanlder-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
-				'combo-literal-mode' : 'comboLiteralMode',
 				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
 				'w'                  : 'isClosureWhenInsertedHead',
@@ -92,16 +81,6 @@ program.command('check-wrap <input>')
 	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
-	.option('   --combo-literal-mode [mode]',
-		[
-			'Combo closest literal before collect. Mode:',
-			'NONE     : do nothing (default)',
-			'LITERAL  : combo simple literal',
-			'I18N     : combo simple literal and I18N callerr',
-			'           (without subtype or tpldata callerr)'
-		]
-		.join(COMMAND_INDENT)+'\n',
-		/^(NONE|LITERAL|I18N)$/i)
 
 	.option('-r', 'Recurse into directories')
 
@@ -117,7 +96,6 @@ program.command('check-wrap <input>')
 				'i18n-handler-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
-				'combo-literal-mode' : 'comboLiteralMode',
 				'r'                  : 'isRecurse',
 			});
 

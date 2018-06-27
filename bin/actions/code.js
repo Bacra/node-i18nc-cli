@@ -53,7 +53,6 @@ module.exports = function code(cwd, input, output, options)
 				isMinFuncTranslateCode    : options.isMinFuncTranslateCode,
 				isClosureWhenInsertedHead : options.isClosureWhenInsertedHead,
 				ignoreScanHandlerNames    : options.ignoreScanHandlerNames,
-				comboLiteralMode          : options.comboLiteralMode,
 				codeModifiedArea          : options.codeModifiedArea,
 			};
 
