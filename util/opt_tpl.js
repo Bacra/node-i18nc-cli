@@ -6,22 +6,23 @@ exports.webAndProcessDomain
 	= exports.webNavigatorAndProcessDomain
 	= function(cache)
 {
+	var key = '$LanguageVars.name$';
 	// cache.g: global
 	// cache.p: platform
 	if (cache.g)
 	{
-		return cache.g.__i18n_lan__;
+		return cache.g[key];
 	}
 	else if (cache.p == 1)
 	{
 		var dm = process.domain;
-		return dm && dm.__i18n_lan__;
+		return dm && dm[key];
 	}
 	else if (typeof window == 'object')
 	{
 		var win = window;
 		cache.g = win;
-		var lan = win.__i18n_lan__;
+		var lan = win[key];
 
 		if (!lan && lan !== false)
 		{
@@ -32,9 +33,9 @@ exports.webAndProcessDomain
 			else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
 
 			if (lan)
-				lan = win.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
+				lan = win[key] = lan.toLowerCase().replace(/-/g, '_');
 			else
-				win.__i18n_lan__ = false;
+				win[key] = false;
 		}
 
 		return lan;
@@ -43,7 +44,7 @@ exports.webAndProcessDomain
 	{
 		cache.p = 1;
 		var dm = process.domain;
-		return dm && dm.__i18n_lan__;
+		return dm && dm[key];
 	}
 	else
 	{
@@ -53,29 +54,30 @@ exports.webAndProcessDomain
 
 exports.webCookeAndProcssDomian = function(cache)
 {
+	var key = '$LanguageVars.name$';
 	// cache.g: global
 	// cache.p: platform
 	if (cache.g)
 	{
-		return cache.g.__i18n_lan__;
+		return cache.g[key];
 	}
 	else if (cache.p == 1)
 	{
 		var dm = process.domain;
-		return dm && dm.__i18n_lan__;
+		return dm && dm[key];
 	}
 	else if (typeof window == 'object')
 	{
 		var win = window;
 		cache.g = win;
-		var lan = win.__i18n_lan__;
+		var lan = win[key];
 
 		if (!lan && lan !== false)
 		{
 			// 最好修改cookie的key
-			lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
+			lan = document.cookie.match(/(?:^|;) *$LanguageVars.cookie$=([^;]+)/);
 			if (lan) lan = decodeURIComponent(lan[1]);
-			win.__i18n_lan__ = lan || false;
+			win[key] = lan || false;
 		}
 
 		return lan;
@@ -84,7 +86,7 @@ exports.webCookeAndProcssDomian = function(cache)
 	{
 		cache.p = 1;
 		var dm = process.domain;
-		return dm && dm.__i18n_lan__;
+		return dm && dm[key];
 	}
 	else
 	{
@@ -95,14 +97,15 @@ exports.webCookeAndProcssDomian = function(cache)
 exports.onlyWebCookie = function()
 {
 	var win = window;
-	var lan = win.__i18n_lan__;
+	var key = '$LanguageVars.name$'
+	var lan = win[key];
 
 	if (!lan && lan !== false)
 	{
 		// 最好修改cookie的key
-		lan = document.cookie.match(/(?:^|;) *__i18n_lan__=([^;]+)/);
+		lan = document.cookie.match(/(?:^|;) *$LanguageVars.cookie$=([^;]+)/);
 		if (lan) lan = decodeURIComponent(lan[1]);
-		win.__i18n_lan__ = lan || false;
+		win[key] = lan || false;
 	}
 
 	return lan;
@@ -112,8 +115,9 @@ exports.onlyWeb
 	= exports.onlyWebNavigator
 	= function()
 {
+	var key = '$LanguageVars.name$';
 	var win = window;
-	var lan = win.__i18n_lan__;
+	var lan = win[key];
 
 	if (!lan && lan !== false)
 	{
@@ -124,9 +128,9 @@ exports.onlyWeb
 		else if (navlan) lan = navlan+','+navlan.split(/[-_]/)[0];
 
 		if (lan)
-			lan = win.__i18n_lan__ = lan.toLowerCase().replace(/-/g, '_');
+			lan = win[key] = lan.toLowerCase().replace(/-/g, '_');
 		else
-			win.__i18n_lan__ = false;
+			win[key] = false;
 	}
 
 	return lan;
