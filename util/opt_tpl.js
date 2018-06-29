@@ -13,7 +13,7 @@ exports.webAndProcessDomain
 	{
 		return cache.g[key];
 	}
-	else if (cache.p == 1)
+	else if (cache.p)
 	{
 		var dm = process.domain;
 		return dm && dm[key];
@@ -61,7 +61,7 @@ exports.webCookeAndProcssDomian = function(cache)
 	{
 		return cache.g[key];
 	}
-	else if (cache.p == 1)
+	else if (cache.p)
 	{
 		var dm = process.domain;
 		return dm && dm[key];
