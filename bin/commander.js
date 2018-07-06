@@ -54,7 +54,7 @@ program.command('code <input> <output>')
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
 				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
-				'w'                  : 'isClosureWhenInsertedHead',
+				'c'                  : 'isCheckClosureForNewI18NHandler',
 				'm'                  : 'isMinFuncTranslateCode',
 			});
 

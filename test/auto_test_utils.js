@@ -37,7 +37,7 @@ function _requireOrFs(file, options)
 
 exports.code2arr = function code2arr(code)
 {
-	return code.split('\n')
+	return code.toString().split('\n')
 		.filter(function(val)
 		{
 			return val.trim();

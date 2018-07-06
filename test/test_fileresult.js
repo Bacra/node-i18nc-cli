@@ -21,9 +21,9 @@ describe('#fileresult', function()
 
 		it('#base', function()
 		{
-			var json1 = i18nc('talkme("中文")', {isClosureWhenInsertedHead: false});
-			var json2 = i18nc('I18N("简体")', {isClosureWhenInsertedHead: false});
-			var json3 = i18nc('I18N("简体", "subtype")', {isClosureWhenInsertedHead: false});
+			var json1 = i18nc('talkme("中文")', {isCheckClosureForNewI18NHandler: false});
+			var json2 = i18nc('I18N("简体")', {isCheckClosureForNewI18NHandler: false});
+			var json3 = i18nc('I18N("简体", "subtype")', {isCheckClosureForNewI18NHandler: false});
 			return i18ncUtil.mulitResult2POFiles(
 				{
 					json1: json1,
