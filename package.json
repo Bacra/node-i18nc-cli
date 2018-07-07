@@ -11,8 +11,11 @@
     "lint": "eslint .",
     "test": "cross-env DEBUG=i18nc* mocha test/test_*",
     "test-cov": "istanbul cover ./node_modules/.bin/_mocha -- test/test_* --reporter dot",
+    "test-e2e": "karma start --",
+    "test-e2e-dev": "cross-env DEBUG=i18nc-core* karma start --auto-watch --no-single-run --browsers=Chrome",
+    "test-e2e-sauce": "karma start -- sauce",
     "test-travis": "istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- test/test_* --reporter dot",
-    "test-build": "cross-env TEST_BUILD=true mocha test/test_*"
+    "test-build": "node test/prev_test_files; cross-env TEST_BUILD=true mocha test/test_*"
   },
   "repository": {
     "type": "git",
@@ -46,9 +49,11 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "eslint": "^5.0.1",
-    "eslint-config-brcjs": "^0.1.0",
+    "eslint-config-brcjs": "^0.2.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.5",
+    "karma": "^2.0.4",
+    "karma-config-brcjs": "^0.1.0",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2"
   }
