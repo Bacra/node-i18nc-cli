@@ -50,7 +50,7 @@ module.exports = function code(cwd, input, output, options)
 				I18NHandlerAlias                : options.I18NHandlerAlias,
 				pickFileLanguages               : options.pickFileLanguages,
 				isPartialUpdate                 : options.isPartialUpdate,
-				isMinFuncTranslateCode          : options.isMinFuncTranslateCode,
+				minTranslateFuncCode            : options.minTranslateFuncCode,
 				isCheckClosureForNewI18NHandler : options.isCheckClosureForNewI18NHandler,
 				ignoreScanHandlerNames          : options.ignoreScanHandlerNames,
 				codeModifiedArea                : options.codeModifiedArea,

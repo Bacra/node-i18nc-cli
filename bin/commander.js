@@ -55,7 +55,7 @@ program.command('code <input> <output>')
 				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
 				'c'                  : 'isCheckClosureForNewI18NHandler',
-				'm'                  : 'isMinFuncTranslateCode',
+				'm'                  : 'minTranslateFuncCode',
 			});
 
 		options.isPartialUpdate = !args.f;
