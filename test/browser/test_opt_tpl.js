@@ -7,7 +7,7 @@ var getlans = require('../i18n_getlans');
 var debug = require('debug')('i18nc:test_opt_tpl');
 
 
-describe('opt_tpl', function()
+describe('#opt_tpl', function()
 {
 	var navlans;
 	if (navigator.languages)
