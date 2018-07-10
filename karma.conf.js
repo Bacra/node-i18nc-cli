@@ -4,7 +4,7 @@ var commonConfig = require('karma-config-brcjs');
 
 module.exports = function(config)
 {
-	commonConfig(config);
+	commonConfig(config, require('./package.json'));
 
 	config.set(
 	{
