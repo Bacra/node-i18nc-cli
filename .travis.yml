@@ -13,3 +13,16 @@ script:
 
 after_script:
   - npm install coveralls@2 && cat ./coverage/lcov.info | coveralls
+
+matrix:
+  include:
+    - node_js: stable
+      dist: trusty
+      env:
+        - MOZ_HEADLESS=1
+      addons:
+        chrome: stable
+        firefox: latest
+      script:
+        - npm run test-e2e ChromeHeadlessNoSandbox,FirefoxHeadless
+      after_script:
