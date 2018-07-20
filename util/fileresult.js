@@ -16,13 +16,23 @@ exports.mulitResult2POFiles = mulitResult2POFiles;
  */
 function mulitResult2POFiles(data, outputDir, options)
 {
+	if (!options) options = {};
 	var subScopeDatas = _.values(data);
 	if (!subScopeDatas || !subScopeDatas.length)
 	{
 		return Promise.resolve();
 	}
-	var result = new subScopeDatas[0].constructor({subScopeDatas: subScopeDatas});
-	var output = i18ncPO.create(result, options);
+	var CodeInfoResult = subScopeDatas[0].constructor;
+	var result = new CodeInfoResult({subScopeDatas: subScopeDatas});
+	var output = i18ncPO.create(result,
+		{
+			title: options.poFileTitle,
+			email: options.poFileEmail,
+			existedTranslateFilter: options.existedTranslateFilter,
+			onlyTheseLanguages: options.I18NHandler
+				&& options.I18NHandler.data
+				&& options.I18NHandler.data.onlyTheseLanguages,
+		});
 	debug('output:%o', output);
 
 	return mkdirp(outputDir)

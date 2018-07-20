@@ -28,17 +28,21 @@ program.command('code <input> <output>')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
 
+	.option('   --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
-	.option('-c --only-check', 'Only check, not write code to file')
 	.option('-w', 'Closure when I18N hanlder insert head')
 	.option('-m', 'Min Function translate code of I18N handler')
 	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
-	.option('-C, --no-color', 'Disable colored output.')
-	.option('-H', 'Disable codeModifiedArea: I18NHandler')
-	.option('-T', 'Disable codeModifiedArea: TranslateWord')
-	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
-	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
+	.option('-c, --color', 'Enable colored output')
+	.option('-C, --no-color', 'Disable colored output')
+
+	.option('-t', 'Enable codeModifyItems: TranslateWord')
+	.option('-T', 'Disable codeModifyItems: TranslateWord')
+	.option('-e', 'Enable codeModifyItems: TranslateWord_RegExp')
+	.option('-E', 'Disable codeModifyItems: TranslateWord_RegExp')
+	.option('-a', 'Enable codeModifyItems: I18NHandlerAlias')
+	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -48,7 +52,7 @@ program.command('code <input> <output>')
 				'translate-db-file'  : 'translateDBFile',
 				'output-po-dir'      : 'outputPODir',
 				'output-word-file'   : 'outputWordFile',
-				'lans'               : 'pickFileLanguages',
+				'lans'               : 'onlyTheseLanguages',
 				'i18n-hanlder-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
@@ -62,10 +66,12 @@ program.command('code <input> <output>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var obj = options.codeModifiedArea = {};
-		if (args.H) obj.I18NHandler = false;
+		var obj = options.codeModifyItems = {};
+		if (args.t) obj.TranslateWord = true;
 		if (args.T) obj.TranslateWord = false;
+		if (args.e) obj.TranslateWord_RegExp = true;
 		if (args.E) obj.TranslateWord_RegExp = false;
+		if (args.a) obj.I18NHandlerAlias = true;
 		if (args.A) obj.I18NHandlerAlias = false;
 
 		codeAction(cwd, input, output, options)
@@ -84,11 +90,15 @@ program.command('check-wrap <input>')
 
 	.option('-r', 'Recurse into directories')
 
-	.option('-C, --no-color', 'Disable colored output.')
-	.option('-H', 'Disable codeModifiedArea: I18NHandler')
-	.option('-T', 'Disable codeModifiedArea: TranslateWord')
-	.option('-E', 'Disable codeModifiedArea: TranslateWord_RegExp')
-	.option('-A', 'Disable codeModifiedArea: I18NHandlerAlias')
+	.option('-c, --color', 'Enable colored output')
+	.option('-C, --no-color', 'Disable colored output')
+
+	.option('-t', 'Enable codeModifyItems: TranslateWord')
+	.option('-T', 'Disable codeModifyItems: TranslateWord')
+	.option('-e', 'Enable codeModifyItems: TranslateWord_RegExp')
+	.option('-E', 'Disable codeModifyItems: TranslateWord_RegExp')
+	.option('-a', 'Enable codeModifyItems: I18NHandlerAlias')
+	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, args)
 	{
 		var options = cliUtil.key2key(args,
@@ -101,10 +111,12 @@ program.command('check-wrap <input>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var obj = options.codeModifiedArea = {};
-		if (args.H) obj.I18NHandler = false;
+		var obj = options.codeModifyItems = {};
+		if (args.t) obj.TranslateWord = true;
 		if (args.T) obj.TranslateWord = false;
+		if (args.e) obj.TranslateWord_RegExp = true;
 		if (args.E) obj.TranslateWord_RegExp = false;
+		if (args.a) obj.I18NHandlerAlias = true;
 		if (args.A) obj.I18NHandlerAlias = false;
 
 		checkWrapAction(cwd, input, options)

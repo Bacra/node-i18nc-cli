@@ -45,15 +45,21 @@ module.exports = function code(cwd, input, output, options)
 			var dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
 			var myOptions =
 			{
-				dbTranslateWords                : dbTranslateWords,
-				I18NHandlerName                 : options.I18NHandlerName,
-				I18NHandlerAlias                : options.I18NHandlerAlias,
-				pickFileLanguages               : options.pickFileLanguages,
-				isPartialUpdate                 : options.isPartialUpdate,
-				minTranslateFuncCode            : options.minTranslateFuncCode,
-				isCheckClosureForNewI18NHandler : options.isCheckClosureForNewI18NHandler,
-				ignoreScanHandlerNames          : options.ignoreScanHandlerNames,
-				codeModifiedArea                : options.codeModifiedArea,
+				dbTranslateWords       : dbTranslateWords,
+				I18NHandlerName        : options.I18NHandlerName,
+				I18NHandlerAlias       : options.I18NHandlerAlias,
+				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
+				codeModifyItems        : options.codeModifyItems,
+				I18NHandler:
+				{
+					data: {onlyTheseLanguages: options.onlyTheseLanguages},
+					style: {minFuncCode: options.minTranslateFuncCode},
+					upgrade: {partial: options.isPartialUpdate},
+					insert:
+					{
+						checkClosure: options.isCheckClosureForNewI18NHandler,
+					},
+				}
 			};
 
 			if (fileInfo.type == 'list')

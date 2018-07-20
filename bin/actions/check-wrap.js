@@ -16,8 +16,18 @@ module.exports = function checkWrap(cwd, input, options)
 				I18NHandlerName        : options.I18NHandlerName,
 				I18NHandlerAlias       : options.I18NHandlerAlias,
 				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-				codeModifiedArea       : options.codeModifiedArea,
+				codeModifyItems        : options.codeModifyItems,
+				I18NHandler:
+				{
+					data: {onlyTheseLanguages: options.onlyTheseLanguages},
+					style: {minFuncCode: options.minTranslateFuncCode},
+					insert:
+					{
+						checkClosure: options.isCheckClosureForNewI18NHandler,
+					},
+				}
 			};
+
 			var files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
 			return Promise.map(files, function(file)
 				{
