@@ -1,6 +1,5 @@
 'use strict';
 
-var _        = require('lodash');
 var debug    = require('debug')('i18nc:cli_util');
 var Promise  = require('bluebird');
 var fs       = Promise.promisifyAll(require('fs'));
@@ -106,7 +105,7 @@ function getWriteOneFilePath(output, input)
 			}
 			else
 			{
-				dir = path.resolve(output, '..');
+				dir = path.join(output, '..');
 				rfile = output;
 			}
 
@@ -116,18 +115,6 @@ function getWriteOneFilePath(output, input)
 					return rfile;
 				});
 		});
-}
-
-
-exports.key2key = key2key;
-function key2key(obj, keyMap)
-{
-	var result = {};
-	_.each(obj, function(val, key)
-	{
-		return result[keyMap[key] || key] = val;
-	});
-	return result;
 }
 
 
@@ -143,12 +130,4 @@ function file2i18nc(file, options)
 			code = stripBOM(code);
 			return i18nc(code, options);
 		});
-}
-
-exports.argsToArray = argsToArray;
-function argsToArray(val)
-{
-	return val.split(',')
-		.map(function(val){return val.trim()})
-		.filter(function(val){return val});
 }

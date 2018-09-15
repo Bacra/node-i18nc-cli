@@ -6,9 +6,9 @@ var debug      = require('debug')('i18nc:check');
 var cliUtil    = require('../cli_util');
 var cliPrinter = require('../../util/cli_printer');
 
-module.exports = function checkWrap(cwd, input, options)
+module.exports = function checkWrap(input, options)
 {
-	return cliUtil.scanFileList(path.resolve(cwd, input), options.isRecurse)
+	return cliUtil.scanFileList(path.resolve(input), options.isRecurse)
 		.then(function(fileInfo)
 		{
 			var myOptions =

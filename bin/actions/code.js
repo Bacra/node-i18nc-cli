@@ -10,14 +10,14 @@ var cliUtil   = require('../cli_util');
 var i18ncUtil = require('../../util/index');
 
 
-module.exports = function code(cwd, input, output, options)
+module.exports = function code(input, output, options)
 {
 	var translateDBFile = options.translateDBFile;
 	var readTranslateDBFilePromise;
 
 	if (translateDBFile)
 	{
-		translateDBFile = path.resolve(cwd, translateDBFile);
+		translateDBFile = path.resolve(translateDBFile);
 		debug('read translateDBFile:%s', translateDBFile);
 
 		readTranslateDBFilePromise = fs.readFileAsync(translateDBFile,
@@ -34,10 +34,10 @@ module.exports = function code(cwd, input, output, options)
 
 	return Promise.all(
 		[
-			cliUtil.scanFileList(path.resolve(cwd, input), null, options.isRecurse),
+			cliUtil.scanFileList(path.resolve(input), null, options.isRecurse),
 			readTranslateDBFilePromise,
-			options.inputPOFile && i18ncUtil.loadPOFile(path.resolve(cwd, options.inputPOFile)),
-			options.inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(cwd, options.inputPODir))
+			options.inputPOFile && i18ncUtil.loadPOFile(path.resolve(options.inputPOFile)),
+			options.inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(options.inputPODir))
 		])
 		.then(function(data)
 		{
@@ -76,7 +76,7 @@ module.exports = function code(cwd, input, output, options)
 								allfiledata[file] = data;
 								if (options.isOnlyCheck) return;
 
-								var wfile = path.resolve(cwd, output, file);
+								var wfile = path.resolve(output, file);
 								debug('writefile: %s', wfile);
 
 								return writeFile(wfile, code)
@@ -104,7 +104,7 @@ module.exports = function code(cwd, input, output, options)
 						allfiledata[file] = data;
 						if (options.isOnlyCheck) return;
 
-						var wfile = path.resolve(cwd, output);
+						var wfile = path.resolve(output);
 						debug('writefile: %s', wfile);
 
 						return cliUtil.getWriteOneFilePath(wfile, file)
@@ -128,7 +128,7 @@ module.exports = function code(cwd, input, output, options)
 			var writeOutputWordFilePromise;
 			if (outputWordFile)
 			{
-				outputWordFile = path.resolve(cwd, outputWordFile);
+				outputWordFile = path.resolve(outputWordFile);
 				writeOutputWordFilePromise = writeFile(outputWordFile, JSON.stringify(allfiledata, null, '\t'))
 					.then(function()
 					{
@@ -137,7 +137,7 @@ module.exports = function code(cwd, input, output, options)
 			}
 
 			var outputPODir = options.outputPODir;
-			if (outputPODir) outputPODir = path.resolve(cwd, outputPODir);
+			if (outputPODir) outputPODir = path.resolve(outputPODir);
 
 			return Promise.all(
 				[

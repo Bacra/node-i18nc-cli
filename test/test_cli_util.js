@@ -190,18 +190,6 @@ describe('#cli_util', function()
 	});
 
 
-	describe('#key2key', function()
-	{
-		it('#base', function()
-		{
-			expect(cliUtil.key2key({k1:1, k2:2}, {k1:'ky1', k2:'ky2'}))
-				.to.eql({ky1: 1, ky2: 2});
-			expect(cliUtil.key2key({k1:1}, {}))
-				.to.eql({k1: 1});
-		});
-	});
-
-
 	describe('#file2i18nc', function()
 	{
 		it('#base', function()
@@ -217,15 +205,4 @@ describe('#cli_util', function()
 		});
 	});
 
-
-	describe('#argsToArray', function()
-	{
-		it('#base', function()
-		{
-			expect(cliUtil.argsToArray('1,2')).to.eql(['1', '2']);
-			expect(cliUtil.argsToArray('1 ,')).to.eql(['1']);
-			expect(cliUtil.argsToArray(',')).to.eql([]);
-			expect(cliUtil.argsToArray(' ')).to.eql([]);
-		});
-	});
 });

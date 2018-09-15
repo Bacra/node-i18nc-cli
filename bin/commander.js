@@ -1,8 +1,7 @@
 'use strict';
 
-var cwd             = process.cwd();
+var _				= require('lodash');
 var program         = require('commander');
-var cliUtil         = require('./cli_util');
 var codeAction      = require('./actions/code');
 var checkWrapAction = require('./actions/check-wrap');
 var refsAction      = require('./actions/refs');
@@ -23,10 +22,10 @@ program.command('code <input> <output>')
 	.option('   --translate-db-file [file]', 'Translate data db file')
 	.option('-o --output-po-dir [dir]', 'Output po files dir')
 	.option('   --output-word-file [file]', 'Output translate words')
-	.option('-l --lans [lan1,lan2]', 'Pick file languages', cliUtil.argsToArray)
+	.option('-l --lans [lan1,lan2]', 'Pick file languages', argsToArray)
 	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
-	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
-	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
+	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray)
+	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray)
 
 	.option('   --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
@@ -45,7 +44,7 @@ program.command('code <input> <output>')
 	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
-		var options = cliUtil.key2key(args,
+		var options = key2key(args,
 			{
 				'input-po-dir'       : 'inputPODir',
 				'input-po-file'      : 'inputPOFile',
@@ -74,7 +73,7 @@ program.command('code <input> <output>')
 		if (args.a) obj.I18NHandlerAlias = true;
 		if (args.A) obj.I18NHandlerAlias = false;
 
-		codeAction(cwd, input, output, options)
+		codeAction(input, output, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
@@ -85,8 +84,8 @@ program.command('code <input> <output>')
 program.command('check-wrap <input>')
 	.description('Check if all words were wrapped by I18N handler.')
 	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
-	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', cliUtil.argsToArray)
-	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', cliUtil.argsToArray)
+	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray)
+	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray)
 
 	.option('-r', 'Recurse into directories')
 
@@ -101,7 +100,7 @@ program.command('check-wrap <input>')
 	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, args)
 	{
-		var options = cliUtil.key2key(args,
+		var options = key2key(args,
 			{
 				'i18n-handler-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
@@ -119,7 +118,7 @@ program.command('check-wrap <input>')
 		if (args.a) obj.I18NHandlerAlias = true;
 		if (args.A) obj.I18NHandlerAlias = false;
 
-		checkWrapAction(cwd, input, options)
+		checkWrapAction(input, options)
 			.catch(function(err)
 			{
 				console.log(err.stack);
@@ -182,4 +181,21 @@ function findSubCommand(program, cmd)
 	});
 
 	return command;
+}
+
+function key2key(obj, keyMap)
+{
+	var result = {};
+	_.each(obj, function(val, key)
+	{
+		return result[keyMap[key] || key] = val;
+	});
+	return result;
+}
+
+function argsToArray(val)
+{
+	return val.split(',')
+		.map(function(val){return val.trim()})
+		.filter(function(val){return val});
 }
