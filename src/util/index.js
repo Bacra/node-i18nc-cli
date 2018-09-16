@@ -6,7 +6,7 @@ exports.refs = require('i18nc-po/lib/refs_utils');
 exports.cli = require('./cli_printer');
 exports.opt =
 {
-	tpl: require('./opt_tpl')
+	tpl: require('../../lib/getlans_opt.tpl.js')
 };
 exports.file = _.extend({}, require('./load_po_files'),
 {

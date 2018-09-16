@@ -8,13 +8,15 @@ var path          = require('path');
 var expect        = require('expect.js');
 var cliUtil       = require('../bin/cli_util');
 var autoTestUtils = require('./auto_test_utils');
+var INPUT_PATH = __dirname+'/../../test/input/';
+var TMP_PATH = __dirname+'/../../test/tmp/';
 
 
 describe('#cli_util', function()
 {
 	describe('#scanFileList', function()
 	{
-		var inputDir = fs.realpathSync(__dirname+'/input/scan_dir/')+'/';
+		var inputDir = fs.realpathSync(INPUT_PATH+'scan_dir/')+'/';
 
 		describe('#no_recurse', function()
 		{
@@ -132,8 +134,8 @@ describe('#cli_util', function()
 
 	describe('#getWriteOneFilePath', function()
 	{
-		var outputDir = __dirname+'/tmp/getWriteOneFilePath/';
-		var inputFile = __dirname+'/input/input.file';
+		var outputDir = TMP_PATH+'getWriteOneFilePath/';
+		var inputFile = INPUT_PATH+'input.file';
 
 		before(function()
 		{
@@ -194,7 +196,7 @@ describe('#cli_util', function()
 	{
 		it('#base', function()
 		{
-			return cliUtil.file2i18nc(__dirname+'/input/example.js')
+			return cliUtil.file2i18nc(INPUT_PATH+'example.js')
 				.then(function(data)
 				{
 					var json = data.toJSON();

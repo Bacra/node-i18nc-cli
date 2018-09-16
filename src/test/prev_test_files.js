@@ -3,8 +3,10 @@
 var _		= require('lodash');
 var fs		= require('fs');
 var mkdirp	= require('mkdirp');
-var optTpl	= require('../util/opt_tpl');
+var optTpl	= require('../../lib/getlans_opt.tpl.js');
 var renders	= exports.renders = {};
+var INPUT_PATH = __dirname+'/../../test/input/';
+// var OUTPUT_PATH = __dirname+'/../../test/input/';
 
 
 [
@@ -27,7 +29,7 @@ var renders	= exports.renders = {};
 
 function main()
 {
-	var p = __dirname+'/input/opt_tpl/';
+	var p = INPUT_PATH+'opt_tpl/';
 	mkdirp.sync(p);
 
 	_.each(renders, function(render, filename)

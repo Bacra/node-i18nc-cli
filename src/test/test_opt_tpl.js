@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('expect.js');
-var getlans = require('./i18n_getlans');
+var getlans = require('../../test/i18n_getlans');
 var Domain = require('domain');
 
 

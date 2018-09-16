@@ -6,8 +6,8 @@ var i18nc         = require('i18nc-core');
 var i18ncUtil     = require('../util/fileresult');
 var autoTestUtils = require('./auto_test_utils');
 
-var OUTPUT_PATH   = __dirname+'/output/';
-var TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/tmp/';
+var OUTPUT_PATH   = __dirname+'/../../test/output/';
+var TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../test/tmp/';
 
 describe('#fileresult', function()
 {
@@ -32,7 +32,13 @@ describe('#fileresult', function()
 				},
 				TMP_PATH+'mulitResult2POFiles',
 				{
-					pickFileLanguages: ['zh-TW', 'en-US']
+					I18NHandler:
+					{
+						data:
+						{
+							onlyTheseLanguages: ['zh-TW', 'en-US']
+						}
+					}
 				})
 				.then(function()
 				{
