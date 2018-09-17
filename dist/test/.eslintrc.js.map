@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/test/.eslintrc.js"],"names":["module","exports","extends","__dirname"],"mappings":";;AAAAA,MAAM,CAACC,OAAP,GACA;AACCC,EAAAA,OAAO,EAAEC,SAAS,GAAC;AADpB,CADA","sourcesContent":["module.exports =\n{\n\textends: __dirname+'/../../test/.eslintrc.js'\n};\n"],"file":".eslintrc.js"}

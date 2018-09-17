@@ -1,4 +1,4 @@
 module.exports =
 {
-	extends: ['eslint-config-brcjs', 'eslint-config-brcjs/mocha']
+	extends: __dirname+'/../../test/.eslintrc.js'
 };
