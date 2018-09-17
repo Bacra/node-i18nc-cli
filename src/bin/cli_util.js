@@ -1,13 +1,13 @@
 'use strict';
 
-var debug    = require('debug')('i18nc:cli_util');
-var Promise  = require('bluebird');
-var fs       = Promise.promisifyAll(require('fs'));
-var glob     = Promise.promisify(require('glob'));
-var mkdirp   = Promise.promisify(require('mkdirp'));
-var path     = require('path');
-var i18nc    = require('i18nc-core');
-var stripBOM = require('strip-bom');
+const debug    = require('debug')('i18nc:cli_util');
+const Promise  = require('bluebird');
+const fs       = Promise.promisifyAll(require('fs'));
+const glob     = Promise.promisify(require('glob'));
+const mkdirp   = Promise.promisify(require('mkdirp'));
+const path     = require('path');
+const i18nc    = require('i18nc-core');
+const stripBOM = require('strip-bom');
 
 exports.scanFileList = scanFileList;
 function scanFileList(input, recurse)
@@ -81,7 +81,7 @@ function getWriteOneFilePath(output, input)
 			else if (stats.isDirectory())
 			{
 				debug('output is dir');
-				var filename = path.basename(input);
+				let filename = path.basename(input);
 				return output+'/'+filename;
 			}
 			else
@@ -95,8 +95,8 @@ function getWriteOneFilePath(output, input)
 
 			debug('output is not exists');
 			// 当文件不存在的时候
-			var tailStr = output[output.length-1];
-			var dir, rfile;
+			let tailStr = output[output.length-1];
+			let dir, rfile;
 			if (tailStr == '/' || tailStr == '\\')
 			{
 				debug('ouput maybe is path');

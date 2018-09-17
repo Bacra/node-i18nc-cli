@@ -1,12 +1,12 @@
 'use strict';
 
-var _		= require('lodash');
-var fs		= require('fs');
-var mkdirp	= require('mkdirp');
-var optTpl	= require('../../lib/getlans_opt.tpl.js');
-var renders	= exports.renders = {};
-var INPUT_PATH = __dirname+'/../../test/input/';
-// var OUTPUT_PATH = __dirname+'/../../test/input/';
+const _		= require('lodash');
+const fs		= require('fs');
+const mkdirp	= require('mkdirp');
+const optTpl	= require('../../lib/getlans_opt.tpl.js');
+const renders	= exports.renders = {};
+const INPUT_PATH = __dirname+'/../../test/input/';
+// const OUTPUT_PATH = __dirname+'/../../test/input/';
 
 
 [
@@ -15,7 +15,7 @@ var INPUT_PATH = __dirname+'/../../test/input/';
 ]
 .forEach(function(name)
 {
-	var code = optTpl[name].toString();
+	let code = optTpl[name].toString();
 
 	renders[name] = function(vars)
 	{
@@ -29,12 +29,12 @@ var INPUT_PATH = __dirname+'/../../test/input/';
 
 function main()
 {
-	var p = INPUT_PATH+'opt_tpl/';
+	let p = INPUT_PATH+'opt_tpl/';
 	mkdirp.sync(p);
 
 	_.each(renders, function(render, filename)
 	{
-		var code = render(
+		let code = render(
 		{
 			name: '__i18n_lan__',
 			cookie: 'test_lan'

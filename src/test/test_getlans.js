@@ -1,6 +1,6 @@
-var expect = require('expect.js');
-var getlans = require('../util/getlans');
-var getlansTest = getlans._test;
+const expect = require('expect.js');
+const getlans = require('../util/getlans');
+const getlansTest = getlans._test;
 
 describe('#getlans', function()
 {

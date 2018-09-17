@@ -1,19 +1,19 @@
 'use strict';
 
-var Promise       = require('bluebird');
-var mkdirp        = Promise.promisify(require('mkdirp'));
-var i18nc         = require('i18nc-core');
-var i18ncUtil     = require('../util/fileresult');
-var autoTestUtils = require('./auto_test_utils');
+const Promise       = require('bluebird');
+const mkdirp        = Promise.promisify(require('mkdirp'));
+const i18nc         = require('i18nc-core');
+const i18ncUtil     = require('../util/fileresult');
+const autoTestUtils = require('./auto_test_utils');
 
-var OUTPUT_PATH   = __dirname+'/../../test/output/';
-var TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../test/tmp/';
+const OUTPUT_PATH   = __dirname+'/../../test/output/';
+const TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../test/tmp/';
 
 describe('#fileresult', function()
 {
 	describe('#mulitResult2POFiles', function()
 	{
-		var diffFiles   = autoTestUtils.diffFiles(TMP_PATH+'mulitResult2POFiles/', OUTPUT_PATH+'mulitResult2POFiles/');
+		let diffFiles   = autoTestUtils.diffFiles(TMP_PATH+'mulitResult2POFiles/', OUTPUT_PATH+'mulitResult2POFiles/');
 		before(function()
 		{
 			return mkdirp(TMP_PATH+'mulitResult2POFiles');
@@ -21,9 +21,9 @@ describe('#fileresult', function()
 
 		it('#base', function()
 		{
-			var json1 = i18nc('talkme("中文")', {isCheckClosureForNewI18NHandler: false});
-			var json2 = i18nc('I18N("简体")', {isCheckClosureForNewI18NHandler: false});
-			var json3 = i18nc('I18N("简体", "subtype")', {isCheckClosureForNewI18NHandler: false});
+			let json1 = i18nc('talkme("中文")', {isCheckClosureForNewI18NHandler: false});
+			let json2 = i18nc('I18N("简体")', {isCheckClosureForNewI18NHandler: false});
+			let json3 = i18nc('I18N("简体", "subtype")', {isCheckClosureForNewI18NHandler: false});
 			return i18ncUtil.mulitResult2POFiles(
 				{
 					json1: json1,

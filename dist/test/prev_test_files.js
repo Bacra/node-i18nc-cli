@@ -9,7 +9,7 @@ var mkdirp = require('mkdirp');
 var optTpl = require('../../lib/getlans_opt.tpl.js');
 
 var renders = exports.renders = {};
-var INPUT_PATH = __dirname + '/../../test/input/'; // var OUTPUT_PATH = __dirname+'/../../test/input/';
+var INPUT_PATH = __dirname + '/../../test/input/'; // const OUTPUT_PATH = __dirname+'/../../test/input/';
 
 ['webNavigatorAndProcessDomain', 'webCookeAndProcssDomian', 'onlyWebCookie', 'onlyWebNavigator'].forEach(function (name) {
   var code = optTpl[name].toString();

@@ -1,22 +1,22 @@
 'use strict';
 
-var Promise       = require('bluebird');
-var fs            = Promise.promisifyAll(require('fs'));
-var mkdirp        = Promise.promisify(require('mkdirp'));
-var rimraf        = Promise.promisify(require('rimraf'));
-var path          = require('path');
-var expect        = require('expect.js');
-var cliUtil       = require('../bin/cli_util');
-var autoTestUtils = require('./auto_test_utils');
-var INPUT_PATH = __dirname+'/../../test/input/';
-var TMP_PATH = __dirname+'/../../test/tmp/';
+const Promise       = require('bluebird');
+const fs            = Promise.promisifyAll(require('fs'));
+const mkdirp        = Promise.promisify(require('mkdirp'));
+const rimraf        = Promise.promisify(require('rimraf'));
+const path          = require('path');
+const expect        = require('expect.js');
+const cliUtil       = require('../bin/cli_util');
+const autoTestUtils = require('./auto_test_utils');
+const INPUT_PATH = __dirname+'/../../test/input/';
+const TMP_PATH = __dirname+'/../../test/tmp/';
 
 
 describe('#cli_util', function()
 {
 	describe('#scanFileList', function()
 	{
-		var inputDir = fs.realpathSync(INPUT_PATH+'scan_dir/')+'/';
+		let inputDir = fs.realpathSync(INPUT_PATH+'scan_dir/')+'/';
 
 		describe('#no_recurse', function()
 		{
@@ -134,8 +134,8 @@ describe('#cli_util', function()
 
 	describe('#getWriteOneFilePath', function()
 	{
-		var outputDir = TMP_PATH+'getWriteOneFilePath/';
-		var inputFile = INPUT_PATH+'input.file';
+		let outputDir = TMP_PATH+'getWriteOneFilePath/';
+		let inputFile = INPUT_PATH+'input.file';
 
 		before(function()
 		{
@@ -199,9 +199,9 @@ describe('#cli_util', function()
 			return cliUtil.file2i18nc(INPUT_PATH+'example.js')
 				.then(function(data)
 				{
-					var json = data.toJSON();
+					let json = data.toJSON();
 					delete json.code;
-					var otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
+					let otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
 					expect(json).to.eql(otherJson);
 				});
 		});

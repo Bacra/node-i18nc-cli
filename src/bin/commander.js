@@ -1,13 +1,13 @@
 'use strict';
 
-var _				= require('lodash');
-var program         = require('commander');
-var codeAction      = require('./actions/code');
-var checkWrapAction = require('./actions/check-wrap');
-var refsAction      = require('./actions/refs');
-var cliPrinter      = require('../util/cli_printer');
+const _				= require('lodash');
+const program         = require('commander');
+const codeAction      = require('./actions/code');
+const checkWrapAction = require('./actions/check-wrap');
+const refsAction      = require('./actions/refs');
+const cliPrinter      = require('../util/cli_printer');
 
-var COMMAND_INDENT = '\n'+new Array(42).join(' ');
+const COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
 
 program.version(
@@ -44,7 +44,7 @@ program.command('code <input> <output>')
 	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
-		var options = key2key(args,
+		let options = key2key(args,
 			{
 				'input-po-dir'       : 'inputPODir',
 				'input-po-file'      : 'inputPOFile',
@@ -65,7 +65,7 @@ program.command('code <input> <output>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var obj = options.codeModifyItems = {};
+		let obj = options.codeModifyItems = {};
 		if (args.t) obj.TranslateWord = true;
 		if (args.T) obj.TranslateWord = false;
 		if (args.e) obj.TranslateWord_RegExp = true;
@@ -100,7 +100,7 @@ program.command('check-wrap <input>')
 	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, args)
 	{
-		var options = key2key(args,
+		let options = key2key(args,
 			{
 				'i18n-handler-name'  : 'I18NHandlerName',
 				'i18n-hanlder-alias' : 'I18NHandlerAlias',
@@ -110,7 +110,7 @@ program.command('check-wrap <input>')
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
 
-		var obj = options.codeModifyItems = {};
+		let obj = options.codeModifyItems = {};
 		if (args.t) obj.TranslateWord = true;
 		if (args.T) obj.TranslateWord = false;
 		if (args.e) obj.TranslateWord_RegExp = true;
@@ -146,9 +146,9 @@ program.command('help <cmd>')
 	.description('display help for [cmd]')
 	.action(function(cmd)
 	{
-		var self = this;
+		let self = this;
 
-		var command = findSubCommand(self.parent, cmd);
+		let command = findSubCommand(self.parent, cmd);
 		if (!command) throw new Error('No Defined Command, '+cmd);
 
 		// command.help();
@@ -170,7 +170,7 @@ program.command('help <cmd>')
 // find sub command
 function findSubCommand(program, cmd)
 {
-	var command;
+	let command;
 	program.commands.some(function(item)
 	{
 		if (item.name() == cmd || item.alias() == cmd)
@@ -185,7 +185,7 @@ function findSubCommand(program, cmd)
 
 function key2key(obj, keyMap)
 {
-	var result = {};
+	let result = {};
 	_.each(obj, function(val, key)
 	{
 		return result[keyMap[key] || key] = val;

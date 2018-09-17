@@ -1,9 +1,9 @@
 'use strict';
 
-var _            = require('lodash');
-var table        = require('table');
-var chalk        = require('chalk');
-var EMPTY_SYMBOL = '(empty)';
+const _            = require('lodash');
+const table        = require('table');
+const chalk        = require('chalk');
+const EMPTY_SYMBOL = '(empty)';
 exports.colors   = new chalk.constructor();
 
 exports.defaultTableOptions =
@@ -23,7 +23,7 @@ exports.defaultTableOptions =
 exports.printDirtyAndNewWords = printDirtyAndNewWords;
 function printDirtyAndNewWords(dirtyWords, newlist, paddingLeft)
 {
-	var list = _getNewWordsTableListData(newlist, true);
+	let list = _getNewWordsTableListData(newlist, true);
 	list.push.apply(list, _getDirtyWordsTableListData(dirtyWords));
 	list.sort(function(a, b)
 	{
@@ -40,7 +40,7 @@ function printDirtyAndNewWords(dirtyWords, newlist, paddingLeft)
 exports.printDirtyWords = printDirtyWords;
 function printDirtyWords(dirtyWords, paddingLeft)
 {
-	var list = _getDirtyWordsTableListData(dirtyWords);
+	let list = _getDirtyWordsTableListData(dirtyWords);
 
 	return _printWordListTable(list,
 		{
@@ -52,7 +52,7 @@ function printDirtyWords(dirtyWords, paddingLeft)
 exports.printNewWords = printNewWords;
 function printNewWords(newlist, paddingLeft)
 {
-	var list = _getNewWordsTableListData(newlist);
+	let list = _getNewWordsTableListData(newlist);
 
 	return _printWordListTable(list,
 		{
@@ -63,8 +63,8 @@ function printNewWords(newlist, paddingLeft)
 exports.printRefs = printRefs;
 function printRefs(info, paddingLeft)
 {
-	var emptySymbol = exports.colors.gray(EMPTY_SYMBOL);
-	var mainTableData =
+	let emptySymbol = exports.colors.gray(EMPTY_SYMBOL);
+	let mainTableData =
 	[
 		[exports.colors.gray('type'), ''+info.type],
 		[exports.colors.gray('fileKey'), info.fileKey || emptySymbol],
@@ -96,9 +96,9 @@ function printRefs(info, paddingLeft)
 
 function _getDirtyWordsTableListData(dirtyWords)
 {
-	var list = dirtyWords.list.map(function(item)
+	let list = dirtyWords.list.map(function(item)
 	{
-		var ast = item.originalAst;
+		let ast = item.originalAst;
 
 		return {
 			ast    : ast,
@@ -113,9 +113,9 @@ function _getDirtyWordsTableListData(dirtyWords)
 
 function _getNewWordsTableListData(newlist, reason)
 {
-	var list = newlist.map(function(item)
+	let list = newlist.map(function(item)
 	{
-		var ast = item.originalAst;
+		let ast = item.originalAst;
 		return {
 			ast    : ast,
 			loc    : getAstLocStr(ast),
@@ -130,7 +130,7 @@ function _getNewWordsTableListData(newlist, reason)
 
 function _printWordListTable(list, firstColumnStyle)
 {
-	var mainTableData = list.map(function(item)
+	let mainTableData = list.map(function(item)
 		{
 			return [
 				item.loc ? exports.colors.gray(item.loc) : ' ',
@@ -148,7 +148,7 @@ function _printWordListTable(list, firstColumnStyle)
 
 function _printTable(mainTableData, firstColumnStyle)
 {
-	var tableOptions = _.extend({}, exports.defaultTableOptions,
+	let tableOptions = _.extend({}, exports.defaultTableOptions,
 		{
 			columns:
 			{

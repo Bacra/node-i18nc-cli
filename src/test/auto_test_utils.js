@@ -1,15 +1,15 @@
 'use strict';
 
-var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require('fs'));
-var expect = require('expect.js');
-// var INPUT_PATH = __dirname+'/../../test/input/';
-var OUTPUT_PATH = __dirname+'/../../test/output/';
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
+const expect = require('expect.js');
+// const INPUT_PATH = __dirname+'/../../test/input/';
+const OUTPUT_PATH = __dirname+'/../../test/output/';
 
 
 exports.requireAfterWrite = function requireAfterWrite(filename, data)
 {
-	var file = OUTPUT_PATH+filename;
+	let file = OUTPUT_PATH+filename;
 	if (!process.env.TEST_BUILD) return require(file);
 
 	if (typeof data == 'object')

@@ -1,19 +1,19 @@
 'use strict';
 
-var Promise   = require('bluebird');
-var debug     = require('debug')('i18nc');
-var fs        = Promise.promisifyAll(require('fs'));
-var mkdirp    = Promise.promisify(require('mkdirp'));
-var path      = require('path');
-var extend    = require('extend');
-var cliUtil   = require('../cli_util');
-var i18ncUtil = require('../../util/index');
+const Promise   = require('bluebird');
+const debug     = require('debug')('i18nc');
+const fs        = Promise.promisifyAll(require('fs'));
+const mkdirp    = Promise.promisify(require('mkdirp'));
+const path      = require('path');
+const extend    = require('extend');
+const cliUtil   = require('../cli_util');
+const i18ncUtil = require('../../util/index');
 
 
 module.exports = function code(input, output, options)
 {
-	var translateDBFile = options.translateDBFile;
-	var readTranslateDBFilePromise;
+	let translateDBFile = options.translateDBFile;
+	let readTranslateDBFilePromise;
 
 	if (translateDBFile)
 	{
@@ -30,7 +30,7 @@ module.exports = function code(input, output, options)
 			});
 	}
 
-	var allfiledata = {};
+	let allfiledata = {};
 
 	return Promise.all(
 		[
@@ -41,9 +41,9 @@ module.exports = function code(input, output, options)
 		])
 		.then(function(data)
 		{
-			var fileInfo = data[0];
-			var dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
-			var myOptions =
+			let fileInfo = data[0];
+			let dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
+			let myOptions =
 			{
 				dbTranslateWords       : dbTranslateWords,
 				I18NHandlerName        : options.I18NHandlerName,
@@ -71,12 +71,12 @@ module.exports = function code(input, output, options)
 						return cliUtil.file2i18nc(file, myOptions)
 							.then(function(data)
 							{
-								var code = data.code;
+								let code = data.code;
 								delete data.code;
 								allfiledata[file] = data;
 								if (options.isOnlyCheck) return;
 
-								var wfile = path.resolve(output, file);
+								let wfile = path.resolve(output, file);
 								debug('writefile: %s', wfile);
 
 								return writeFile(wfile, code)
@@ -92,19 +92,19 @@ module.exports = function code(input, output, options)
 			}
 			else
 			{
-				var file = fileInfo.data;
+				let file = fileInfo.data;
 				debug('one file mod:%s', file);
 
 				return cliUtil.file2i18nc(file, myOptions)
 					.then(function(data)
 					{
-						var code = data.code;
+						let code = data.code;
 						delete data.code;
 
 						allfiledata[file] = data;
 						if (options.isOnlyCheck) return;
 
-						var wfile = path.resolve(output);
+						let wfile = path.resolve(output);
 						debug('writefile: %s', wfile);
 
 						return cliUtil.getWriteOneFilePath(wfile, file)
@@ -124,8 +124,8 @@ module.exports = function code(input, output, options)
 			// 如果仅仅检查，则不处理写的逻辑
 			if (options.isOnlyCheck) return;
 
-			var outputWordFile = options.outputWordFile;
-			var writeOutputWordFilePromise;
+			let outputWordFile = options.outputWordFile;
+			let writeOutputWordFilePromise;
 			if (outputWordFile)
 			{
 				outputWordFile = path.resolve(outputWordFile);
@@ -136,7 +136,7 @@ module.exports = function code(input, output, options)
 					});
 			}
 
-			var outputPODir = options.outputPODir;
+			let outputPODir = options.outputPODir;
 			if (outputPODir) outputPODir = path.resolve(outputPODir);
 
 			return Promise.all(

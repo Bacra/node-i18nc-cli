@@ -8,7 +8,7 @@ var Promise = require('bluebird');
 
 var fs = Promise.promisifyAll(require('fs'));
 
-var expect = require('expect.js'); // var INPUT_PATH = __dirname+'/../../test/input/';
+var expect = require('expect.js'); // const INPUT_PATH = __dirname+'/../../test/input/';
 
 
 var OUTPUT_PATH = __dirname + '/../../test/output/';
