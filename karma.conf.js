@@ -1,6 +1,6 @@
 'use strict';
 
-var commonConfig = require('karma-config-brcjs');
+const commonConfig = require('karma-config-brcjs');
 
 module.exports = function(config)
 {
@@ -8,6 +8,7 @@ module.exports = function(config)
 
 	config.set(
 	{
+		basePath: 'dist/test/',
 		files: ['browser/test_*.js'],
 		preprocessors: {'browser/test_*.js': ['browserify']},
 	});

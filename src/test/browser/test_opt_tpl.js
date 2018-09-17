@@ -2,14 +2,14 @@
 
 'use strict';
 
-var expect = require('expect.js');
-var getlans = require('../i18n_getlans');
-var debug = require('debug')('i18nc:test_opt_tpl');
+const expect = require('expect.js');
+const getlans = require('../../../test/i18n_getlans');
+const debug = require('debug')('i18nc:test_opt_tpl');
 
 
 describe('#opt_tpl', function()
 {
-	var navlans;
+	let navlans;
 	if (navigator.languages)
 		navlans = ''+navigator.languages;
 	else
@@ -27,7 +27,7 @@ describe('#opt_tpl', function()
 
 	it('#onlyWebCookie', function()
 	{
-		var cache = {};
+		let cache = {};
 		expect(getlans.onlyWebCookie(cache)).to.be('zh-tw,cht');
 		expect(window.__i18n_lan__).to.be('zh-tw,cht');
 		expect(getlans.onlyWebCookie(cache)).to.be('zh-tw,cht');
@@ -35,7 +35,7 @@ describe('#opt_tpl', function()
 
 	it('#webCookeAndProcssDomian', function()
 	{
-		var cache = {};
+		let cache = {};
 		expect(getlans.webCookeAndProcssDomian(cache)).to.be('zh-tw,cht');
 		expect(cache.g).to.be(window);
 		expect(window.__i18n_lan__).to.be('zh-tw,cht');
@@ -44,7 +44,7 @@ describe('#opt_tpl', function()
 
 	it('#onlyWebNavigator', function()
 	{
-		var cache = {};
+		let cache = {};
 		expect(getlans.onlyWebNavigator(cache)).to.be(navlans);
 		expect(window.__i18n_lan__).to.be(navlans);
 		expect(getlans.onlyWebNavigator(cache)).to.be(navlans);
@@ -52,7 +52,7 @@ describe('#opt_tpl', function()
 
 	it('#webNavigatorAndProcessDomain', function()
 	{
-		var cache = {};
+		let cache = {};
 		expect(getlans.webNavigatorAndProcessDomain(cache)).to.be(navlans);
 		expect(cache.g).to.be(window);
 		expect(window.__i18n_lan__).to.be(navlans);
