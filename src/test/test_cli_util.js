@@ -1,5 +1,6 @@
 'use strict';
 
+const _				= require('lodash');
 const Promise       = require('bluebird');
 const fs            = Promise.promisifyAll(require('fs'));
 const mkdirp        = Promise.promisify(require('mkdirp'));
@@ -8,8 +9,8 @@ const path          = require('path');
 const expect        = require('expect.js');
 const cliUtil       = require('../bin/cli_util');
 const autoTestUtils = require('./auto_test_utils');
-const INPUT_PATH = __dirname+'/../../test/input/';
-const TMP_PATH = __dirname+'/../../test/tmp/';
+const INPUT_PATH    = __dirname+'/../../test/input/';
+const TMP_PATH      = __dirname+'/../../test/tmp/';
 
 
 describe('#cli_util', function()
@@ -200,7 +201,7 @@ describe('#cli_util', function()
 				.then(function(data)
 				{
 					let json = data.toJSON();
-					delete json.code;
+					clearCodeResult(json);
 					let otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
 					expect(json).to.eql(otherJson);
 				});
@@ -208,3 +209,10 @@ describe('#cli_util', function()
 	});
 
 });
+
+
+function clearCodeResult(json)
+{
+	delete json.code;
+	_.each(json.subScopeDatas, clearCodeResult);
+}

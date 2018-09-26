@@ -1,9 +1,12 @@
 {
-	"en-US": {
+	"version": 2,
+	"data": {
 		"*": {
-			"DEFAULTS": {
-				"简体": "zh",
-				"国际化": "I18N"
+			"en-US": {
+				"DEFAULTS": {
+					"简体": "zh",
+					"国际化": "I18N"
+				}
 			}
 		}
 	}

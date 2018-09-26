@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var Promise = require('bluebird');
 
 var fs = Promise.promisifyAll(require('fs'));
@@ -124,11 +126,17 @@ describe('#cli_util', function () {
     it('#base', function () {
       return cliUtil.file2i18nc(INPUT_PATH + 'example.js').then(function (data) {
         var json = data.toJSON();
-        delete json.code;
+        clearCodeResult(json);
         var otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
         expect(json).to.eql(otherJson);
       });
     });
   });
 });
+
+function clearCodeResult(json) {
+  delete json.code;
+
+  _.each(json.subScopeDatas, clearCodeResult);
+}
 //# sourceMappingURL=test_cli_util.js.map
