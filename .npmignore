@@ -12,7 +12,7 @@ package-lock.json
 .tags*
 .DS_Store
 
-test
+global/test
 dist/test
 src/test
 coverage

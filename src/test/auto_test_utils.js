@@ -3,8 +3,8 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const expect = require('expect.js');
-// const INPUT_PATH = __dirname+'/../../test/input/';
-const OUTPUT_PATH = __dirname+'/../../test/output/';
+// const INPUT_PATH = __dirname+'/../../global/test/input/';
+const OUTPUT_PATH = __dirname+'/../../global/test/output/';
 
 
 exports.requireAfterWrite = function requireAfterWrite(filename, data)

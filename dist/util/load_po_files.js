@@ -186,4 +186,3 @@ function loadPOFileSync(file) {
   content = stripBOM(content);
   return i18ncPO.parse(content);
 }
-//# sourceMappingURL=load_po_files.js.map

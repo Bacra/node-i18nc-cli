@@ -6,7 +6,7 @@ var loader = require('../util/load_po_files');
 
 var autoTestUtils = require('./auto_test_utils');
 
-var INPUT_PATH = __dirname + '/../../test/input/';
+var INPUT_PATH = __dirname + '/../../global/test/input/';
 describe('#load_po_files', function () {
   describe('#autoLoadPOFiles', function () {
     describe('#async', function () {
@@ -37,4 +37,3 @@ describe('#load_po_files', function () {
     });
   });
 });
-//# sourceMappingURL=test_load_po_files.js.map

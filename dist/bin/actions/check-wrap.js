@@ -58,4 +58,3 @@ function _printResult(item) {
     console.log(output);
   }
 }
-//# sourceMappingURL=check-wrap.js.map

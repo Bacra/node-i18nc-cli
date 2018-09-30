@@ -1,4 +1,4 @@
 coverage/
-test/tmp/
-test/input/
+global/test/tmp/
+global/test/input/
 dist/

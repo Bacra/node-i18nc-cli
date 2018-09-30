@@ -1,4 +1,4 @@
 module.exports =
 {
-	extends: __dirname+'/../../test/.eslintrc.js'
+	extends: __dirname+'/../../global/test/.eslintrc.js'
 };

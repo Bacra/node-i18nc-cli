@@ -108,4 +108,3 @@ function file2i18nc(file, options) {
     return i18nc(code, options);
   });
 }
-//# sourceMappingURL=cli_util.js.map

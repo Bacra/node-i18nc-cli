@@ -8,10 +8,10 @@ var Promise = require('bluebird');
 
 var fs = Promise.promisifyAll(require('fs'));
 
-var expect = require('expect.js'); // const INPUT_PATH = __dirname+'/../../test/input/';
+var expect = require('expect.js'); // const INPUT_PATH = __dirname+'/../../global/test/input/';
 
 
-var OUTPUT_PATH = __dirname + '/../../test/output/';
+var OUTPUT_PATH = __dirname + '/../../global/test/output/';
 
 exports.requireAfterWrite = function requireAfterWrite(filename, data) {
   var file = OUTPUT_PATH + filename;
@@ -42,4 +42,3 @@ exports.diffFiles = function diffFiles(input, output) {
     });
   };
 };
-//# sourceMappingURL=auto_test_utils.js.map

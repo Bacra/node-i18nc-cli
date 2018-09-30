@@ -2,7 +2,7 @@
 
 var expect = require('expect.js');
 
-var getlans = require('../../test/i18n_getlans');
+var getlans = require('../../global/test/i18n_getlans');
 
 var Domain = require('domain');
 
@@ -28,4 +28,3 @@ describe('#opt_tpl', function () {
     });
   });
 });
-//# sourceMappingURL=test_opt_tpl.js.map

@@ -10,8 +10,8 @@ var i18ncUtil = require('../util/fileresult');
 
 var autoTestUtils = require('./auto_test_utils');
 
-var OUTPUT_PATH = __dirname + '/../../test/output/';
-var TMP_PATH = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname + '/../../test/tmp/';
+var OUTPUT_PATH = __dirname + '/../../global/test/output/';
+var TMP_PATH = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname + '/../../global/test/tmp/';
 describe('#fileresult', function () {
   describe('#mulitResult2POFiles', function () {
     var diffFiles = autoTestUtils.diffFiles(TMP_PATH + 'mulitResult2POFiles/', OUTPUT_PATH + 'mulitResult2POFiles/');
@@ -44,4 +44,3 @@ describe('#fileresult', function () {
     });
   });
 });
-//# sourceMappingURL=test_fileresult.js.map

@@ -16,8 +16,8 @@ var cliUtil = require('../bin/cli_util');
 
 var autoTestUtils = require('./auto_test_utils');
 
-var INPUT_PATH = __dirname + '/../../test/input/';
-var TMP_PATH = __dirname + '/../../test/tmp/';
+var INPUT_PATH = __dirname + '/../../global/test/input/';
+var TMP_PATH = __dirname + '/../../global/test/tmp/';
 describe('#cli_util', function () {
   describe('#scanFileList', function () {
     var inputDir = fs.realpathSync(INPUT_PATH + 'scan_dir/') + '/';
@@ -139,4 +139,3 @@ function clearCodeResult(json) {
 
   _.each(json.subScopeDatas, clearCodeResult);
 }
-//# sourceMappingURL=test_cli_util.js.map

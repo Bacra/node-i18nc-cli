@@ -9,8 +9,8 @@ const path          = require('path');
 const expect        = require('expect.js');
 const cliUtil       = require('../bin/cli_util');
 const autoTestUtils = require('./auto_test_utils');
-const INPUT_PATH    = __dirname+'/../../test/input/';
-const TMP_PATH      = __dirname+'/../../test/tmp/';
+const INPUT_PATH    = __dirname+'/../../global/test/input/';
+const TMP_PATH      = __dirname+'/../../global/test/tmp/';
 
 
 describe('#cli_util', function()

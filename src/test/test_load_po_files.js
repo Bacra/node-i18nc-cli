@@ -3,7 +3,7 @@
 const expect        = require('expect.js');
 const loader        = require('../util/load_po_files');
 const autoTestUtils = require('./auto_test_utils');
-const INPUT_PATH = __dirname+'/../../test/input/';
+const INPUT_PATH = __dirname+'/../../global/test/input/';
 
 
 describe('#load_po_files', function()

@@ -13,4 +13,3 @@ module.exports = function (str) {
   var output = cliPrinter.printRefs(info);
   console.log(output);
 };
-//# sourceMappingURL=refs.js.map

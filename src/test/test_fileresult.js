@@ -6,8 +6,8 @@ const i18nc         = require('i18nc-core');
 const i18ncUtil     = require('../util/fileresult');
 const autoTestUtils = require('./auto_test_utils');
 
-const OUTPUT_PATH   = __dirname+'/../../test/output/';
-const TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../test/tmp/';
+const OUTPUT_PATH   = __dirname+'/../../global/test/output/';
+const TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../global/test/tmp/';
 
 describe('#fileresult', function()
 {

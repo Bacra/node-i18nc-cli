@@ -125,4 +125,3 @@ exports.getAstLocStr = getAstLocStr;
 function getAstLocStr(ast) {
   if (ast && ast.loc) return 'Loc:' + ast.loc.start.line + ',' + ast.loc.start.column;else return '';
 }
-//# sourceMappingURL=cli_printer.js.map
