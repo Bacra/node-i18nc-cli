@@ -9,6 +9,8 @@ const path          = require('path');
 const expect        = require('expect.js');
 const cliUtil       = require('../bin/cli_util');
 const autoTestUtils = require('./auto_test_utils');
+
+const requireAfterWrite = autoTestUtils.requireAfterWrite('cli_util');
 const INPUT_PATH    = __dirname+'/../../global/test/input/';
 const TMP_PATH      = __dirname+'/../../global/test/tmp/';
 
@@ -202,7 +204,7 @@ describe('#cli_util', function()
 				{
 					let json = data.toJSON();
 					clearCodeResult(json);
-					let otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
+					let otherJson = requireAfterWrite('file2i18nc.json', json);
 					expect(json).to.eql(otherJson);
 				});
 		});

@@ -3,33 +3,12 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const expect = require('expect.js');
-// const INPUT_PATH = __dirname+'/../../global/test/input/';
-const OUTPUT_PATH = __dirname+'/../../global/test/output/';
+const testReq = require('i18nc-test-req');
+testReq.ROOT_PATH = __dirname+'/../../global/test/output/';
 
 
-exports.requireAfterWrite = function requireAfterWrite(filename, data)
-{
-	let file = OUTPUT_PATH+filename;
-	if (!process.env.TEST_BUILD) return require(file);
-
-	if (typeof data == 'object')
-	{
-		data = JSON.stringify(data, null, '\t');
-	}
-
-	fs.writeFileSync(file, data);
-
-	return require(file);
-}
-
-exports.code2arr = function code2arr(code)
-{
-	return code.toString().split('\n')
-		.filter(function(val)
-		{
-			return val.trim();
-		});
-}
+exports.requireAfterWrite = testReq;
+exports.code2arr = testReq.code2arr;
 
 exports.diffFiles = function diffFiles(input, output)
 {

@@ -16,6 +16,7 @@ var cliUtil = require('../bin/cli_util');
 
 var autoTestUtils = require('./auto_test_utils');
 
+var requireAfterWrite = autoTestUtils.requireAfterWrite('cli_util');
 var INPUT_PATH = __dirname + '/../../global/test/input/';
 var TMP_PATH = __dirname + '/../../global/test/tmp/';
 describe('#cli_util', function () {
@@ -127,7 +128,7 @@ describe('#cli_util', function () {
       return cliUtil.file2i18nc(INPUT_PATH + 'example.js').then(function (data) {
         var json = data.toJSON();
         clearCodeResult(json);
-        var otherJson = autoTestUtils.requireAfterWrite('file2i18nc.json', json);
+        var otherJson = requireAfterWrite('file2i18nc.json', json);
         expect(json).to.eql(otherJson);
       });
     });

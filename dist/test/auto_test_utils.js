@@ -1,35 +1,16 @@
 'use strict';
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
-
 var Promise = require('bluebird');
 
 var fs = Promise.promisifyAll(require('fs'));
 
-var expect = require('expect.js'); // const INPUT_PATH = __dirname+'/../../global/test/input/';
+var expect = require('expect.js');
 
+var testReq = require('i18nc-test-req');
 
-var OUTPUT_PATH = __dirname + '/../../global/test/output/';
-
-exports.requireAfterWrite = function requireAfterWrite(filename, data) {
-  var file = OUTPUT_PATH + filename;
-  if (!process.env.TEST_BUILD) return require(file);
-
-  if ((0, _typeof2.default)(data) == 'object') {
-    data = JSON.stringify(data, null, '\t');
-  }
-
-  fs.writeFileSync(file, data);
-  return require(file);
-};
-
-exports.code2arr = function code2arr(code) {
-  return code.toString().split('\n').filter(function (val) {
-    return val.trim();
-  });
-};
+testReq.ROOT_PATH = __dirname + '/../../global/test/output/';
+exports.requireAfterWrite = testReq;
+exports.code2arr = testReq.code2arr;
 
 exports.diffFiles = function diffFiles(input, output) {
   return function (filename) {
