@@ -47,3 +47,4 @@ function mulitResult2POFiles(data, outputDir, options) {
     return Promise.all([fs.writeFileAsync(outputDir + '/lans.pot', output.pot), poPromises]);
   });
 }
+//# sourceMappingURL=fileresult.js.map

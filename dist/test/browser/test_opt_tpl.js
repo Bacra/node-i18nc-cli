@@ -43,3 +43,4 @@ describe('#opt_tpl', function () {
     expect(getlans.webNavigatorAndProcessDomain(cache)).to.be(navlans);
   });
 });
+//# sourceMappingURL=test_opt_tpl.js.map

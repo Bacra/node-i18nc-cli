@@ -15,7 +15,7 @@ var cliPrinter = require('../util/cli_printer');
 var COMMAND_INDENT = '\n' + new Array(42).join(' ');
 module.exports = program;
 program.version(' cli: v' + require('../package.json').version + '\ncore: v' + require('../').version);
-program.command('code <input> <output>').description('Warp code width I18N handler.').option('-d --input-po-dir [dir]', 'Input po files dir').option('   --input-po-file [file]', 'Input po files file').option('   --translate-db-file [file]', 'Translate data db file').option('-o --output-po-dir [dir]', 'Output po files dir').option('   --output-word-file [file]', 'Output translate words').option('-l --lans [lan1,lan2]', 'Pick file languages', argsToArray).option('-n --i18n-handler-name [name]', 'Custom I18N handler name').option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray).option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray).option('   --only-check', 'Only check, not write code to file').option('-r', 'Recurse into directories').option('-w', 'Closure when I18N hanlder insert head').option('-m', 'Min Function translate code of I18N handler').option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT) + '\n').option('-c, --color', 'Enable colored output').option('-C, --no-color', 'Disable colored output').option('-t', 'Enable codeModifyItems: TranslateWord').option('-T', 'Disable codeModifyItems: TranslateWord').option('-e', 'Enable codeModifyItems: TranslateWord_RegExp').option('-E', 'Disable codeModifyItems: TranslateWord_RegExp').option('-a', 'Enable codeModifyItems: I18NHandlerAlias').option('-A', 'Disable codeModifyItems: I18NHandlerAlias').action(function (input, output, args) {
+program.command('code <input> <output>').description('Warp code width I18N handler.').option('-d --input-po-dir [dir]', 'Input po files dir').option('   --input-po-file [file]', 'Input po files file').option('   --translate-db-file [file]', 'Translate data db file').option('-o --output-po-dir [dir]', 'Output po files dir').option('   --output-word-file [file]', 'Output translate words').option('-l --lans [lan1,lan2]', 'Pick file languages', argsToArray).option('-n --i18n-handler-name [name]', 'Custom I18N handler name').option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray).option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray).option('   --only-check', 'Only check, not write code to file').option('-r', 'Recurse into directories').option('-w', 'Closure when I18N handler insert head').option('-m', 'Min Function translate code of I18N handler').option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT) + '\n').option('-c, --color', 'Enable colored output').option('-C, --no-color', 'Disable colored output').option('-t', 'Enable codeModifyItems: TranslateWord').option('-T', 'Disable codeModifyItems: TranslateWord').option('-e', 'Enable codeModifyItems: TranslateWord_RegExp').option('-E', 'Disable codeModifyItems: TranslateWord_RegExp').option('-a', 'Enable codeModifyItems: I18NHandlerAlias').option('-A', 'Disable codeModifyItems: I18NHandlerAlias').action(function (input, output, args) {
   var options = key2key(args, {
     'input-po-dir': 'inputPODir',
     'input-po-file': 'inputPOFile',
@@ -23,8 +23,8 @@ program.command('code <input> <output>').description('Warp code width I18N handl
     'output-po-dir': 'outputPODir',
     'output-word-file': 'outputWordFile',
     'lans': 'onlyTheseLanguages',
-    'i18n-hanlder-name': 'I18NHandlerName',
-    'i18n-hanlder-alias': 'I18NHandlerAlias',
+    'i18n-handler-name': 'I18NHandlerName',
+    'i18n-handler-alias': 'I18NHandlerAlias',
     'ignore-scan-names': 'ignoreScanHandlerNames',
     'only-check': 'isOnlyCheck',
     'r': 'isRecurse',
@@ -47,7 +47,7 @@ program.command('code <input> <output>').description('Warp code width I18N handl
 program.command('check-wrap <input>').description('Check if all words were wrapped by I18N handler.').option('-n --i18n-handler-name [name]', 'Custom I18N handler name').option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray).option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray).option('-r', 'Recurse into directories').option('-c, --color', 'Enable colored output').option('-C, --no-color', 'Disable colored output').option('-t', 'Enable codeModifyItems: TranslateWord').option('-T', 'Disable codeModifyItems: TranslateWord').option('-e', 'Enable codeModifyItems: TranslateWord_RegExp').option('-E', 'Disable codeModifyItems: TranslateWord_RegExp').option('-a', 'Enable codeModifyItems: I18NHandlerAlias').option('-A', 'Disable codeModifyItems: I18NHandlerAlias').action(function (input, args) {
   var options = key2key(args, {
     'i18n-handler-name': 'I18NHandlerName',
-    'i18n-hanlder-alias': 'I18NHandlerAlias',
+    'i18n-handler-alias': 'I18NHandlerAlias',
     'ignore-scan-names': 'ignoreScanHandlerNames',
     'r': 'isRecurse'
   });
@@ -114,3 +114,4 @@ function argsToArray(val) {
     return val;
   });
 }
+//# sourceMappingURL=commander.js.map

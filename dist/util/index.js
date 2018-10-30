@@ -11,3 +11,4 @@ exports.file = _.extend({}, require('./load_po_files'), {
   mulitResult2POFiles: require('./fileresult').mulitResult2POFiles
 });
 exports.getlans = require('./getlans');
+//# sourceMappingURL=index.js.map

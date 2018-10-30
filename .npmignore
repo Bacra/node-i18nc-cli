@@ -9,6 +9,7 @@ package-lock.json
 .eslintignore
 .editorconfig
 .npmignore
+.coveralls.yml
 .tags*
 .DS_Store
 

@@ -44,3 +44,4 @@ describe('#fileresult', function () {
     });
   });
 });
+//# sourceMappingURL=test_fileresult.js.map

@@ -140,3 +140,4 @@ function clearCodeResult(json) {
 
   _.each(json.subScopeDatas, clearCodeResult);
 }
+//# sourceMappingURL=test_cli_util.js.map

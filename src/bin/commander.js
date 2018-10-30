@@ -29,7 +29,7 @@ program.command('code <input> <output>')
 
 	.option('   --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
-	.option('-w', 'Closure when I18N hanlder insert head')
+	.option('-w', 'Closure when I18N handler insert head')
 	.option('-m', 'Min Function translate code of I18N handler')
 	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
@@ -52,8 +52,8 @@ program.command('code <input> <output>')
 				'output-po-dir'      : 'outputPODir',
 				'output-word-file'   : 'outputWordFile',
 				'lans'               : 'onlyTheseLanguages',
-				'i18n-hanlder-name'  : 'I18NHandlerName',
-				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'i18n-handler-name'  : 'I18NHandlerName',
+				'i18n-handler-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
 				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
@@ -103,7 +103,7 @@ program.command('check-wrap <input>')
 		let options = key2key(args,
 			{
 				'i18n-handler-name'  : 'I18NHandlerName',
-				'i18n-hanlder-alias' : 'I18NHandlerAlias',
+				'i18n-handler-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
 				'r'                  : 'isRecurse',
 			});

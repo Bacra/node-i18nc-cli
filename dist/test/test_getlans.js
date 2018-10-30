@@ -20,3 +20,4 @@ describe('#getlans', function () {
     expect(getlans.filter(['zh-hk', 'zh-tw', 'en-us'], ['zh-hk', 'en'])).to.eql(['zh-hk', 'en-us']);
   });
 });
+//# sourceMappingURL=test_getlans.js.map
