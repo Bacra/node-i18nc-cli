@@ -8,50 +8,128 @@ const ignore = require('ignore');
 const i18nc = require('i18nc');
 const debug = require('debug')('i18nc:cli_scan');
 
+/**
+ * 扫描一个目录下所有符合要求的文件，同时返回可能的配置文件
+ * @param  {String} dir 扫描目录
+ * @return {ResultObject}
+ */
 exports.dir = async function(dir)
 {
 	let filelist = await glob(dir, {});
-	let subdirConfigs = {};
-	let ignoreConfigs = {};
+	let results = await exports.files(filelist);
 
-	let results = await Promise.map(filelist, async function(file)
-		{
-			let dirname = path.dirname(file);
-
-			let configfile = dirname + '/' + '.i18ncrc.js';
-			let configPo = subdirConfigs[configfile]
-				|| (subdirConfigs[configfile] = _checkAndLoadConfig(configfile));
-
-			let ignorefile = dirname + '/' + '.i18ncignore';
-			let ignorePo = ignoreConfigs[ignorefile]
-				|| (ignoreConfigs[ignorefile] = _checkAndLoadIgnore(ignorefile));
-
-			let arr = await Promise.all([configPo, ignorePo]);
-
-			if (arr[1] && arr[1].ignores(file))
-			{
-				debug('ignore file: %s', file);
-				return;
-			}
-			return {file, config: arr[0]};
-		},
-		{
-			concurrency: 5
-		});
-
-	return results.filter(function(val)
-		{
-			return val;
-		});
+	return results;
 }
 
+/**
+ * 扫描文件列表，并返回可用的文件和对一个的配置
+ * @param  {Array} filelist 文件列表
+ * @return {ResultObject}
+ */
+exports.files = async function(filelist)
+{
+	let subdirConfigs = {};
+	let ignoreConfigs = {};
+	let results = new ResultObject();
+
+	await Promise.map(filelist, async function(file)
+	{
+		let filename = path.basename(file);
+		if (filename == '.i18ncrc.js' || filename == '.i18ncignore')
+		{
+			debug('ignore rcfile: %s', file);
+			return;
+		}
+
+		let dirname = path.dirname(file);
+
+		let configfile = dirname + '/' + '.i18ncrc.js';
+		let configPo = subdirConfigs[configfile]
+			|| (subdirConfigs[configfile] = _checkAndLoadConfig(configfile));
+
+		let ignorefile = dirname + '/' + '.i18ncignore';
+		let ignorePo = ignoreConfigs[ignorefile]
+			|| (ignoreConfigs[ignorefile] = _checkAndLoadIgnore(ignorefile));
+
+		let arr = await Promise.all([configPo, ignorePo]);
+
+		if (arr[1] && arr[1].ignores(file))
+		{
+			debug('ignore file: %s', file);
+			return;
+		}
+
+		results.add(new FileItem({file, config: arr[0]}));
+	},
+	{
+		concurrency: 5
+	});
+
+	return results;
+}
+
+
+/**
+ * 获取一个文件的配置信息
+ * @param  {String} file 文件路径
+ * @return {FileItem}
+ */
 exports.file = async function(file)
 {
 	let dirname = path.dirname(file);
 	let configfile = dirname + '/' + '.i18ncrc.js';
 	let config = await _checkAndLoadConfig(configfile);
-	return {file, config};
+	return new FileItem({file, config});
 }
+
+exports.loadConfig = loadConfig;
+async function loadConfig(file)
+{
+	let mainConfig = require(file);
+	let extConfigs = mainConfig.extends;
+	if (extConfigs)
+	{
+		let dirname = path.dirname(file);
+		extConfigs = Array.isArray(extConfigs) ? extConfigs : [extConfigs];
+		if (extConfigs.length)
+		{
+			extConfigs.unshift(i18nc.extend(mainConfig));
+			mainConfig = extConfigs.reduce(function(a, b)
+			{
+				return i18nc.extend(loadConfig(dirname + '/' + b), a);
+			});
+		}
+	}
+
+	return mainConfig;
+}
+
+
+
+class ResultObject
+{
+	constructor(list)
+	{
+		this.list = list;
+	}
+
+	add(item)
+	{
+		this.list.push(item);
+	}
+}
+
+
+class FileItem
+{
+	constructor(item)
+	{
+		this.file = item.file;
+		this.config = item.config;
+	}
+}
+
+
 
 async function _checkAndLoadConfig(file)
 {
@@ -109,27 +187,4 @@ async function _checkAndLoadIgnore(file)
 
 		if (hasIg) return ig;
 	}
-}
-
-
-exports.loadConfig = loadConfig;
-async function loadConfig(file)
-{
-	let mainConfig = require(file);
-	let extConfigs = mainConfig.extends;
-	if (extConfigs)
-	{
-		let dirname = path.dirname(file);
-		extConfigs = Array.isArray(extConfigs) ? extConfigs : [extConfigs];
-		if (extConfigs.length)
-		{
-			extConfigs.unshift(i18nc.extend(mainConfig));
-			mainConfig = extConfigs.reduce(function(a, b)
-			{
-				return i18nc.extend(loadConfig(dirname + '/' + b), a);
-			});
-		}
-	}
-
-	return mainConfig;
 }
