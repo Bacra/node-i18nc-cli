@@ -16,7 +16,7 @@ const stripBOM = require('strip-bom');
  */
 exports.dir = async function(dir)
 {
-	let filelist = await glob(dir, {});
+	let filelist = await glob(dir, {nodir: true});
 	let results = await exports.files(filelist);
 
 	return results;
