@@ -4,7 +4,7 @@ const _            = require('lodash');
 const table        = require('table');
 const chalk        = require('chalk');
 const EMPTY_SYMBOL = '(empty)';
-exports.colors   = new chalk.constructor();
+exports.colors     = new chalk.constructor();
 
 exports.defaultTableOptions =
 {
