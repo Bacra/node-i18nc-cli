@@ -7,6 +7,7 @@ const path = require('path');
 const ignore = require('ignore');
 const i18nc = require('i18nc');
 const debug = require('debug')('i18nc:cli_scan');
+const stripBOM = require('strip-bom');
 
 /**
  * 扫描一个目录下所有符合要求的文件，同时返回可能的配置文件
@@ -172,18 +173,22 @@ async function _checkAndLoadIgnore(file)
 
 	if (file)
 	{
-		let buf = await fs.readFileAsync(file);
+		let buf = await fs.readFileAsync(file, {
+			encoding: 'utf8'
+		});
+
 		let ig = new ignore();
 		let hasIg = false;
-		buf.toString().split(/\n/g).forEach(function(file)
-		{
-			file = file.trim();
-			if (file)
+		stripBOM(buf).split(/\n/g)
+			.forEach(function(file)
 			{
-				hasIg = true;
-				ig.add(file);
-			}
-		});
+				file = file.trim();
+				if (file)
+				{
+					hasIg = true;
+					ig.add(file);
+				}
+			});
 
 		if (hasIg) return ig;
 	}
