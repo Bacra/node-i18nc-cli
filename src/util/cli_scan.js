@@ -128,6 +128,11 @@ class FileItem
 		this.file = item.file;
 		this.config = item.config;
 	}
+
+	extend(options)
+	{
+		return i18nc.extend(this.config, options);
+	}
 }
 
 
