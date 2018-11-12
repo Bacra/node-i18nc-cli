@@ -14,14 +14,12 @@ exports.mulitResult2POFiles = mulitResult2POFiles;
  * 将很多个文件解析的结果，打包成一组po文件
  * data的格式为 {filepath: <i18nc ret>}
  */
-function mulitResult2POFiles(data, outputDir, options)
+async function mulitResult2POFiles(data, outputDir, options)
 {
 	if (!options) options = {};
 	let subScopeDatas = _.values(data);
-	if (!subScopeDatas || !subScopeDatas.length)
-	{
-		return Promise.resolve();
-	}
+	if (!subScopeDatas || !subScopeDatas.length) return;
+
 	let CodeInfoResult = subScopeDatas[0].constructor;
 	let result = new CodeInfoResult({subScopeDatas: subScopeDatas});
 	let output = i18ncPO.create(result,
@@ -35,22 +33,20 @@ function mulitResult2POFiles(data, outputDir, options)
 		});
 	debug('output:%o', output);
 
-	return mkdirp(outputDir)
-		.then(function()
-		{
-			let poPromises = Promise.map(_.keys(output.po), function(lan)
-				{
-					let file = outputDir+'/'+lan+'.po';
-					return fs.writeFileAsync(file, output.po[lan]);
-				},
-				{
-					concurrency: 5
-				});
+	await mkdirp(outputDir);
 
-			return Promise.all(
-				[
-					fs.writeFileAsync(outputDir+'/lans.pot', output.pot),
-					poPromises
-				]);
+	let poPromises = Promise.map(_.keys(output.po), function(lan)
+		{
+			let file = outputDir+'/'+lan+'.po';
+			return fs.writeFileAsync(file, output.po[lan]);
+		},
+		{
+			concurrency: 5
 		});
+
+	return Promise.all(
+		[
+			fs.writeFileAsync(outputDir+'/lans.pot', output.pot),
+			poPromises
+		]);
 }

@@ -6,49 +6,41 @@ const debug      = require('debug')('i18nc:check');
 const cliUtil    = require('../cli_util');
 const cliPrinter = require('../../util/cli_printer');
 
-module.exports = function checkWrap(input, options)
+module.exports = async function checkWrap(input, options)
 {
-	return cliUtil.scanFileList(path.resolve(input), options.isRecurse)
-		.then(function(fileInfo)
+	let fileInfo = await cliUtil.scanFileList(path.resolve(input), options.isRecurse)
+	let myOptions =
+	{
+		I18NHandlerName        : options.I18NHandlerName,
+		I18NHandlerAlias       : options.I18NHandlerAlias,
+		ignoreScanHandlerNames : options.ignoreScanHandlerNames,
+		codeModifyItems        : options.codeModifyItems,
+		I18NHandler:
 		{
-			let myOptions =
+			data: {onlyTheseLanguages: options.onlyTheseLanguages},
+			style: {minFuncCode: options.minTranslateFuncCode},
+			insert:
 			{
-				I18NHandlerName        : options.I18NHandlerName,
-				I18NHandlerAlias       : options.I18NHandlerAlias,
-				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-				codeModifyItems        : options.codeModifyItems,
-				I18NHandler:
-				{
-					data: {onlyTheseLanguages: options.onlyTheseLanguages},
-					style: {minFuncCode: options.minTranslateFuncCode},
-					insert:
-					{
-						checkClosure: options.isCheckClosureForNewI18NHandler,
-					},
-				}
-			};
+				checkClosure: options.isCheckClosureForNewI18NHandler,
+			},
+		}
+	};
 
-			let files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
-			return Promise.map(files, function(file)
-				{
-					debug('i18n file start: %s', file);
+	let files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
+	let results = await Promise.map(files, async function(file)
+		{
+			debug('i18n file start: %s', file);
 
-					return cliUtil.file2i18nc(file, myOptions)
-						.then(function(result)
-						{
-							let newlist = result.allCodeTranslateWords().list4newWordAsts();
-							let dirtyWords = result.allDirtyWords();
-							return {file: file, newlist: newlist, dirtyWords: dirtyWords};
-						});
-				},
-				{
-					concurrency: 5
-				})
-				.then(function(results)
-				{
-					results.forEach(_printResult);
-				});
+			let result = await cliUtil.file2i18nc(file, myOptions)
+			let newlist = result.allCodeTranslateWords().list4newWordAsts();
+			let dirtyWords = result.allDirtyWords();
+			return {file: file, newlist: newlist, dirtyWords: dirtyWords};
+		},
+		{
+			concurrency: 5
 		});
+
+	results.forEach(_printResult);
 }
 
 

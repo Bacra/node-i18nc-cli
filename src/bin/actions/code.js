@@ -10,7 +10,7 @@ const cliUtil   = require('../cli_util');
 const i18ncUtil = require('../../util/index');
 
 
-module.exports = function code(input, output, options)
+module.exports = async function code(input, output, options)
 {
 	let translateDBFile = options.translateDBFile;
 	let readTranslateDBFilePromise;
@@ -31,132 +31,106 @@ module.exports = function code(input, output, options)
 	}
 
 	let allfiledata = {};
-
-	return Promise.all(
+	let data = await Promise.all(
 		[
 			cliUtil.scanFileList(path.resolve(input), null, options.isRecurse),
 			readTranslateDBFilePromise,
 			options.inputPOFile && i18ncUtil.loadPOFile(path.resolve(options.inputPOFile)),
 			options.inputPODir && i18ncUtil.autoLoadPOFiles(path.resolve(options.inputPODir))
-		])
-		.then(function(data)
+		]);
+	let fileInfo = data[0];
+	let dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
+	let myOptions =
+	{
+		dbTranslateWords       : dbTranslateWords,
+		I18NHandlerName        : options.I18NHandlerName,
+		I18NHandlerAlias       : options.I18NHandlerAlias,
+		ignoreScanHandlerNames : options.ignoreScanHandlerNames,
+		codeModifyItems        : options.codeModifyItems,
+		I18NHandler:
 		{
-			let fileInfo = data[0];
-			let dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
-			let myOptions =
+			data: {onlyTheseLanguages: options.onlyTheseLanguages},
+			style: {minFuncCode: options.minTranslateFuncCode},
+			upgrade: {partial: options.isPartialUpdate},
+			insert:
 			{
-				dbTranslateWords       : dbTranslateWords,
-				I18NHandlerName        : options.I18NHandlerName,
-				I18NHandlerAlias       : options.I18NHandlerAlias,
-				ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-				codeModifyItems        : options.codeModifyItems,
-				I18NHandler:
+				checkClosure: options.isCheckClosureForNewI18NHandler,
+			},
+		}
+	};
+
+	if (fileInfo.type == 'list')
+	{
+		await Promise.map(fileInfo.data, async function(file)
+			{
+				debug('i18n file start: %s', file);
+
+				let data = await cliUtil.file2i18nc(file, myOptions)
+				let code = data.code;
+				delete data.code;
+				allfiledata[file] = data;
+				if (options.isOnlyCheck) return;
+
+				let wfile = path.resolve(output, file);
+				debug('writefile: %s', wfile);
+
+				await writeFile(wfile, code)
+				console.log('write file: '+wfile);
+			},
+			{
+				concurrency: 5
+			});
+	}
+	else
+	{
+		let file = fileInfo.data;
+		debug('one file mod:%s', file);
+
+		let data = await cliUtil.file2i18nc(file, myOptions);
+		let code = data.code;
+		delete data.code;
+
+		allfiledata[file] = data;
+		if (options.isOnlyCheck) return;
+
+		let wfile = path.resolve(output);
+		debug('writefile: %s', wfile);
+
+		wfile = await cliUtil.getWriteOneFilePath(wfile, file);
+		await fs.writeFileAsync(wfile, code);
+		console.log('write file: '+wfile);
+	}
+	// 如果仅仅检查，则不处理写的逻辑
+	if (options.isOnlyCheck) return;
+
+	let outputWordFile = options.outputWordFile;
+	let writeOutputWordFilePromise;
+	if (outputWordFile)
+	{
+		outputWordFile = path.resolve(outputWordFile);
+		writeOutputWordFilePromise = writeFile(outputWordFile, JSON.stringify(allfiledata, null, '\t'))
+			.then(function()
+			{
+				console.log('write words file: '+outputWordFile);
+			});
+	}
+
+	let outputPODir = options.outputPODir;
+	if (outputPODir) outputPODir = path.resolve(outputPODir);
+
+	await Promise.all(
+		[
+			writeOutputWordFilePromise,
+			outputPODir && i18ncUtil.mulitResult2POFiles(allfiledata, outputPODir,
 				{
-					data: {onlyTheseLanguages: options.onlyTheseLanguages},
-					style: {minFuncCode: options.minTranslateFuncCode},
-					upgrade: {partial: options.isPartialUpdate},
-					insert:
-					{
-						checkClosure: options.isCheckClosureForNewI18NHandler,
-					},
-				}
-			};
-
-			if (fileInfo.type == 'list')
-			{
-				return Promise.map(fileInfo.data, function(file)
-					{
-						debug('i18n file start: %s', file);
-
-						return cliUtil.file2i18nc(file, myOptions)
-							.then(function(data)
-							{
-								let code = data.code;
-								delete data.code;
-								allfiledata[file] = data;
-								if (options.isOnlyCheck) return;
-
-								let wfile = path.resolve(output, file);
-								debug('writefile: %s', wfile);
-
-								return writeFile(wfile, code)
-									.then(function()
-									{
-										console.log('write file: '+wfile);
-									});
-							});
-					},
-					{
-						concurrency: 5
-					});
-			}
-			else
-			{
-				let file = fileInfo.data;
-				debug('one file mod:%s', file);
-
-				return cliUtil.file2i18nc(file, myOptions)
-					.then(function(data)
-					{
-						let code = data.code;
-						delete data.code;
-
-						allfiledata[file] = data;
-						if (options.isOnlyCheck) return;
-
-						let wfile = path.resolve(output);
-						debug('writefile: %s', wfile);
-
-						return cliUtil.getWriteOneFilePath(wfile, file)
-							.then(function(wfile)
-							{
-								return fs.writeFileAsync(wfile, code)
-									.then(function()
-									{
-										console.log('write file: '+wfile);
-									});
-							});
-					});
-			}
-		})
-		.then(function()
-		{
-			// 如果仅仅检查，则不处理写的逻辑
-			if (options.isOnlyCheck) return;
-
-			let outputWordFile = options.outputWordFile;
-			let writeOutputWordFilePromise;
-			if (outputWordFile)
-			{
-				outputWordFile = path.resolve(outputWordFile);
-				writeOutputWordFilePromise = writeFile(outputWordFile, JSON.stringify(allfiledata, null, '\t'))
-					.then(function()
-					{
-						console.log('write words file: '+outputWordFile);
-					});
-			}
-
-			let outputPODir = options.outputPODir;
-			if (outputPODir) outputPODir = path.resolve(outputPODir);
-
-			return Promise.all(
-				[
-					writeOutputWordFilePromise,
-					outputPODir && i18ncUtil.mulitResult2POFiles(allfiledata, outputPODir,
-						{
-							pickFileLanguages: options.pickFileLanguages
-						})
-				])
-				.then(function(){});
-		});
+					pickFileLanguages: options.pickFileLanguages
+				})
+		]);
 }
 
 
-function writeFile(file, content)
+async function writeFile(file, content)
 {
-	return mkdirp(path.dirname(file))
-		.then(function()
-		{
-			return fs.writeFileAsync(file, content);
-		});
+	await mkdirp(path.dirname(file));
+	return await fs.writeFileAsync(file, content);
 }

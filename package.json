@@ -12,6 +12,7 @@
     "build": "babel src --out-dir dist --source-maps",
     "build-dev": "babel src --out-dir dist --watch",
     "test": "cross-env DEBUG=i18nc* mocha dist/test/test_*.js",
+    "test-src": "cross-env DEBUG=i18nc* mocha src/test/test_*.js",
     "test-cov": "istanbul cover ./node_modules/.bin/_mocha -- dist/test/test_*.js --reporter dot",
     "test-e2e": "karma start --",
     "test-e2e-dev": "cross-env DEBUG=i18nc-core* karma start --auto-watch --no-single-run --browsers=Chrome",
