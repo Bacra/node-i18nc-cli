@@ -40,7 +40,7 @@ module.exports = async function code(input, output, options)
 		]);
 	let fileInfo = data[0];
 	let dbTranslateWords = extend(true, {}, data[2], data[3], data[1]);
-	let myOptions =
+	let taskOptions =
 	{
 		dbTranslateWords       : dbTranslateWords,
 		I18NHandlerName        : options.I18NHandlerName,
@@ -61,11 +61,13 @@ module.exports = async function code(input, output, options)
 
 	if (fileInfo.type == 'list')
 	{
-		await Promise.map(fileInfo.data, async function(file)
+		await Promise.map(fileInfo.data.list, async function(fileItem)
 			{
+				let file = fileItem.file;
+				let fileOptions = fileItem.extend(taskOptions);
 				debug('i18n file start: %s', file);
 
-				let data = await cliUtil.file2i18nc(file, myOptions)
+				let data = await cliUtil.file2i18nc(file, fileOptions)
 				let code = data.code;
 				delete data.code;
 				allfiledata[file] = data;
@@ -83,10 +85,12 @@ module.exports = async function code(input, output, options)
 	}
 	else
 	{
-		let file = fileInfo.data;
+		let fileItem = fileInfo.data;
+		let file = fileItem.file;
+		let fileOptions = fileInfo.extend(fileOptions);
 		debug('one file mod:%s', file);
 
-		let data = await cliUtil.file2i18nc(file, myOptions);
+		let data = await cliUtil.file2i18nc(file, taskOptions);
 		let code = data.code;
 		delete data.code;
 
@@ -118,7 +122,7 @@ module.exports = async function code(input, output, options)
 	let outputPODir = options.outputPODir;
 	if (outputPODir) outputPODir = path.resolve(outputPODir);
 
-	await Promise.all(
+	return Promise.all(
 		[
 			writeOutputWordFilePromise,
 			outputPODir && i18ncUtil.mulitResult2POFiles(allfiledata, outputPODir,
@@ -132,5 +136,5 @@ module.exports = async function code(input, output, options)
 async function writeFile(file, content)
 {
 	await mkdirp(path.dirname(file));
-	return await fs.writeFileAsync(file, content);
+	return fs.writeFileAsync(file, content);
 }

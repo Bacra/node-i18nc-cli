@@ -1,13 +1,13 @@
 'use strict';
 
-const debug    = require('debug')('i18nc:cli_util');
-const Promise  = require('bluebird');
-const fs       = Promise.promisifyAll(require('fs'));
-const glob     = Promise.promisify(require('glob'));
-const mkdirp   = Promise.promisify(require('mkdirp'));
-const path     = require('path');
-const i18nc    = require('i18nc-core');
-const stripBOM = require('strip-bom');
+const debug     = require('debug')('i18nc:cli_util');
+const Promise   = require('bluebird');
+const fs        = Promise.promisifyAll(require('fs'));
+const mkdirp    = Promise.promisify(require('mkdirp'));
+const path      = require('path');
+const i18nc     = require('i18nc-core');
+const i18ncUtil = require('../util');
+const stripBOM  = require('strip-bom');
 
 exports.scanFileList = scanFileList;
 async function scanFileList(input, recurse)
@@ -23,7 +23,7 @@ async function scanFileList(input, recurse)
 
 		debug('input is not exists, start glob');
 
-		let files = await glob(input, {nodir: true, realpath: true})
+		let files = await i18ncUtil.cli.scan.dir(input);
 		return {
 			type: 'list',
 			data: files
@@ -34,7 +34,7 @@ async function scanFileList(input, recurse)
 	if (stats.isFile())
 	{
 		debug('input is file');
-		let file = await fs.realpathAsync(input);
+		let file = await i18ncUtil.cli.scan.file(input);
 		return {
 			type: 'one',
 			data: file
@@ -45,7 +45,7 @@ async function scanFileList(input, recurse)
 		debug('input is dir');
 		if (!recurse) throw new Error('Input Is A Directory');
 
-		let files = await glob('**/*', {cwd: input, nodir: true, realpath: true})
+		let files = await i18ncUtil.cli.scan.dir(input+'/**/*');
 		return {
 			type: 'list',
 			data: files

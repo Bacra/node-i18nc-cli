@@ -9,7 +9,7 @@ const cliPrinter = require('../../util/cli_printer');
 module.exports = async function checkWrap(input, options)
 {
 	let fileInfo = await cliUtil.scanFileList(path.resolve(input), options.isRecurse)
-	let myOptions =
+	let taskOptions =
 	{
 		I18NHandlerName        : options.I18NHandlerName,
 		I18NHandlerAlias       : options.I18NHandlerAlias,
@@ -26,12 +26,14 @@ module.exports = async function checkWrap(input, options)
 		}
 	};
 
-	let files = fileInfo.type == 'list' ? fileInfo.data : [fileInfo.data];
-	let results = await Promise.map(files, async function(file)
+	let files = fileInfo.type == 'list' ? fileInfo.data.list : [fileInfo.data];
+	let results = await Promise.map(files, async function(fileItem)
 		{
+			let file = fileItem.file;
+			let fileOptions = fileItem.extend(taskOptions);
 			debug('i18n file start: %s', file);
 
-			let result = await cliUtil.file2i18nc(file, myOptions)
+			let result = await cliUtil.file2i18nc(file, fileOptions);
 			let newlist = result.allCodeTranslateWords().list4newWordAsts();
 			let dirtyWords = result.allDirtyWords();
 			return {file: file, newlist: newlist, dirtyWords: dirtyWords};
