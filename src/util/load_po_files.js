@@ -37,7 +37,7 @@ async function loadPOFiles(inputDir)
 	debug('sacn dir:%s', inputDir);
 
 	let files = await globAsync('**/*.po', {cwd: inputDir, nodir: true, absolute: true})
-	let arr = await Promise.map(files, function(file)
+	let arr = await Promise.map(files.sort(), function(file)
 		{
 			debug('load po file:%s', file);
 			return loadPOFile(file);
@@ -79,7 +79,7 @@ function loadPOFilesSync(inputDir)
 {
 	debug('sacn dir:%s', inputDir);
 	let files = glob.sync('**/*.po', {cwd: inputDir, nodir: true, absolute: true});
-	let arr = files.map(loadPOFileSync);
+	let arr = files.sort().map(loadPOFileSync);
 	arr.unshift(true);
 	return extend.apply(null, arr);
 }
