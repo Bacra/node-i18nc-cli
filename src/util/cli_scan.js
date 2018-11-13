@@ -5,7 +5,7 @@ const fs = Promise.promisifyAll(require('fs'));
 const glob = Promise.promisify(require('glob'));
 const path = require('path');
 const ignore = require('ignore');
-const i18nc = require('i18nc');
+const i18ncOptions = require('i18nc-options');
 const debug = require('debug')('i18nc:cli_scan');
 const stripBOM = require('strip-bom');
 
@@ -94,10 +94,10 @@ async function loadConfig(file)
 		extConfigs = Array.isArray(extConfigs) ? extConfigs : [extConfigs];
 		if (extConfigs.length)
 		{
-			extConfigs.unshift(i18nc.extend(mainConfig));
+			extConfigs.unshift(i18ncOptions.init(mainConfig));
 			mainConfig = extConfigs.reduce(function(a, b)
 			{
-				return i18nc.extend(loadConfig(dirname + '/' + b), a);
+				return i18ncOptions.extend(loadConfig(dirname + '/' + b), a);
 			});
 		}
 	}
@@ -140,7 +140,7 @@ class FileItem
 
 	extend(options)
 	{
-		return i18nc.extend(this.config, options);
+		return i18ncOptions.extend(this.config, options);
 	}
 }
 
