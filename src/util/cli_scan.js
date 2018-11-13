@@ -138,6 +138,11 @@ class FileItem
 		return this.data.config;
 	}
 
+	toString()
+	{
+		return this.data.file;
+	}
+
 	extend(options)
 	{
 		return i18ncOptions.extend(this.config, options);
