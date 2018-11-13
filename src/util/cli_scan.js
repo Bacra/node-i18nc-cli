@@ -111,7 +111,7 @@ class ResultObject
 {
 	constructor(list)
 	{
-		this.list = list;
+		this.list = list || [];
 	}
 
 	add(item)
@@ -123,10 +123,19 @@ class ResultObject
 
 class FileItem
 {
-	constructor(item)
+	constructor(data)
 	{
-		this.file = item.file;
-		this.config = item.config;
+		this.data = data;
+	}
+
+	get file()
+	{
+		return this.data.file;
+	}
+
+	get config()
+	{
+		return this.data.config;
 	}
 
 	extend(options)
