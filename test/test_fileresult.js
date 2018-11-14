@@ -3,11 +3,11 @@
 const Promise       = require('bluebird');
 const mkdirp        = Promise.promisify(require('mkdirp'));
 const i18nc         = require('i18nc-core');
-const i18ncUtil     = require('../util/fileresult');
+const i18ncUtil     = require('../src/util/fileresult');
 const autoTestUtils = require('./auto_test_utils');
 
-const OUTPUT_PATH   = __dirname+'/../../global/test/output/';
-const TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/../../global/test/tmp/';
+const OUTPUT_PATH   = __dirname+'/output/';
+const TMP_PATH      = process.env.TEST_BUILD ? OUTPUT_PATH : __dirname+'/tmp/';
 
 describe('#fileresult', function()
 {

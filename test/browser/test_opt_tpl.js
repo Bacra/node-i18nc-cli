@@ -3,7 +3,7 @@
 'use strict';
 
 const expect = require('expect.js');
-const getlans = require('../../../global/test/i18n_getlans');
+const getlans = require('../i18n_getlans');
 const debug = require('debug')('i18nc:test_opt_tpl');
 
 

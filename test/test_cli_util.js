@@ -7,12 +7,12 @@ const mkdirp        = Promise.promisify(require('mkdirp'));
 const rimraf        = Promise.promisify(require('rimraf'));
 const path          = require('path');
 const expect        = require('expect.js');
-const cliUtil       = require('../bin/cli_util');
+const cliUtil       = require('../src/bin/cli_util');
 const autoTestUtils = require('./auto_test_utils');
 
 const requireAfterWrite = autoTestUtils.requireAfterWrite('cli_util');
-const INPUT_PATH    = __dirname+'/../../global/test/input/';
-const TMP_PATH      = __dirname+'/../../global/test/tmp/';
+const INPUT_PATH    = __dirname+'/input/';
+const TMP_PATH      = __dirname+'/tmp/';
 
 
 describe('#cli_util', function()

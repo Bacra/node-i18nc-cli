@@ -3,10 +3,9 @@
 const _		= require('lodash');
 const fs		= require('fs');
 const mkdirp	= require('mkdirp');
-const optTpl	= require('../../global/lib/getlans_opt.tpl.js');
+const optTpl	= require('../tpl/getlans_opt.tpl.js');
 const renders	= exports.renders = {};
-const INPUT_PATH = __dirname+'/../../global/test/input/';
-// const OUTPUT_PATH = __dirname+'/../../global/test/input/';
+const INPUT_PATH = __dirname+'/input/';
 
 
 [

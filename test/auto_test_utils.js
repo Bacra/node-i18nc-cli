@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const expect = require('expect.js');
 const testReq = require('i18nc-test-req');
-testReq.ROOT_PATH = __dirname+'/../../global/test/output/';
+testReq.ROOT_PATH = __dirname+'/output/';
 
 
 exports.requireAfterWrite = testReq;

@@ -10,5 +10,5 @@ exports.getlans = require('./getlans');
 
 exports.opt =
 {
-	tpl: require('../../global/lib/getlans_opt.tpl.js')
+	tpl: require('../../tpl/getlans_opt.tpl.js')
 };

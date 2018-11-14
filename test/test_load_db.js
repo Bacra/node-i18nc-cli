@@ -1,10 +1,10 @@
 'use strict';
 
 const expect        = require('expect.js');
-const loader        = require('../util/load_db');
+const loader        = require('../src/util/load_db');
 const autoTestUtils = require('./auto_test_utils');
 const requireAfterWrite = autoTestUtils.requireAfterWrite('load_db');
-const INPUT_PATH = __dirname+'/../../global/test/input/';
+const INPUT_PATH = __dirname+'/input/';
 
 
 describe('#load_db', function()
