@@ -1,1 +1,0 @@
-{"version":3,"sources":["../src/index.js"],"names":["exports","module","require","util"],"mappings":"AAAA;;AAEAA,OAAO,GAAGC,MAAM,CAACD,OAAP,GAAiBE,OAAO,CAAC,YAAD,CAAlC;AACAF,OAAO,CAACG,IAAR,GAAeD,OAAO,CAAC,cAAD,CAAtB","sourcesContent":["'use strict';\n\nexports = module.exports = require('i18nc-core');\nexports.util = require('./util/index');\n"],"file":"index.js"}

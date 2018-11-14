@@ -7,7 +7,7 @@
     "i18nc": "cli.js"
   },
   "scripts": {
-    "prepublish": "npm ls",
+    "prepublish": "npm run build && npm run lint && npm ls",
     "lint": "eslint .",
     "build": "babel src --out-dir dist --source-maps",
     "build-dev": "babel src --out-dir dist --watch",
