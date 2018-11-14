@@ -28,11 +28,8 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir+'root.file')
 					.then(function(data)
 					{
-						expect(data).to.eql(
-							{
-								type: 'one',
-								data: path.normalize(inputDir+'root.file')
-							});
+						expect(data.type).to.be('one');
+						expect(data.data.toJSON()).to.be(path.normalize(inputDir+'root.file'));
 					});
 			});
 
@@ -67,11 +64,8 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir+'*.file')
 					.then(function(data)
 					{
-						expect(data).to.eql(
-						{
-							type: 'list',
-							data: [path.normalize(inputDir+'root.file')]
-						});
+						expect(data.type).to.be('list');
+						expect(data.data.toJSON()).to.eql([path.normalize(inputDir+'root.file')]);
 					});
 			});
 		});
@@ -83,11 +77,8 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir+'root.file', true)
 					.then(function(data)
 					{
-						expect(data).to.eql(
-							{
-								type: 'one',
-								data: path.normalize(inputDir+'root.file')
-							});
+						expect(data.type).to.be('one');
+						expect(data.data.toJSON()).to.be(path.normalize(inputDir+'root.file'));
 					});
 			});
 
@@ -96,7 +87,8 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir+'not_exists', true)
 					.then(function(data)
 					{
-						expect(data).to.eql({type: 'list', data: []});
+						expect(data.type).to.be('list');
+						expect(data.data.toJSON()).to.eql([]);
 					});
 			});
 
@@ -105,17 +97,13 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir, true)
 					.then(function(data)
 					{
-						data.data = data.data.sort();
-						expect(data).to.eql(
-							{
-								type: 'list',
-								data:
-								[
-									path.normalize(inputDir+'root.file'),
-									path.normalize(inputDir+'child_dir/child1.file'),
-									path.normalize(inputDir+'child_dir/child2.file')
-								].sort()
-							});
+						expect(data.type).to.be('list');
+						expect(data.data.toJSON().sort()).to.eql(
+							[
+								path.normalize(inputDir+'root.file'),
+								path.normalize(inputDir+'child_dir/child1.file'),
+								path.normalize(inputDir+'child_dir/child2.file')
+							].sort());
 					});
 			});
 
@@ -124,11 +112,8 @@ describe('#cli_util', function()
 				return cliUtil.scanFileList(inputDir+'*.file', true)
 					.then(function(data)
 					{
-						expect(data).to.eql(
-						{
-							type: 'list',
-							data: [path.normalize(inputDir+'root.file')]
-						});
+						expect(data.type).to.be('list');
+						expect(data.data.toJSON()).to.eql([path.normalize(inputDir+'root.file')]);
 					});
 			});
 		});

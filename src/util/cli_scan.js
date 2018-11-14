@@ -114,6 +114,13 @@ class ResultObject
 		this.list = list || [];
 	}
 
+	toJSON()
+	{
+		return this.list.map((item) => {
+			return item.toJSON();
+		});
+	}
+
 	add(item)
 	{
 		this.list.push(item);
@@ -141,6 +148,11 @@ class FileItem
 	toString()
 	{
 		return this.data.file;
+	}
+
+	toJSON()
+	{
+		return this.toString();
 	}
 
 	extend(options)
