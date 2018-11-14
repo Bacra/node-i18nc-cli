@@ -3,21 +3,21 @@
 const Promise   = require('bluebird');
 const fs        = Promise.promisifyAll(require('fs'));
 const glob      = require('glob');
-const debug     = require('debug')('i18nc:load_po_files');
+const debug     = require('debug')('i18nc:load_db');
 const i18ncPO   = require('i18nc-po');
 const stripBOM  = require('strip-bom');
 const extend    = require('extend');
 const globAsync = Promise.promisify(glob);
 
-exports.autoLoadPOFiles = autoLoadPOFiles;
+exports.autoLoadDB = autoLoadDB;
 exports.loadPOFiles = loadPOFiles;
 exports.loadPOFile = loadPOFile;
 
-exports.autoLoadPOFilesSync = autoLoadPOFilesSync;
+exports.autoLoadDBSync = autoLoadDBSync;
 exports.loadPOFilesSync = loadPOFilesSync;
 exports.loadPOFileSync = loadPOFileSync;
 
-async function autoLoadPOFiles(input)
+async function autoLoadDB(input)
 {
 	let stats = await fs.statAsync(input);
 
@@ -60,7 +60,7 @@ async function loadPOFile(file)
 
 
 
-function autoLoadPOFilesSync(input)
+function autoLoadDBSync(input)
 {
 	let stats = fs.statSync(input);
 
