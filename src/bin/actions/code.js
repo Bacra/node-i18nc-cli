@@ -46,17 +46,6 @@ module.exports = async function code(input, output, options)
 		I18NHandlerName        : options.I18NHandlerName,
 		I18NHandlerAlias       : options.I18NHandlerAlias,
 		ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-		codeModifyItems        : options.codeModifyItems,
-		I18NHandler:
-		{
-			data: {onlyTheseLanguages: options.onlyTheseLanguages},
-			style: {minFuncCode: options.minTranslateFuncCode},
-			upgrade: {partial: options.isPartialUpdate},
-			insert:
-			{
-				checkClosure: options.isCheckClosureForNewI18NHandler,
-			},
-		}
 	};
 
 	if (fileInfo.type == 'list')

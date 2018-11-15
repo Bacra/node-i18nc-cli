@@ -1,13 +1,12 @@
 'use strict';
 
-const _				= require('lodash');
+const _               = require('lodash');
 const program         = require('commander');
 const codeAction      = require('./actions/code');
 const checkWrapAction = require('./actions/check-wrap');
 const refsAction      = require('./actions/refs');
 const cliPrinter      = require('../util/cli_printer');
 
-const COMMAND_INDENT = '\n'+new Array(42).join(' ');
 module.exports = program;
 
 program.version(
@@ -22,26 +21,15 @@ program.command('code <input> <output>')
 	.option('   --translate-db-file [file]', 'Translate data db file')
 	.option('-o --output-po-dir [dir]', 'Output po files dir')
 	.option('   --output-word-file [file]', 'Output translate words')
-	.option('-l --lans [lan1,lan2]', 'Pick file languages', argsToArray)
 	.option('-n --i18n-handler-name [name]', 'Custom I18N handler name')
 	.option('   --i18n-handler-alias [name,name]', 'I18N handler alias', argsToArray)
 	.option('   --ignore-scan-names [name,name]', 'Ignore cacn handler names', argsToArray)
 
 	.option('   --only-check', 'Only check, not write code to file')
 	.option('-r', 'Recurse into directories')
-	.option('-w', 'Closure when I18N handler insert head')
-	.option('-m', 'Min Function translate code of I18N handler')
-	.option('-f', ['Force update total I18N Function', 'default: partial update'].join(COMMAND_INDENT)+'\n')
 
 	.option('-c, --color', 'Enable colored output')
 	.option('-C, --no-color', 'Disable colored output')
-
-	.option('-t', 'Enable codeModifyItems: TranslateWord')
-	.option('-T', 'Disable codeModifyItems: TranslateWord')
-	.option('-e', 'Enable codeModifyItems: TranslateWord_RegExp')
-	.option('-E', 'Disable codeModifyItems: TranslateWord_RegExp')
-	.option('-a', 'Enable codeModifyItems: I18NHandlerAlias')
-	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, output, args)
 	{
 		let options = key2key(args,
@@ -51,27 +39,16 @@ program.command('code <input> <output>')
 				'translate-db-file'  : 'translateDBFile',
 				'output-po-dir'      : 'outputPODir',
 				'output-word-file'   : 'outputWordFile',
-				'lans'               : 'onlyTheseLanguages',
 				'i18n-handler-name'  : 'I18NHandlerName',
 				'i18n-handler-alias' : 'I18NHandlerAlias',
 				'ignore-scan-names'  : 'ignoreScanHandlerNames',
 				'only-check'         : 'isOnlyCheck',
 				'r'                  : 'isRecurse',
-				'c'                  : 'isCheckClosureForNewI18NHandler',
-				'm'                  : 'minTranslateFuncCode',
 			});
 
 		options.isPartialUpdate = !args.f;
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
-
-		let obj = options.codeModifyItems = {};
-		if (args.t) obj.TranslateWord = true;
-		if (args.T) obj.TranslateWord = false;
-		if (args.e) obj.TranslateWord_RegExp = true;
-		if (args.E) obj.TranslateWord_RegExp = false;
-		if (args.a) obj.I18NHandlerAlias = true;
-		if (args.A) obj.I18NHandlerAlias = false;
 
 		codeAction(input, output, options)
 			.catch(function(err)
@@ -91,13 +68,6 @@ program.command('check-wrap <input>')
 
 	.option('-c, --color', 'Enable colored output')
 	.option('-C, --no-color', 'Disable colored output')
-
-	.option('-t', 'Enable codeModifyItems: TranslateWord')
-	.option('-T', 'Disable codeModifyItems: TranslateWord')
-	.option('-e', 'Enable codeModifyItems: TranslateWord_RegExp')
-	.option('-E', 'Disable codeModifyItems: TranslateWord_RegExp')
-	.option('-a', 'Enable codeModifyItems: I18NHandlerAlias')
-	.option('-A', 'Disable codeModifyItems: I18NHandlerAlias')
 	.action(function(input, args)
 	{
 		let options = key2key(args,
@@ -109,14 +79,6 @@ program.command('check-wrap <input>')
 			});
 
 		if (args.color === false) cliPrinter.colors.enabled = false;
-
-		let obj = options.codeModifyItems = {};
-		if (args.t) obj.TranslateWord = true;
-		if (args.T) obj.TranslateWord = false;
-		if (args.e) obj.TranslateWord_RegExp = true;
-		if (args.E) obj.TranslateWord_RegExp = false;
-		if (args.a) obj.I18NHandlerAlias = true;
-		if (args.A) obj.I18NHandlerAlias = false;
 
 		checkWrapAction(input, options)
 			.catch(function(err)

@@ -14,16 +14,6 @@ module.exports = async function checkWrap(input, options)
 		I18NHandlerName        : options.I18NHandlerName,
 		I18NHandlerAlias       : options.I18NHandlerAlias,
 		ignoreScanHandlerNames : options.ignoreScanHandlerNames,
-		codeModifyItems        : options.codeModifyItems,
-		I18NHandler:
-		{
-			data: {onlyTheseLanguages: options.onlyTheseLanguages},
-			style: {minFuncCode: options.minTranslateFuncCode},
-			insert:
-			{
-				checkClosure: options.isCheckClosureForNewI18NHandler,
-			},
-		}
 	};
 
 	let files = fileInfo.type == 'list' ? fileInfo.data.list : [fileInfo.data];
